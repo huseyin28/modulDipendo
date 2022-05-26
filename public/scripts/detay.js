@@ -5,11 +5,7 @@ let Etiket = {};
 let Etiketler = [];
 
 function ready() {
-
     Login();
-    //getDipendoDetay();
-
-    
 }
 
 function Login(){
