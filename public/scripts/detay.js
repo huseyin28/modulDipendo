@@ -8,24 +8,24 @@ function ready() {
     Login();
 }
 
-function Login(){
+function Login() {
     $.ajax({
-        type : "POST",
-        url : "https://app.dipendo.com/oauth/token",
-        data : "username=huseyinyilmaz@celsancelik.com&password=asdasd528&grant_type=password&client_id=DipendoWeb",
+        type: "POST",
+        url: "https://app.dipendo.com/oauth/token",
+        data: "username=huseyinyilmaz@celsancelik.com&password=asdasd528&grant_type=password&client_id=DipendoWeb",
     }).then(response => {
-        Authorization = response.token_type+' '+response.access_token
-        
-        units = JSON.parse(units)
-    const urlParams = new URLSearchParams(location.search);
+        Authorization = response.token_type + ' ' + response.access_token
 
-    $.ajax({
-        url: "https://app.dipendo.com/api/sales/" + urlParams.get('id'),
-        headers: { "Authorization": Authorization }
-    }).then(response => {
-        FORM.createPrintForm(response);
-        PAGE.writeForm(response);
-    })
+        units = JSON.parse(units)
+        const urlParams = new URLSearchParams(location.search);
+
+        $.ajax({
+            url: "https://app.dipendo.com/api/sales/" + urlParams.get('id'),
+            headers: { "Authorization": Authorization }
+        }).then(response => {
+            FORM.createPrintForm(response);
+            PAGE.writeForm(response);
+        })
     })
 }
 
