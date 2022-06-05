@@ -58,9 +58,10 @@ let PAGE = {
     createEtiket : function(saleItemId){
         Sale.saleItems.forEach(element => {
             if(element.saleItemId == saleItemId){
+                console.log(Sale.customer);
                 let data = {
                     "sipno" :  Sale.externalSaleCode,
-                    "customer" : Sale.customer.title,
+                    "customer" : Sale.customer.title.slice(0, 20),
                     "size" : element.purchaseItem.product.productPropertyValues[0].propertyValue,
                     "tanim" : element.purchaseItem.product.productPropertyValues[1].propertyValue +' '+element.purchaseItem.product.productPropertyValues[2].propertyValue +' '+ element.purchaseItem.product.productPropertyValues[4].propertyValue +' '+ element.purchaseItem.product.productPropertyValues[6].propertyValue,
                     "metraj" : element.saleCount,
