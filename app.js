@@ -35,12 +35,12 @@ app.post('/createEtiket', (req, res) => {
     req.body.metraj+"\n"+
     req.body.agirlik+"\n"+
     req.body.pid
-    console.log(req.body);
     fs.writeFile(path.join(__dirname,"/etiket.txt"), data, err => {
-        if (err) return console.log(err);
-        console.log('işlem başarılı');
+        if (err)
+            res.json({success : false})
+        else
+            res.json({success : true})
     })
-    res.json({success : true})
 })
 
 app.get('/detay2', (req, res) => {

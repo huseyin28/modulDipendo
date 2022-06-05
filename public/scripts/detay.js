@@ -71,9 +71,14 @@ let PAGE = {
                 $.ajax({
                     type : "POST",
                     url : "/createEtiket",
+                    dataType : "JSON",
                     data : data
                 }).then(response => {
-
+                    if(response.success){
+                        alert("Etiket oluşturuldu")
+                    }else{
+                        alert("işlem başarısız")
+                    }
                 })
                 return;
             }
