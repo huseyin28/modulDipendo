@@ -30,12 +30,12 @@ app.get('/detay', (req, res) => {
 app.post('/createEtiket', (req, res) => {
     let data = `${req.body.sipno}\n`+
     req.body.customer+"\n"+
-    req.body.size+"\n"+
-    req.body.tanim+"\n"+
+    req.body.size.replace("mm", "")+"\n"+
+    req.body.tanim.replace("UNGALV", "").replace("RHRL", "").replace("RHLL", "").replace("LHRL", "SOL").replace("LHLL", "SOL")+"\n"+
     req.body.metraj+"\n"+
     req.body.agirlik+"\n"+
     req.body.pid
-    fs.writeFile(path.join(__dirname,"/etiket.txt"), data, err => {
+    fs.writeFile(path.join(__dirname,"/etiket.txt"), "ascii", data, err => {
         if (err)
             res.json({success : false})
         else
