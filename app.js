@@ -28,13 +28,17 @@ app.get('/detay', (req, res) => {
 })
 
 app.post('/createEtiket', (req, res) => {
+
+    let customer = req.body.customer.replace("İ", "I").replace("ı", "i")
+    customer = customer.split(" ")
+    console.log(customer);
     let data = `${req.body.sipno}\n`+
-    req.body.customer+"\n"+
+    customer[0]+' '+customer[1]+"\n"+
     req.body.size.replace("mm", "")+"\n"+
     req.body.tanim.replace("UNGALV", "").replace("RHRL", "").replace("RHLL", "").replace("LHRL", "SOL").replace("LHLL", "SOL")+"\n"+
     req.body.metraj+"\n"+
-    req.body.agirlik+"\n"+
-    req.body.pid
+    req.body.agirlik+"\n"+req.body.pid
+    
     fs.writeFile(path.join(__dirname,"/etiket.txt"), data, "ascii", (err) => {
         if (err)
             res.json({success : false})
