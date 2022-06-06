@@ -35,7 +35,7 @@ app.post('/createEtiket', (req, res) => {
     req.body.metraj+"\n"+
     req.body.agirlik+"\n"+
     req.body.pid
-    fs.writeFile(path.join(__dirname,"/etiket.txt"), "ascii", data, err => {
+    fs.writeFile(path.join(__dirname,"/etiket.txt"), data, "ascii", (err) => {
         if (err)
             res.json({success : false})
         else
