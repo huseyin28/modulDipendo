@@ -6,7 +6,7 @@ const port = 3000
 const bodyParser = require('body-parser')
 const fs = require('fs');
 
-app.use("/public",express.static('public'))
+app.use("/public", express.static('public'))
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -17,21 +17,20 @@ app.set('views', path.join(__dirname, '/views'));
 app.set('layout', '_layout')
 
 app.get('/', (req, res) => {
-    res.render('index', { 
+    res.render('index', {
         title: 'CelsanApp | Satış',
-        scripts : `<script src="/public/scripts/index.js"></script>`
+        scripts: `<script src="/public/scripts/index.js"></script>`
     })
 })
 
 app.get('/detay', (req, res) => {
-    res.render('detay', { layout : false})
+    res.render('detay', { layout: false })
 })
 
 app.post('/createEtiket', (req, res) => {
-
-    let customer = req.body.customer.replace("İ", "I").replace("ı", "i")
+    let customer = req.body.customer;
     customer = customer.split(" ")
-    console.log(customer);
+
     let data = `${req.body.sipno}\n`+
     customer[0]+' '+customer[1]+"\n"+
     req.body.size.replace("mm", "")+"\n"+
@@ -39,18 +38,19 @@ app.post('/createEtiket', (req, res) => {
     req.body.metraj+"\n"+
     req.body.agirlik+"\n"+req.body.pid
     
-    fs.writeFile(path.join(__dirname,"/etiket.txt"), data, "ascii", (err) => {
+    data = data.replace("Ş","S",data)
+    data = data.replace("İ","I",data)
+    data = data.replace("Ğ","G",data)
+    
+    data = data.replace("ş","s",data)
+    data = data.replace("ı","i",data)
+    data = data.replace("ğ","g",data)
+    
+    fs.writeFile(path.join(__dirname,"/etiket.txt"), data, 'ascii', (err) => {
         if (err)
             res.json({success : false})
         else
             res.json({success : true})
-    })
-})
-
-app.get('/detay2', (req, res) => {
-    res.render('detay2', { 
-        title: 'CelsanApp | Detay2',
-        scripts : `<script src="/public/scripts/detay2.js"></script>`
     })
 })
 

@@ -1,12 +1,1 @@
-class Main{
-    static Login (){
-        $.ajax({
-            type : "POST",
-            async : "false",
-            url : "https://app.dipendo.com/oauth/token",
-            data : `username=huseyinyilmaz@celsancelik.com&password=asdasd528&grant_type=password&client_id=DipendoWeb`,
-        }).then(response => {
-            localStorage.setItem("Authorization", response.token_type+' '+response.access_token);
-        })
-    }
-}
+const Authorization = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiJ9.eyJuYW1laWQiOiI0MyIsInVuaXF1ZV9uYW1lIjoiaHVzZXlpbnlpbG1hekBjZWxzYW5jZWxpay5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL2FjY2Vzc2NvbnRyb2xzZXJ2aWNlLzIwMTAvMDcvY2xhaW1zL2lkZW50aXR5cHJvdmlkZXIiOiJBU1AuTkVUIElkZW50aXR5IiwiQXNwTmV0LklkZW50aXR5LlNlY3VyaXR5U3RhbXAiOiJiZTZhZWFhMS1mOThmLTQ5MmMtODViNy00YzU0NzdiZWI5MDQiLCJTdG9jayI6IjEiLCJFZGl0VXNlcnMiOiIxIiwiVmlld0Nvc3QiOiIxIiwiRWRpdEN1c3RvbWVycyI6IjEiLCJWaWV3UmVwb3J0cyI6IjEiLCJQdXJjaGFzZSI6IjEiLCJFZGl0UHVyY2hhc2VzIjoiMSIsIkVkaXRQdXJjaGFzZUl0ZW1zIjoiMSIsIkVkaXRQdXJjaGFzZUl0ZW1zUHVyY2hhc2VDb3VudCI6IjEiLCJTYWxlIjoiMSIsIkVkaXRTYWxlcyI6IjEiLCJWaWV3U2FsZXMiOiIxIiwiRWRpdFNhbGVJdGVtcyI6IjEiLCJDYWxlbmRhciI6IjEiLCJFZGl0U3VwcGxpZXJzIjoiMSIsIkVkaXRQcm9kdWN0cyI6IjEiLCJUZW5hbnQiOiI4MTAyNmRhMC0xMjQ4LTRkNWMtYjc3OC1iN2YxNjg3YzBhOWMiLCJDdWx0dXJlIjoidHItVFIiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0L0RpcGVuZG8uQVBJLyIsImF1ZCI6ImM5MmQ1ZTQ1OGI1NmUyNDMyOGVmMzE1NWEwZGU1YmE3IiwiZXhwIjoxNjU3MDUxNjM4LCJuYmYiOjE2NTQ0NTk2Mzh9.rNueGHY9CWwA_q2rixyuaxfqDX5YIqeXFnYuhozCzsq6vv4Dqir5ST6CwolhRCQ7e7f6i6afWOODgyuQInS8fQ';

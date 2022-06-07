@@ -14,30 +14,16 @@ function setURL(){
     url += `startTime=${yesterday.getFullYear()}-${yesterday.getMonth() + 1}-${yesterday.getDate()}T21:00:00.000Z&`
     url += `endTime=${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}T20:59:59.999Z`
 
-    Login()
-}
-
-function Login(){
-    $.ajax({
-        type : "POST",
-        async : "false",
-        url : "https://app.dipendo.com/oauth/token",
-        data : `username=huseyinyilmaz@celsancelik.com&password=asdasd528&grant_type=password&client_id=DipendoWeb`,
-    }).then(response => {
-        localStorage.setItem("Authorization", response.token_type+' '+response.access_token);
-        getList()
-        setInterval(getList, 1000*60)
-    })
+    getList()
+    setInterval(getList, 1000*60)
 }
 
 function getList(){
     $.ajax({
         url : url, 
-        headers: {"Authorization": localStorage.getItem("Authorization")}
-    })
-    .then(LoadList)
-    .fail(error => {
-      alert("olmadı")
+        headers: {"Authorization": Authorization}
+    }).then(LoadList).fail(error => {
+      console.warn(error)
     })
 }
 
