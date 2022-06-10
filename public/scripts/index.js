@@ -1,4 +1,5 @@
 let url = '';
+let pageTitle = $('title').html();
 $(document).ready(ready)
 
 function ready(){
@@ -28,11 +29,17 @@ function getList(){
 }
 
 function LoadList(response){
+    $('#message').remove()
     $('#list').html('')
-    response.forEach(element => {
-        if(element.status == 3)
-            $('#list').append(getRowHTML(element))
-    });
+    $('title').html(`(${response.length}) ${pageTitle}`)
+    if(response.length == 0){
+        $('.container').prepend(`<div class="alert alert-dark" id="message" role="alert">Sipariş bulunamadı</div>`)
+    }else{
+        response.forEach(element => {
+            if(element.status == 3)
+                $('#list').append(getRowHTML(element))
+        });
+    }
 }
 
 function getRowHTML(element) {
