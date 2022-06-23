@@ -1,22 +1,110 @@
 let url = '';
 let pageTitle = $('title').html();
+let daterangepickerOptions = {
+    opens: 'left',
+    "locale": {
+        "format": "DD.MM.YYYY",
+        "separator": " - ",
+        "applyLabel": "Uygula",
+        "cancelLabel": "Vazgeç",
+        "fromLabel": "Dan",
+        "toLabel": "a",
+        "customRangeLabel": "Seç",
+        "daysOfWeek": [
+            "Pz",
+            "Pt",
+            "Sl",
+            "Çr",
+            "Pr",
+            "Cm",
+            "Ct"
+            
+        ],
+        "monthNames": [
+            "Ocak",
+            "Şubat",
+            "Mart",
+            "Nisan",
+            "Mayıs",
+            "Haziran",
+            "Temmuz",
+            "Ağustos",
+            "Eylül",
+            "Ekim",
+            "Kasım",
+            "Aralık"
+        ],
+        "firstDay": 1
+    }
+}
+let myInterval = null
+
+let queryParams = {
+    search : "",
+    offset : 0,
+    limit : 1000000,
+    startTime : new Date(),
+    endTime : new Date()
+}
+
 $(document).ready(ready)
 
 function ready(){
+    const searchParams = new URLSearchParams(location.search);
+
+    if(searchParams.has('limit')) queryParams.limit = searchParams.get('limit')
+    if(searchParams.has('search')) queryParams.search = searchParams.get('search')
+    if(searchParams.has('offset')) queryParams.offset = searchParams.get('offset')
+    
+    if(searchParams.has('startTime')){
+         queryParams.startTime = new Date(searchParams.get('startTime').split('T')[0])
+    }
+
+    if(searchParams.has('endTime')) {
+        queryParams.endTime = new Date(searchParams.get('endTime').split('T')[0])
+    }
+
+    daterangepickerOptions.startDate = queryParams.startTime
+    daterangepickerOptions.endDate = queryParams.endTime
+    
+    $('input[name="daterange"]').daterangepicker(daterangepickerOptions, eventSetDate);
+    if(daterangepickerOptions.startDate == daterangepickerOptions.endDate)
+    queryParams.startTime.setDate(queryParams.startTime.getDate() - 1)
+    
     setURL()
 }
 
 function setURL(){
-    let today = new Date()
-    let yesterday = new Date()
-    yesterday.setDate(yesterday.getDate() - 1)
-
-    url = `https://app.dipendo.com/api/sales?search=&offset=0&limit=100&`
-    url += `startTime=${yesterday.getFullYear()}-${yesterday.getMonth() + 1}-${yesterday.getDate()}T21:00:00.000Z&`
-    url += `endTime=${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}T20:59:59.999Z`
+    url = `https://app.dipendo.com/api/sales?`+getDipendoParamsStr()
+    
+    var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?'+ getParamsStr();
+    window.history.pushState({path:newurl},'',newurl);
 
     getList()
-    setInterval(getList, 1000*60)
+
+    if(myInterval != null) clearInterval(myInterval)
+
+    myInterval = setInterval(getList, 1000*60)
+}
+
+function getDipendoParamsStr(){
+    let ret = '';
+    ret += `search=${queryParams.search}&offset=${queryParams.offset}&limit=${queryParams.limit}&`
+    ret += `startTime=${queryParams.startTime.getFullYear()}-${queryParams.startTime.getMonth() + 1}-${queryParams.startTime.getDate()-1}T21:00:00.000Z&`
+    ret += `endTime=${queryParams.endTime.getFullYear()}-${queryParams.endTime.getMonth() + 1}-${queryParams.endTime.getDate()}T21:00:00.000Z`
+    return ret
+}
+function getParamsStr(){
+    let ret = `search=${queryParams.search}&offset=${queryParams.offset}&limit=${queryParams.limit}&`;
+    ret += `startTime=${queryParams.startTime.getFullYear()}-${queryParams.startTime.getMonth() + 1}-${queryParams.startTime.getDate()}&`
+    ret += `endTime=${queryParams.endTime.getFullYear()}-${queryParams.endTime.getMonth() + 1}-${queryParams.endTime.getDate()}`
+    return ret
+}
+
+function eventSetDate(start, end){
+    queryParams.startTime = start._d
+    queryParams.endTime = end._d
+    setURL()
 }
 
 function getList(){
@@ -32,14 +120,11 @@ function LoadList(response){
     $('#message').remove()
     $('#list').html('')
     $('title').html(`(${response.length}) ${pageTitle}`)
-    if(response.length == 0){
-        $('.container').prepend(`<div class="alert alert-dark" id="message" role="alert">Sipariş bulunamadı</div>`)
-    }else{
-        response.forEach(element => {
-            if(element.status == 3)
-                $('#list').append(getRowHTML(element))
-        });
-    }
+    $('#listCount').html(response.length+' adet sipariş bulunmuştur.')
+    response.forEach(element => {
+        if(element.status == 3)
+            $('#list').append(getRowHTML(element))
+    });
 }
 
 function getRowHTML(element) {
