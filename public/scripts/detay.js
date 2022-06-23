@@ -1,10 +1,9 @@
-let units = `{"896":"m","897":"m","898":"m","899":"m","900":"m","901":"m","902":"m","903":"m","904":"m","905":"m","906":"m","907":"m","908":"m","909":"m","910":"m","911":"m","912":"m","913":"m","914":"m","915":"adet","916":"adet","917":"adet","918":"adet","919":"adet","920":"adet","921":"adet","922":"m","923":"adet","924":"adet","925":"adet","926":"adet","927":"adet","928":"adet","929":"adet","930":"adet","931":"adet","932":"adet","933":"kg","934":"adet","935":"adet","936":"adet","937":"kg","943":"adet","944":"adet"}`;
+let units = {"896":"m","897":"m","898":"m","899":"m","900":"m","901":"m","902":"m","903":"m","904":"m","905":"m","906":"m","907":"m","908":"m","909":"m","910":"m","911":"m","912":"m","913":"m","914":"m","915":"adet","916":"adet","917":"adet","918":"adet","919":"adet","920":"adet","921":"adet","922":"m","923":"adet","924":"adet","925":"adet","926":"adet","927":"adet","928":"adet","929":"adet","930":"adet","931":"adet","932":"adet","933":"kg","934":"adet","935":"adet","936":"adet","937":"kg","943":"adet","944":"adet"};
 let Sale = null
 
 $(document).ready(ready)
 
 function ready() {
-    units = JSON.parse(units)
     const urlParams = new URLSearchParams(location.search);
     $.ajax({
         url: "https://app.dipendo.com/api/sales/" + urlParams.get('id'),
@@ -14,6 +13,39 @@ function ready() {
         FORM.createPrintForm(response);
         PAGE.writeForm(response);
     })
+}
+
+function next(siid){
+    Sale.saleItems.forEach(item => {
+        if(item.saleItemId == siid){
+            if(item.status != 3){
+                item.status += 1;
+                updateSale();
+            }
+        }
+    })
+}
+
+function updateSale(){
+    $.ajax({
+        url: "https://app.dipendo.com/api/sales/" + Sale.saleId,
+        type : "PUT",
+        dataType : "JSON",
+        data : Sale,
+        headers: { "Authorization": Authorization }
+    }).then(response => {
+        setAlert('İşlem başarılı',"success")
+        ready()
+    }).fail(err => {
+        setAlert('Hata oluştu')
+    })
+}
+
+function setAlert(str, type = 'danger'){
+    $(`<div class="alert alert-${type} alert-dismissible fade show" role="alert">
+        ${str}
+    </div>`)
+    .appendTo('.alerts').delay(5555).queue(function() { $(this).remove(); });
 }
 
 let PAGE = {
@@ -45,12 +77,14 @@ let PAGE = {
         }
     },
     getRow: function (item) {
+        let status = ['','Hazırlanacak','Sevke Hazır', 'Gönderildi']
         let btnCreateEtiket = `<button type="button" onclick="PAGE.createEtiket(${item.saleItemId})" class="btn btn-link btn-sm p-0">OLUŞTUR</button>`
         return `<div class="row">
-            <div class="col-8">${item.purchaseItem.product.name}</div>
+            <div class="col-6">${item.purchaseItem.product.name}</div>
             <div class="col-1">${units[item.purchaseItem.product.productGroupId] == "m" ? item.purchaseItemId : ""}</div>
             <div class="col-1">${(item.purchaseItem.product.unitMass * item.saleCount).toFixed(2)} ${item.purchaseItem.product.unitOfMass}</div>
             <div class="col-1">${item.saleCount} ${units[item.purchaseItem.product.productGroupId]}</div>
+            <div class="col-2">${status[item.status]} <button type="button" class="btn btn-sm btn-link" onclick="next(${item.saleItemId})">İlerlet</button></div>
             <div class="col-1">${units[item.purchaseItem.product.productGroupId] == "m" ? btnCreateEtiket : ""}</div>
         </div>`;
     },
@@ -86,10 +120,11 @@ let PAGE = {
     },
     getHead: function () {
         return `<div class="row">
-        <div class="col-8 h6">ÜRÜN</div>
+        <div class="col-6 h6">ÜRÜN</div>
         <div class="col-1 h6">KİMLİK</div>
         <div class="col-1 h6">AĞIRLIK</div>
         <div class="col-1 h6">MİKTAR</div>
+        <div class="col-2 h6">DURUM</div>
         <div class="col-1 h6">ETİKET</div>
     </div>`
     }
@@ -110,6 +145,9 @@ let FORM = {
         $(".n").clone().appendTo(".form");
     },
     writeRows: function (response) {
+        for (const i in response.saleItems) 
+            $('#products').append(FORM.getRow(response.saleItems[i]))
+        return;
         let list = {};
         for (const i in response.saleItems) {
             if (Object.hasOwnProperty.call(response.saleItems, i)) {
