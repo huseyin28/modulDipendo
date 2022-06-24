@@ -6,6 +6,13 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+.alerts{
+    position: fixed;
+    width: 500px;
+    bottom: 15px;
+    right: 15px;
+}
+
 .form {
     display: none !important;
     font-family: 'Open Sans', sans-serif;
