@@ -1,5 +1,8 @@
 let url = '';
 let pageTitle = $('title').html();
+let sCount = null;
+var audio = new Audio('/public/sound.mp3');
+
 $(document).ready(ready)
 
 function ready(){
@@ -32,6 +35,14 @@ function LoadList(response){
     $('#message').remove()
     $('#list').html('')
     $('title').html(`(${response.length}) ${pageTitle}`)
+
+    if(sCount == null)
+        sCount = response.length
+    else if (sCount != response.length){
+        audio.play();
+        sCount = response.length
+    }
+
     if(response.length == 0){
         $('.container').prepend(`<div class="alert alert-dark" id="message" role="alert">Sipariş bulunamadı</div>`)
     }else{
