@@ -3,7 +3,10 @@ const expressLayouts = require('express-ejs-layouts')
 const path = require('path');
 const app = express()
 const port = 80
+<<<<<<< HEAD
 
+=======
+>>>>>>> fa1ae8fa9e6afcd81356917c46ff6841beb0ae0a
 const bodyParser = require('body-parser')
 const fs = require('fs');
 
@@ -34,6 +37,7 @@ app.post('/createEtiket', (req, res) => {
 
     let data = `${req.body.sipno}\n`+
     customer[0]+' '+customer[1]+"\n"+
+    // "İiIıÜüĞğŞşÇçÖö"+"\n"+
     req.body.size.replace("mm", "")+"\n"+
     req.body.tanim.replace("UNGALV", "").replace("RHRL", "").replace("RHLL", "").replace("LHRL", "SOL").replace("LHLL", "SOL")+"\n"+
     req.body.metraj+"\n"+
@@ -42,7 +46,6 @@ app.post('/createEtiket', (req, res) => {
     data = data.replace("Ş","S",data)
     data = data.replace("İ","I",data)
     data = data.replace("Ğ","G",data)
-    
     data = data.replace("ş","s",data)
     data = data.replace("ı","i",data)
     data = data.replace("ğ","g",data)
