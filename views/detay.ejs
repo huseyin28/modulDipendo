@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <div class="container no-print">
+    <div class="container-fluid no-print">
         <div class="row my-2">
             <div class="col-12">
                 <button class="btn btn-outline-success" onclick="window.print()">
@@ -45,6 +45,13 @@
                 <div id="htmlProducts">
 
                 </div>
+
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="d-flex flex-row-reverse">
+                <button type="button" class="btn btn-outline-success mx-1" onclick="allStatus(3)">Tümünü Gönder</button>
+                <button type="button" class="btn btn-outline-info mx-1" onclick="allStatus(2)">Tümünü Hazırla</button>
             </div>
         </div>
         <div class="alerts"></div>

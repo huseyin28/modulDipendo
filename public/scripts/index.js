@@ -42,6 +42,7 @@ let daterangepickerOptions = {
     }
 }
 let myInterval = null
+let searchInterval = null
 
 let queryParams = {
     search: "",
@@ -55,6 +56,16 @@ let queryParams = {
 $(document).ready(ready)
 
 function ready() {
+    $('#txtSearch').off('keyup').on('keyup',(e)=>{
+        if(searchInterval != null)
+            clearInterval(searchInterval)
+        
+        searchInterval = setTimeout(function(val){
+            queryParams.search = val
+            setURL()
+        },500, e.target.value)    
+    })
+    
     const searchParams = new URLSearchParams(location.search);
 
     if (searchParams.has('limit')) queryParams.limit = searchParams.get('limit')

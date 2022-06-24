@@ -26,6 +26,13 @@ function next(siid){
     })
 }
 
+function allStatus(statu){
+    Sale.saleItems.forEach(item => {
+        item.status = statu;
+    })
+    updateSale();
+}
+
 function updateSale(){
     $.ajax({
         url: "https://app.dipendo.com/api/sales/" + Sale.saleId,
@@ -42,9 +49,7 @@ function updateSale(){
 }
 
 function setAlert(str, type = 'danger'){
-    $(`<div class="alert alert-${type} alert-dismissible fade show" role="alert">
-        ${str}
-    </div>`)
+    $(`<div class="alert alert-${type} alert-dismissible fade show" role="alert">${str}</div>`)
     .appendTo('.alerts').delay(5555).queue(function() { $(this).remove(); });
 }
 
@@ -91,7 +96,6 @@ let PAGE = {
     createEtiket : function(saleItemId){
         Sale.saleItems.forEach(element => {
             if(element.saleItemId == saleItemId){
-                console.log(Sale.customer);
                 let data = {
                     "sipno" :  Sale.externalSaleCode,
                     "customer" : Sale.customer.title.slice(0, 20),
@@ -108,11 +112,10 @@ let PAGE = {
                     dataType : "JSON",
                     data : data
                 }).then(response => {
-                    if(response.success){
-                        alert("Etiket oluşturuldu")
-                    }else{
-                        alert("işlem başarısız")
-                    }
+                    if(response.success)
+                        setAlert('Etiket oluşturuldu','success')
+                    else
+                        setAlert('işlem başarısız')
                 })
                 return;
             }
