@@ -15,13 +15,12 @@ function ready() {
     })
 }
 
-function next(siid){
+function setStatu(siid, statu){
     Sale.saleItems.forEach(item => {
         if(item.saleItemId == siid){
-            if(item.status != 3){
-                item.status += 1;
-                updateSale();
-            }
+            item.status = statu;
+            updateSale();
+            return
         }
     })
 }
@@ -83,14 +82,22 @@ let PAGE = {
     },
     getRow: function (item) {
         let status = ['','Hazırlanacak','Sevke Hazır', 'Gönderildi']
-        let btnCreateEtiket = `<button type="button" onclick="PAGE.createEtiket(${item.saleItemId})" class="btn btn-link btn-sm p-0">OLUŞTUR</button>`
-        return `<div class="row">
-            <div class="col-6">${item.purchaseItem.product.name}</div>
-            <div class="col-1">${units[item.purchaseItem.product.productGroupId] == "m" ? item.purchaseItemId : ""}</div>
-            <div class="col-1">${(item.purchaseItem.product.unitMass * item.saleCount).toFixed(2)} ${item.purchaseItem.product.unitOfMass}</div>
-            <div class="col-1">${item.saleCount} ${units[item.purchaseItem.product.productGroupId]}</div>
-            <div class="col-2">${status[item.status]} <button type="button" class="btn btn-sm btn-link" onclick="next(${item.saleItemId})">İlerlet</button></div>
-            <div class="col-1">${units[item.purchaseItem.product.productGroupId] == "m" ? btnCreateEtiket : ""}</div>
+
+        let btnStatus = `<div class="btn-group" role="group">`
+        
+        btnStatus += `<button type="button" onclick="setStatu(${item.saleItemId}, 1)" class="btn btn-sm btn-${item.status == 1 ? '' : 'outline-'}dark"><i class="fa-solid fa-hourglass-start"></i></button>`
+        btnStatus += `<button type="button" onclick="setStatu(${item.saleItemId}, 2)" class="btn btn-sm btn-${item.status == 2 ? '' : 'outline-'}primary"><i class="fa-solid fa-hourglass-end"></i></button>`
+        btnStatus += `<button type="button" onclick="setStatu(${item.saleItemId}, 3)" class="btn btn-sm btn-${item.status == 3 ? '' : 'outline-'}success"><i class="fa-solid fa-check"></i></button>`
+        btnStatus += `</div>`
+
+        let btnCreateEtiket = `<button type="button" onclick="PAGE.createEtiket(${item.saleItemId})" class="ml-2 btn btn-primary btn-sm my-1"><i class="fa-solid fa-tag"></i></button>`
+        return `<div class="row" style="line-height: 39px;">
+            <div class="col-12 col-md-6">${item.purchaseItem.product.name}</div>
+            <div class="col-4 col-md-1">${units[item.purchaseItem.product.productGroupId] == "m" ? item.purchaseItemId : ""}</div>
+            <div class="col-4 col-md-1">${(item.purchaseItem.product.unitMass * item.saleCount).toFixed(2)} ${item.purchaseItem.product.unitOfMass}</div>
+            <div class="col-4 col-md-1">${item.saleCount} ${units[item.purchaseItem.product.productGroupId]}</div>
+            <div class="col-8 col-md-2">${btnStatus}  ${units[item.purchaseItem.product.productGroupId] == "m" ? btnCreateEtiket : ""}</div>
+            <div class="col-4 col-md-1"> </div>
         </div>`;
     },
     createEtiket : function(saleItemId){
@@ -123,12 +130,12 @@ let PAGE = {
     },
     getHead: function () {
         return `<div class="row">
-        <div class="col-6 h6">ÜRÜN</div>
-        <div class="col-1 h6">KİMLİK</div>
-        <div class="col-1 h6">AĞIRLIK</div>
-        <div class="col-1 h6">MİKTAR</div>
-        <div class="col-2 h6">DURUM</div>
-        <div class="col-1 h6">ETİKET</div>
+        <div class="col-12 col-md-6 h6">ÜRÜN</div>
+        <div class="d-none d-sm-block col-md-1 h6"><b>KİMLİK</b></div>
+        <div class="d-none d-sm-block col-md-1 h6"><b>AĞIRLIK</b></div>
+        <div class="d-none d-sm-block col-md-1 h6"><b>MİKTAR</b></div>
+        <div class="d-none d-sm-block col-md-2 h6"><b>DURUM</b></div>
+        <div class="d-none d-sm-block col-md-1 h6"><b>ETİKET</b></div>
     </div>`
     }
 }

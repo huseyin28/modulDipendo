@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <div class="container-fluid no-print">
+    <div class="container-fluid no-print" id="HtmlForm">
         <div class="row my-2">
             <div class="col-12">
                 <button class="btn btn-outline-success" onclick="window.print()">
@@ -28,24 +28,30 @@
             </div>
         </div>
 
-        <div class="card" id="HtmlForm">
+        <div class="row">
+            <div class="col">
+                <h1 class="display-4" style="font-size: 2rem;" id="htmlCustomer">Display 4</h1>
+            </div>
+        </div>
+        <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-6">
-                        <h5 class="card-title d-block"><span id="htmlCustomer"></span></h5>
+                        
                     </div>
-                    <div class="col-6 text-muted" style="text-align: right;">
-                        <small class="text-muted float-right d-block" id="htmlUser"></small>
+                    <div class="col-6" style="text-align: right;">
+                        <small class="float-right d-block" id="htmlUser"></small>
                     </div>
                 </div>
 
-                <h6 class="card-subtitle mb-2 text-muted" id="htmlSendDate"></h6>
-                <h6 class="card-subtitle mb-2 text-muted" id="htmlSaleCode"></h6>
+                <h6 class="card-subtitle mb-2" id="htmlSendDate"></h6>
+                <h6 class="card-subtitle mb-2" id="htmlSaleCode"></h6>
                 <p class="card-text" id="htmlExplanation"></p>
-                <div id="htmlProducts">
-
-                </div>
-
+            </div>
+        </div>
+        <div class="card mt-2">
+            <div class="card-body">
+                <div id="htmlProducts"></div>
             </div>
         </div>
         <div class="row mt-2">
