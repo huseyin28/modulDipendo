@@ -22,7 +22,7 @@ let daterangepickerOptions = {
             "Pr",
             "Cm",
             "Ct"
-            
+
         ],
         "monthNames": [
             "Ocak",
@@ -44,111 +44,103 @@ let daterangepickerOptions = {
 let myInterval = null
 
 let queryParams = {
-    search : "",
-    offset : 0,
-    limit : 1000000,
-    startTime : new Date(),
-    endTime : new Date()
+    search: "",
+    offset: 0,
+    limit: 1000000,
+    startTime: new Date(),
+    endTime: new Date()
 }
 
 
 $(document).ready(ready)
 
-function ready(){
+function ready() {
     const searchParams = new URLSearchParams(location.search);
 
-    if(searchParams.has('limit')) queryParams.limit = searchParams.get('limit')
-    if(searchParams.has('search')) queryParams.search = searchParams.get('search')
-    if(searchParams.has('offset')) queryParams.offset = searchParams.get('offset')
-    
-    if(searchParams.has('startTime')){
-         queryParams.startTime = new Date(searchParams.get('startTime').split('T')[0])
+    if (searchParams.has('limit')) queryParams.limit = searchParams.get('limit')
+    if (searchParams.has('search')) queryParams.search = searchParams.get('search')
+    if (searchParams.has('offset')) queryParams.offset = searchParams.get('offset')
+
+    if (searchParams.has('startTime')) {
+        queryParams.startTime = new Date(searchParams.get('startTime').split('T')[0])
     }
 
-    if(searchParams.has('endTime')) {
+    if (searchParams.has('endTime')) {
         queryParams.endTime = new Date(searchParams.get('endTime').split('T')[0])
     }
 
     daterangepickerOptions.startDate = queryParams.startTime
     daterangepickerOptions.endDate = queryParams.endTime
-    
+
     $('input[name="daterange"]').daterangepicker(daterangepickerOptions, eventSetDate);
-    if(daterangepickerOptions.startDate == daterangepickerOptions.endDate)
-    queryParams.startTime.setDate(queryParams.startTime.getDate() - 1)
-    
+    if (daterangepickerOptions.startDate == daterangepickerOptions.endDate)
+        queryParams.startTime.setDate(queryParams.startTime.getDate() - 1)
+
     setURL()
 }
 
-function setURL(){
-    url = `https://app.dipendo.com/api/sales?`+getDipendoParamsStr()
-    
-    var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?'+ getParamsStr();
-    window.history.pushState({path:newurl},'',newurl);
+function setURL() {
+    url = `https://app.dipendo.com/api/sales?` + getDipendoParamsStr()
+
+    var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + getParamsStr();
+    window.history.pushState({ path: newurl }, '', newurl);
 
     getList()
 
-    if(myInterval != null) clearInterval(myInterval)
+    if (myInterval != null) clearInterval(myInterval)
 
-    myInterval = setInterval(getList, 1000*60)
+    myInterval = setInterval(getList, 1000 * 60)
 }
 
-function getDipendoParamsStr(){
+function getDipendoParamsStr() {
     let ret = '';
     ret += `search=${queryParams.search}&offset=${queryParams.offset}&limit=${queryParams.limit}&`
-    ret += `startTime=${queryParams.startTime.getFullYear()}-${queryParams.startTime.getMonth() + 1}-${queryParams.startTime.getDate()-1}T21:00:00.000Z&`
+    ret += `startTime=${queryParams.startTime.getFullYear()}-${queryParams.startTime.getMonth() + 1}-${queryParams.startTime.getDate() - 1}T21:00:00.000Z&`
     ret += `endTime=${queryParams.endTime.getFullYear()}-${queryParams.endTime.getMonth() + 1}-${queryParams.endTime.getDate()}T21:00:00.000Z`
     return ret
 }
-function getParamsStr(){
+function getParamsStr() {
     let ret = `search=${queryParams.search}&offset=${queryParams.offset}&limit=${queryParams.limit}&`;
     ret += `startTime=${queryParams.startTime.getFullYear()}-${queryParams.startTime.getMonth() + 1}-${queryParams.startTime.getDate()}&`
     ret += `endTime=${queryParams.endTime.getFullYear()}-${queryParams.endTime.getMonth() + 1}-${queryParams.endTime.getDate()}`
     return ret
 }
 
-function eventSetDate(start, end){
+function eventSetDate(start, end) {
     queryParams.startTime = start._d
     queryParams.endTime = end._d
     setURL()
 }
 
-function getList(){
+function getList() {
     $.ajax({
-        url : url, 
-        headers: {"Authorization": Authorization}
+        url: url,
+        headers: { "Authorization": Authorization }
     }).then(LoadList).fail(error => {
-      console.warn(error)
+        console.warn(error)
     })
 }
 
-function LoadList(response){
+function LoadList(response) {
     $('#message').remove()
-    $('#list').html('')
-    $('title').html(`(${response.length}) ${pageTitle}`)
-<<<<<<< HEAD
 
-    if(sCount == null)
+    $('title').html(`(${response.length}) ${pageTitle}`)
+
+
+    if (sCount == null)
         sCount = response.length
-    else if (sCount != response.length){
+    else if (sCount != response.length) {
         audio.play();
         sCount = response.length
     }
 
-    if(response.length == 0){
-        $('.container').prepend(`<div class="alert alert-dark" id="message" role="alert">Sipariş bulunamadı</div>`)
-    }else{
-        response.forEach(element => {
-            if(element.status == 3)
-                $('#list').append(getRowHTML(element))
-        });
-    }
-=======
-    $('#listCount').html(response.length+' adet sipariş bulunmuştur.')
+    $('#list').html('')
     response.forEach(element => {
-        if(element.status == 3)
+        if (element.status == 3)
             $('#list').append(getRowHTML(element))
     });
->>>>>>> fa1ae8fa9e6afcd81356917c46ff6841beb0ae0a
+
+    $('#listCount').html(response.length + ' adet sipariş bulunmuştur.')
 }
 
 function getRowHTML(element) {
