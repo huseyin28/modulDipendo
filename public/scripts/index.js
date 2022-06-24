@@ -1,9 +1,9 @@
 let url = '';
 let pageTitle = $('title').html();
-<<<<<<< HEAD
+
 let sCount = null;
 var audio = new Audio('/public/sound.mp3');
-=======
+
 let daterangepickerOptions = {
     opens: 'left',
     "locale": {
@@ -50,7 +50,7 @@ let queryParams = {
     startTime : new Date(),
     endTime : new Date()
 }
->>>>>>> fa1ae8fa9e6afcd81356917c46ff6841beb0ae0a
+
 
 $(document).ready(ready)
 

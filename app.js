@@ -3,10 +3,6 @@ const expressLayouts = require('express-ejs-layouts')
 const path = require('path');
 const app = express()
 const port = 80
-<<<<<<< HEAD
-
-=======
->>>>>>> fa1ae8fa9e6afcd81356917c46ff6841beb0ae0a
 const bodyParser = require('body-parser')
 const fs = require('fs');
 
