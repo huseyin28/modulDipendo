@@ -69,7 +69,10 @@ function ready() {
     const searchParams = new URLSearchParams(location.search);
 
     if (searchParams.has('limit')) queryParams.limit = searchParams.get('limit')
-    if (searchParams.has('search')) queryParams.search = searchParams.get('search')
+    if (searchParams.has('search')) {
+        queryParams.search = searchParams.get('search')
+        $('#txtSearch').val(queryParams.search)
+    }
     if (searchParams.has('offset')) queryParams.offset = searchParams.get('offset')
 
     if (searchParams.has('startTime')) {
