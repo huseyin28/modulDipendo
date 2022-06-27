@@ -136,9 +136,10 @@ function getList() {
 }
 
 function LoadList(response) {
+    let count = 0;
     $('#message').remove()
 
-    $('title').html(`(${response.length}) ${pageTitle}`)
+    
 
 
     if (sCount == null)
@@ -150,16 +151,24 @@ function LoadList(response) {
 
     $('#list').html('')
     response.forEach(element => {
-        if (element.status == 3)
+        if (element.status == 3){
             $('#list').append(getRowHTML(element))
+            count++;
+        }
     });
+
+    $('title').html(`(${count}) ${pageTitle}`)
 
     $('#listCount').html(response.length + ' adet sipariş bulunmuştur.')
 }
 
 function getRowHTML(element) {
+    let dt = new Date(element.deliveryTime)
+    let create = new Date(element.recordTime)
     return `<tr>
     <td>${element.customer.title}</td>
+    <td>${create.getDate()+1}.${create.getMonth()+1}.${create.getFullYear()} ${create.getHours()}:${create.getMinutes()}</td>
+    <td>${dt.getDate()+1}.${dt.getMonth()+1}.${dt.getFullYear()}</td>
     <td><a href="/detay?id=${element.id}" target="_blank" class="btn btn-sm btn-outline-primary" aria-pressed="true">Detay</a></td>
     </tr>
     `
