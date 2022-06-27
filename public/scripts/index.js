@@ -167,7 +167,7 @@ function getRowHTML(element) {
     let create = new Date(element.recordTime)
     return `<tr>
     <td>${element.customer.title}</td>
-    <td>${create.getDate()+1}.${create.getMonth()+1}.${create.getFullYear()} ${create.getHours()+3}:${create.getMinutes()}</td>
+    <td>${create.getDate()}.${create.getMonth()+1}.${create.getFullYear()} ${create.getHours()+3}:${create.getMinutes()}</td>
     <td>${dt.getDate()+1}.${dt.getMonth()+1}.${dt.getFullYear()}</td>
     <td><a href="/detay?id=${element.id}" target="_blank" class="btn btn-sm btn-outline-primary" aria-pressed="true">Detay</a></td>
     </tr>
