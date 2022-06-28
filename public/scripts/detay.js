@@ -18,14 +18,14 @@ function ready() {
     })
 }
 
-function setStatu(siid, statu) {
-    Sale.saleItems.forEach(item => {
-        if (item.saleItemId == siid) {
-            item.status = statu;
-            updateSale();
-            return
-        }
-    })
+function setStatu() {
+    for(let i = 1; i < arguments.length; i++){
+        Sale.saleItems.forEach(item => {
+            if (item.saleItemId == arguments[i])
+                item.status = arguments[0];
+        })
+    }
+    updateSale();
 }
 
 function allStatus(statu) {
@@ -79,10 +79,10 @@ let PAGE = {
     },
     importItem: function (item, index) {
         Sale.listItems[index].saleCount += item.saleCount;
-        if (Object.hasOwnProperty.call(Sale, 'otherItems'))
-            Sale.otherItems.push(item.saleItemId)
+        if (Object.hasOwnProperty.call(Sale.listItems[index], 'otherItems'))
+            Sale.listItems[index].otherItems.push(item.saleItemId)
         else
-            Sale.otherItems = [item.saleItemId]
+            Sale.listItems[index].otherItems = [item.saleItemId]
     },
     getIndex: function (item) {
         let ret = -1;
@@ -101,11 +101,15 @@ let PAGE = {
 
     },
     getRow: function (item) {
+        let params = item.saleItemId+''
+        if (Object.hasOwnProperty.call(item, 'otherItems')){
+            params += ','+item.otherItems.join(',')
+        }
         let btnStatus =
             `<div class="btn-group" role="group">
-            <button type="button" onclick="setStatu(${item.saleItemId}, 1)" class="btn btn-sm btn-${item.status == 1 ? '' : 'outline-'}dark"><i class="fa-solid fa-hourglass-start"></i></button>
-            <button type="button" onclick="setStatu(${item.saleItemId}, 2)" class="btn btn-sm btn-${item.status == 2 ? '' : 'outline-'}primary"><i class="fa-solid fa-hourglass-end"></i></button>
-            <button type="button" onclick="setStatu(${item.saleItemId}, 3)" class="btn btn-sm btn-${item.status == 3 ? '' : 'outline-'}success"><i class="fa-solid fa-check"></i></button>
+            <button type="button" onclick="setStatu(1, ${params})" class="btn btn-sm btn-${item.status == 1 ? '' : 'outline-'}dark"><i class="fa-solid fa-hourglass-start"></i></button>
+            <button type="button" onclick="setStatu(2, ${params})" class="btn btn-sm btn-${item.status == 2 ? '' : 'outline-'}primary"><i class="fa-solid fa-hourglass-end"></i></button>
+            <button type="button" onclick="setStatu(3, ${params})" class="btn btn-sm btn-${item.status == 3 ? '' : 'outline-'}success"><i class="fa-solid fa-check"></i></button>
         </div>`
         let btnCreateEtiket = `<button type="button" onclick="PAGE.createEtiket(${item.saleItemId})" class="ml-2 btn btn-primary btn-sm my-1"><i class="fa-solid fa-tag"></i></button>`
 
