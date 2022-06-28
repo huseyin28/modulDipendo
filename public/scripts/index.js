@@ -52,7 +52,6 @@ let queryParams = {
     endTime: new Date()
 }
 
-
 $(document).ready(ready)
 
 function ready() {
