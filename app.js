@@ -23,6 +23,13 @@ app.get('/', (req, res) => {
     })
 })
 
+app.get('/demo', (req, res) => {
+    res.render('demo', {
+        title: 'CelsanApp | Demo',
+        scripts: `<script src="/public/scripts/demo.js"></script>`
+    })
+})
+
 app.get('/detay', (req, res) => {
     res.render('detay', { layout: false })
 })
