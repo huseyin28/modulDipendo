@@ -106,10 +106,12 @@ function setURL() {
 }
 
 function getDipendoParamsStr() {
+    queryParams.startTime.setDate(queryParams.startTime.getDate() - 1)
     let ret = '';
     ret += `search=${queryParams.search}&offset=${queryParams.offset}&limit=${queryParams.limit}&`
-    ret += `startTime=${queryParams.startTime.getFullYear()}-${queryParams.startTime.getMonth() + 1}-${queryParams.startTime.getDate() - 1}T21:00:00.000Z&`
+    ret += `startTime=${queryParams.startTime.getFullYear()}-${queryParams.startTime.getMonth() + 1}-${queryParams.startTime.getDate()}T21:00:00.000Z&`
     ret += `endTime=${queryParams.endTime.getFullYear()}-${queryParams.endTime.getMonth() + 1}-${queryParams.endTime.getDate()}T21:00:00.000Z`
+    queryParams.startTime.setDate(queryParams.startTime.getDate() + 1)
     return ret
 }
 function getParamsStr() {
