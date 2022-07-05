@@ -124,12 +124,16 @@ let PAGE = {
     createEtiket: function (saleItemId) {
         Sale.saleItems.forEach(element => {
             if (element.saleItemId == saleItemId) {
+                let pv = element.purchaseItem.product.productPropertyValues;
+                element.purchaseItem.product.productPropertyValues.forEach(item => {
+                    console.log(item);
+                });
+                console.log(pv);
                 let data = {
                     "sipno": Sale.externalSaleCode,
                     "customer": Sale.customer.title.slice(0, 20),
-                    "size": element.purchaseItem.product.productPropertyValues[0].propertyValue,
-                    "tanim": element.purchaseItem.product.productPropertyValues[1].propertyValue || '' + ' ' + element.purchaseItem.product.productPropertyValues[2].propertyValue || ''
-                     + ' ' + element.purchaseItem.product.productPropertyValues[4].propertyValue || '' + ' ' + element.purchaseItem.product.productPropertyValues[6].propertyValue || '',
+                    "size": pv[0].propertyValue,
+                    "tanim": `${pv[1].propertyValue || ''} ${pv[2].propertyValue || ''} ${pv[4].propertyValue || ''} ${pv[6].propertyValue || ''}`,
                     "metraj": element.saleCount,
                     "agirlik": (element.purchaseItem.product.unitMass * element.saleCount).toFixed(0),
                     "pid": element.purchaseItemId
