@@ -1,0 +1,29 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0 !important;
+    font-size: 10pt !important;
+}
+
+.container-form{
+    width: 210mm;
+}
+
+.page{
+    width: 210mm;
+    height: 297mm;
+    float: left;
+}
+
+.nusha{
+    padding: 8mm;
+    min-height: 148mm;
+    max-height: 297mm;
+}
+
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}

@@ -1,117 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="https://getbootstrap.com/docs/5.2/assets/img/favicons/favicon.ico">
-    <link rel="stylesheet" href="/public/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/public/style/detay.css">
-    <link rel="stylesheet" href="/public/fontawesome/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <title>Detay</title>
-</head>
-
-<body>
-    <div class="container-fluid no-print" id="HtmlForm">
-        <div class="row my-2">
-            <div class="col-12">
-                <button class="btn btn-outline-success" onclick="window.print()">
-                    <i class="fa-solid fa-fw fa-xl fa-print"></i>
-                </button>
-                <a class="btn btn-outline-danger float-right" style="float: right;" href="#" onclick="window.close()"
-                    role="button">
-                    <i class="fa-solid fa-fw fa-xl fa-xmark"></i>
-                </a>
-            </div>
+<div class="container-fluid text-dark" id="HtmlForm">
+    <div class="row">
+        <div class="col-12 d-lg-block col-lg-8">
+            <h3 class="h3" id="htmlCustomer"></h3>
         </div>
-
-        <div class="row">
-            <div class="col">
-                <h1 class="display-4" style="font-size: 2rem;" id="htmlCustomer"></h1>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-6" style="text-align: right; position: absolute; right: 0;">
-                        <small class="float-right d-block" id="htmlUser"></small>
-                    </div>
-                </div>
-
-                <h6 class="card-text mb-2" id="htmlSendDate"></h6>
-                <h6 class="card-text mb-2" id="htmlSaleCode"></h6>
-                <p class="card-text" id="htmlExplanation"></p>
-            </div>
-        </div>
-        <div class="card mt-2">
-            <div class="card-body">
-                <div class="row h6 fw-bolder">
-                    <div class="col-12 col-md-8">ÜRÜN</div>
-                    <div class="d-none d-sm-block col-md-1">KİMLİK</div>
-                    <div class="d-none d-sm-block col-md-1">AĞIRLIK</div>
-                    <div class="d-none d-sm-block col-md-1">MİKTAR</div>
-                    <div class="d-none d-sm-block col-md-1">İŞLEM</div>
-                </div>
-                <div id="htmlProducts"></div>
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="d-flex flex-row-reverse">
-                <button type="button" class="btn btn-outline-success mx-1" onclick="allStatus(3)">Tümünü Gönder</button>
-                <button type="button" class="btn btn-outline-info mx-1" onclick="allStatus(2)">Tümünü Hazırla</button>
-            </div>
-        </div>
-        <div class="alerts"></div>
-    </div>
-    <div class="form">
-        <div class="n">
-            <h4 class="text-center my-2">Depo Çıkış Formu</h4>
-            <table class="table table-sm table-borderless">
-                <tr>
-                    <td class="col-2">Müşteri : </td>
-                    <td id="customer"></td>
-                </tr>
-                <tr>
-                    <td>Satış Yapan : </td>
-                    <td id="user"></td>
-                </tr>
-                <tr>
-                    <td>Sipariş Tarihi : </td>
-                    <td id="record"></td>
-                </tr>
-                <tr>
-                    <td>Sevk Tarihi : </td>
-                    <td id="teslimat"></td>
-                </tr>
-                <tr>
-                    <td>Sip No : </td>
-                    <td id="externalSaleCode"></td>
-                </tr>
-                <tr>
-                    <td>Açıklama : </td>
-                    <td id="explanation"></td>
-                </tr>
-            </table>
-            <table class="table table-sm table-borderless">
-                <thead>
-                    <th clas="col">MÜŞTERİ</th>
-                    <th scope="col">KİMLİK</th>
-                    <th scope="col">AĞIRLIK</th>
-                    <th scope="col">MİKTAR</th>
-                </thead>
-                <tbody id="products">
-
-                </tbody>
-            </table>
+        <div class="d-none d-lg-block col-lg-4">
+            <a class="btn btn-outline-danger float-right ml-2" style="float: right;" href="#" onclick="window.close()"
+                role="button">
+                <i class="fa-solid fa-fw fa-xl fa-xmark"></i>
+            </a>
+            <button class="btn btn-outline-success float-right" id="print">
+                <i class="fa-solid fa-fw fa-xl fa-print"></i>
+            </button>
         </div>
     </div>
-    <script src="/public/jquery/jquery-3.6.0.min.js"></script>
-    <script src="/public/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/public/scripts/mainObject.js"></script>
-    <script src="/public/scripts/detay.js"></script>
-</body>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-6" style="text-align: right; position: absolute; right: 0;">
+                    <small class="float-right d-block" id="htmlUser"></small>
+                </div>
+            </div>
 
-</html>
+            <h6 class="mb-2" id="htmlSendDate"></h6>
+            <h6 class="mb-2" id="htmlSaleCode"></h6>
+            <p id="htmlExplanation"></p>
+        </div>
+    </div>
+    <div class="card mt-2">
+        <div class="card-body">
+            <div class="row h6 fw-bolder">
+                <div class="col-12 col-sm-8 col-lg-5">ÜRÜN</div>
+                <div class="d-none d-lg-block col-lg-2">KİMLİK</div>
+                <div class="d-none d-lg-block col-lg-2">AĞIRLIK</div>
+                <div class="d-none d-lg-block col-lg-1">MİKTAR</div>
+                <div class="d-none d-sm-block col-sm-4 col-lg-2">İŞLEM</div>
+            </div>
+            <div id="htmlProducts"></div>
+        </div>
+    </div>
+    <div class="card p-2 mt-2">
+        <div class="d-flex flex-row-reverse">
+            <button type="button" class="btn btn-outline-success mx-1" onclick="allStatus(3)">Tümünü Gönder</button>
+            <button type="button" class="btn btn-outline-info mx-1" onclick="allStatus(2)">Tümünü Hazırla</button>
+        </div>
+    </div>
+    <div class="alerts"></div>
+</div>

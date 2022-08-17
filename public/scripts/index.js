@@ -2,7 +2,7 @@ let url = '';
 let pageTitle = $('title').html();
 
 let sCount = null;
-var audio = new Audio('/public/sound.mp3');
+var audio = new Audio('/public/sounds/s1.wav');
 
 let daterangepickerOptions = {
     opens: 'left',
@@ -132,7 +132,11 @@ function getList() {
         url: url,
         headers: { "Authorization": Authorization }
     }).then(LoadList).fail(error => {
-        console.warn(error)
+        if(error.status == 401){
+            
+        }else if(window.navigator.onLine == false){
+            alert('İnternet bağlantısını kontrol ediniz')
+        }
     })
 }
 
@@ -170,7 +174,7 @@ function getRowHTML(element) {
     <td>${element.customer.title}</td>
     <td>${create.getDate()}.${create.getMonth()+1}.${create.getFullYear()} ${create.getHours()+3}:${create.getMinutes()}</td>
     <td>${dt.getDate()+1}.${dt.getMonth()+1}.${dt.getFullYear()}</td>
-    <td><a href="/detay?id=${element.id}" target="_blank" class="btn btn-sm btn-outline-primary" aria-pressed="true">Detay</a></td>
+    <td class="py-1"><a href="/detay?id=${element.id}" target="_blank" class="btn btn-sm btn-outline-primary" aria-pressed="true">Detay</a></td>
     </tr>
     `
 }

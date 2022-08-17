@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/x-icon" href="/public/images/icon.png">
+    <title>
+        <%- title %> | ÇelsanApp
+    </title>
+    <!-- Custom fonts for this template-->
+    <link href="/public/fontawesome/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="/public/template/css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="/public/style/detay.css">
+</head>
+
+<body id="page-top">
+    <div class="no-print">
+        <div id="wrapper">
+            <%- include('partial/sidebar') %>
+                <div id="content-wrapper" class="d-flex flex-column">
+                    <div id="content">
+                        <%- include('partial/navbar') %>
+                            <div class="container-fluid">
+                                <%- body %>
+                            </div>
+                    </div>
+                    <footer class="sticky-footer bg-white no-print">
+                        <div class="container my-auto">
+                            <div class="copyright text-center my-auto">
+                                <span>Copyright &copy; Your Website 2020</span>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+        </div>
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+        <div class="modal fade " id="logoutModal" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="login.html">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="print-form">
+        <div class="form">
+            <div class="n">
+                <h4 class="text-center my-2">Depo Çıkış Formu</h4>
+                <table class="table table-sm table-borderless">
+                    <tr>
+                        <td>Müşteri</td>
+                        <td id="customer"></td>
+                    </tr>
+                    <tr>
+                        <td>Satış Yapan</td>
+                        <td id="user"></td>
+                    </tr>
+                    <tr>
+                        <td>Sipariş Tarihi</td>
+                        <td id="record"></td>
+                    </tr>
+                    <tr>
+                        <td>Sevk Tarihi</td>
+                        <td id="teslimat"></td>
+                    </tr>
+                    <tr>
+                        <td>Sip No</td>
+                        <td id="externalSaleCode"></td>
+                    </tr>
+                    <tr>
+                        <td>Açıklama</td>
+                        <td id="explanation"></td>
+                    </tr>
+                </table>
+                <table class="table table-sm table-borderless" style="line-height: 31px;">
+                    <thead>
+                        <th scope="col">ÜRÜN</th>
+                        <th scope="col">KİMLİK</th>
+                        <th scope="col">AĞIRLIK</th>
+                        <th scope="col">MİKTAR</th>
+                    </thead>
+                    <tbody id="products">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="/public/jquery/jquery-3.6.0.min.js"></script>
+    <script src="/public/template/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/public/template/js/sb-admin-2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="/public/scripts/mainObject.js"></script>
+    <%- scripts %>
+</body>
+
+</html>

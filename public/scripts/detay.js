@@ -10,7 +10,9 @@ function ready() {
         headers: { "Authorization": Authorization }
     }).then(response => {
         Sale = response
-
+        $('#print').off('click').on('click',function(){
+            window.open('/formPrint/'+ urlParams.get('id'), "_blank") 
+        })
         Sale.listItems = []
         PAGE.joinItems()
         FORM.createPrintForm();
@@ -55,7 +57,7 @@ let PAGE = {
     writeForm: function () {
         $('#HtmlForm #htmlCustomer').html(Sale.customer.title)
         $('#HtmlForm #htmlSendDate').html(`Sevk Tarihi : &ensp;${FORM.getTarih(Sale.deliveryTime)}`)
-        $('#HtmlForm #htmlExplanation').html(Sale.explanation)
+        $('#HtmlForm #htmlExplanation').html(Sale.explanation.replaceAll('\n','<br>'))
         $('#HtmlForm #htmlUser').html(Sale.user.firstName + ' ' + Sale.user.lastName + ' / <small>' + FORM.getTarih(Sale.recordTime) + '</small>')
         $('#htmlSaleCode').html(`Sipariş No : &ensp; ${Sale.externalSaleCode || ''}`)
         PAGE.writeProducts()
@@ -114,21 +116,20 @@ let PAGE = {
         let btnCreateEtiket = `<button type="button" onclick="PAGE.createEtiket(${item.saleItemId})" class="ml-2 btn btn-primary btn-sm my-1"><i class="fa-solid fa-tag"></i></button>`
 
         return `<div class="row" style="line-height: 39px;">
-            <div class="col-12 col-md-8">${item.purchaseItem.product.name}</div>
-            <div class="col-4 col-md-1">${units[item.purchaseItem.product.productGroupId] == "m" ? item.purchaseItemId : ""}</div>
-            <div class="col-4 col-md-1">${(item.purchaseItem.product.unitMass * item.saleCount).toFixed(2)} ${item.purchaseItem.product.unitOfMass}</div>
-            <div class="col-4 col-md-1">${item.saleCount} ${units[item.purchaseItem.product.productGroupId]}</div>
-            <div class="col-8 col-md-1">${btnStatus}  ${units[item.purchaseItem.product.productGroupId] == "m" ? btnCreateEtiket : ""}</div>
+            <div class="col-12 col-sm-8 col-lg-5">${item.purchaseItem.product.name}</div>
+            <div class="d-none d-lg-block col-lg-2">${units[item.purchaseItem.product.productGroupId] == "m" ? item.purchaseItemId : ""}</div>
+            <div class="d-none d-lg-block col-lg-2">${(item.purchaseItem.product.unitMass * item.saleCount).toFixed(2)} ${item.purchaseItem.product.unitOfMass}</div>
+            <div class="d-none d-lg-block col-lg-1">${item.saleCount} ${units[item.purchaseItem.product.productGroupId]}</div>
+            <div class="d-none d-sm-block col-sm-4 col-lg-2">${btnStatus}  ${units[item.purchaseItem.product.productGroupId] == "m" ? btnCreateEtiket : ""}</div>
         </div>`;
     },
     createEtiket: function (saleItemId) {
         Sale.saleItems.forEach(element => {
             if (element.saleItemId == saleItemId) {
+                console.log(element);
                 let pv = element.purchaseItem.product.productPropertyValues;
                 element.purchaseItem.product.productPropertyValues.forEach(item => {
-                    console.log(item);
                 });
-                console.log(pv);
                 let data = {
                     "sipno": Sale.externalSaleCode,
                     "customer": Sale.customer.title.slice(0, 20),
@@ -159,7 +160,7 @@ let PAGE = {
 let FORM = {
     createPrintForm: function () {
         $('#customer').html(Sale.customer.title)
-        $('#explanation').html(Sale.explanation)
+        $('#explanation').html(Sale.explanation.replaceAll('\n','<br>'))
         $('#record').html(FORM.getTarih(Sale.recordTime))
         $('#teslimat').html(FORM.getTarih(Sale.deliveryTime))
         $('#externalSaleCode').html(Sale.externalSaleCode)

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="/public/style/formPrint.css">
+    <link rel="stylesheet" href="/public/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/fontawesome/css/all.min.css">
+</head>
+
+<body>
+    <div class="container-form">
+        <div class="page">
+            <div class="nusha">
+                <div>
+                    <h5 class="text-center">DEPO ÇIKIŞ FORMU</h5>
+                </div>
+                <div class="row">
+                    <div class="col-3"><b>MÜŞTERİ</b></div>
+                    <div class="col-9" data-id="customer"></div>
+                </div>
+                <div class="row">
+                    <div class="col-3"><b>SİPARİŞ TARİHİ</b></div>
+                    <div class="col-9"><span data-id="recordTime"></span> <span data-id="user"></span></div>
+                </div>
+                <div class="row">
+                    <div class="col-3"><b>SEVK TARİHİ</b></div>
+                    <div class="col-9" data-id="deliveryTime"></div>
+                </div>
+                <div class="row">
+                    <div class="col-12" data-id="explanation"></div>
+                </div>
+                <div class="row mt-2" data-id="products"></div>
+            </div>
+            <div class="nusha">
+                <div>
+                    <h5 class="text-center">DEPO ÇIKIŞ FORMU</h5>
+                </div>
+                <div class="row">
+                    <div class="col-3"><b>MÜŞTERİ</b></div>
+                    <div class="col-9" data-id="customer"></div>
+                </div>
+                <div class="row">
+                    <div class="col-3"><b>SİPARİŞ TARİHİ</b></div>
+                    <div class="col-9"><span data-id="recordTime"></span> <span data-id="user"></span></div>
+                </div>
+                <div class="row">
+                    <div class="col-3"><b>SEVK TARİHİ</b></div>
+                    <div class="col-9" data-id="deliveryTime"></div>
+                </div>
+                <div class="row">
+                    <div class="col-12" data-id="explanation"></div>
+                </div>
+                <div class="row mt-2" data-id="products"></div>
+            </div>
+        </div>
+    </div>
+    <script src="/public/jquery/jquery-3.6.0.min.js"></script>
+    <script src="/public/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/public/scripts/mainObject.js"></script>
+    <%- saleId %>
+    <%- scripts %>
+</body>
+
+</html>
