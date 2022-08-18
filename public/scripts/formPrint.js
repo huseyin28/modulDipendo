@@ -1,6 +1,22 @@
 let units = { "896": "m", "897": "m", "898": "m", "899": "m", "900": "m", "901": "m", "902": "m", "903": "m", "904": "m", "905": "m", "906": "m", "907": "m", "908": "m", "909": "m", "910": "m", "911": "m", "912": "m", "913": "m", "914": "m", "915": "adet", "916": "adet", "917": "adet", "918": "adet", "919": "adet", "920": "adet", "921": "adet", "922": "m", "923": "adet", "924": "adet", "925": "adet", "926": "adet", "927": "adet", "928": "adet", "929": "adet", "930": "adet", "931": "adet", "932": "adet", "933": "kg", "934": "adet", "935": "adet", "936": "adet", "937": "kg", "943": "adet", "944": "adet" };
 const SaleID = saleId;
 let Sale = null;
+// const tableHead = `
+// <div class="row" style="font-weight: bold;">
+//     <div class="col-6">ÜRÜN</div>
+//     <div class="col-2">KİMLİK</div>
+//     <div class="col-2">AĞIRLIK</div>
+//     <div class="col-2">MİKTAR</div>
+// </div>`
+
+const tableHead = `
+<div class="d-flex" style="font-weight: bold;">
+    <div class="flex-fill">ÜRÜN</div>
+    <div style="width: 90px;text-align: center;">KİMLİK</div>
+    <div style="width: 90px;text-align: center;">AĞIRLIK</div>
+    <div style="width: 90px;text-align: center;">MİKTAR</div>
+</div>`
+
 
 $(document).ready(ready)
 
@@ -21,8 +37,8 @@ function writeForm(s){
     Obj.writeProducts()
     // Pristine.writeProducts()
 
-    window.print(); 
-    window.close();
+    // window.print(); 
+    // window.close();
 }
 
 function getDt(str, time = false){
@@ -72,7 +88,7 @@ let Obj = {
     writeProducts: function () {
         Sale.listItems = []
         Obj.joinItems();
-        $('[data-id="products"]').html('<div class="row" style="font-weight: bold;"><div class="col-6">ÜRÜN</div><div class="col-2">KİMLİK</div><div class="col-2">AĞIRLIK</div><div class="col-2">MİKTAR</div></div>')
+        $('[data-id="products"]').html(tableHead)
         for (const i in Sale.listItems)
             $('[data-id="products"]').append(Obj.getRow(Sale.listItems[i]))
 
@@ -81,6 +97,14 @@ let Obj = {
         }
     },
     getRow: function (item) {
+        return `
+        <div class="d-flex">
+            <div class="flex-fill">${item.purchaseItem.product.name}</div>
+            <div style="width: 90px;text-align: center;">${units[item.purchaseItem.product.productGroupId] == "m" ? item.purchaseItemId : ""}</div>
+            <div style="width: 90px;text-align: center;">${(item.purchaseItem.product.unitMass * item.saleCount).toFixed(2)} ${item.purchaseItem.product.unitOfMass}</div>
+            <div style="width: 90px;text-align: center;">${item.saleCount} ${units[item.purchaseItem.product.productGroupId]}</div>
+        </div>`;
+
         return `<div class="row">
             <div class="col-6">${item.purchaseItem.product.name}</div>
             <div class="col-2">${units[item.purchaseItem.product.productGroupId] == "m" ? item.purchaseItemId : ""}</div>
@@ -92,7 +116,6 @@ let Obj = {
 
 let Pristine = {
     writeProducts : function(){
-        for (const i in Sale.saleItems)
-            $('[data-id="products"]').append(Obj.getRow(Sale.saleItems[i]))
+        for (const i in Sale.saleItems) $('[data-id="products"]').append(Obj.getRow(Sale.saleItems[i]))
     }
 }
