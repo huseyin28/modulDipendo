@@ -116,7 +116,7 @@ let PAGE = {
         let btnCreateEtiket = `<button type="button" onclick="PAGE.createEtiket(${item.saleItemId})" class="ml-2 btn btn-primary btn-sm my-1"><i class="fa-solid fa-tag"></i></button>`
 
         return `<div class="row" style="line-height: 39px;">
-            <div class="col-12 col-sm-8 col-lg-5">${item.purchaseItem.product.name}</div>
+            <div class="col-12 col-sm-8 col-lg-5"><a href="/purchaseItem/detay/${item.purchaseItemId}">${item.purchaseItem.product.name}</a></div>
             <div class="d-none d-lg-block col-lg-2">${units[item.purchaseItem.product.productGroupId] == "m" ? item.purchaseItemId : ""}</div>
             <div class="d-none d-lg-block col-lg-2">${(item.purchaseItem.product.unitMass * item.saleCount).toFixed(2)} ${item.purchaseItem.product.unitOfMass}</div>
             <div class="d-none d-lg-block col-lg-1">${item.saleCount} ${units[item.purchaseItem.product.productGroupId]}</div>
