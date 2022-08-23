@@ -30,7 +30,9 @@ function ready(){
 function writeForm(s){
     Sale = s;
     $('[data-id="customer"]').html(Sale.customer.title);
+    $('[data-id="externalSaleCode"]').html(Sale.externalSaleCode);
     $('[data-id="deliveryTime"]').html(getDt(Sale.deliveryTime) );
+    
     $('[data-id="recordTime"]').html(getDt(Sale.recordTime, true));
     $('[data-id="user"]').html(`(${Sale.user.firstName} ${Sale.user.lastName})`);
     $('[data-id="explanation"]').html('<b>AÇIKLAMA : </b>'+(Sale.explanation || '').replaceAll('\n\n','\n').replaceAll('\n','<br>'));
