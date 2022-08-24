@@ -102,7 +102,7 @@ function setURL() {
 
     if (myInterval != null) clearInterval(myInterval)
 
-    myInterval = setInterval(getList, 1000 * 60)
+    myInterval = setInterval(getList, 1000 * 60, true)
 }
 
 function getDipendoParamsStr() {
@@ -127,11 +127,11 @@ function eventSetDate(start, end) {
     setURL()
 }
 
-function getList() {
+function getList(sound = false) {
     $.ajax({
         url: url,
         headers: { "Authorization": Authorization }
-    }).then(LoadList).fail(error => {
+    }).then(response => LoadList(response, sound)).fail(error => {
         if(error.status == 401){
             
         }else if(window.navigator.onLine == false){
@@ -140,7 +140,7 @@ function getList() {
     })
 }
 
-function LoadList(response) {
+function LoadList(response, sound) {
     let count = 0;
     $('#message').remove()
 
@@ -149,7 +149,7 @@ function LoadList(response) {
 
     if (sCount == null)
         sCount = response.length
-    else if (sCount != response.length) {
+    else if (sCount != response.length && sound == true) {
         audio.play();
         sCount = response.length
     }

@@ -27,7 +27,7 @@ router.get('/formPrint/:id', (req, res) => {
 
 router.get('/purchaseItem/detay/:id', (req, res) => {
     res.render('purchaseItem', {
-        title: 'Detay',
+        title: 'Ürün Detayı',
         scripts: `<script>const purchaseItemId = ${req.params.id}; </script><script src="/public/scripts/purchaseItem.js"></script>`,
     })
 })
