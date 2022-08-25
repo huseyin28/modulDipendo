@@ -149,8 +149,9 @@ function LoadList(response, sound) {
 
     if (sCount == null)
         sCount = response.length
-    else if (sCount != response.length && sound == true) {
-        audio.play();
+    else if (sCount != response.length) {
+        if(sound)
+            audio.play();
         sCount = response.length
     }
 
