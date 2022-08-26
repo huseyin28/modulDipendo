@@ -55,16 +55,16 @@ let queryParams = {
 $(document).ready(ready)
 
 function ready() {
-    $('#txtSearch').off('keyup').on('keyup',(e)=>{
-        if(searchInterval != null)
+    $('#txtSearch').off('keyup').on('keyup', (e) => {
+        if (searchInterval != null)
             clearInterval(searchInterval)
-        
-        searchInterval = setTimeout(function(val){
+
+        searchInterval = setTimeout(function (val) {
             queryParams.search = val
             setURL()
-        },500, e.target.value)    
+        }, 500, e.target.value)
     })
-    
+
     const searchParams = new URLSearchParams(location.search);
 
     if (searchParams.has('limit')) queryParams.limit = searchParams.get('limit')
@@ -132,9 +132,9 @@ function getList(sound = false) {
         url: url,
         headers: { "Authorization": Authorization }
     }).then(response => LoadList(response, sound)).fail(error => {
-        if(error.status == 401){
-            
-        }else if(window.navigator.onLine == false){
+        if (error.status == 401) {
+
+        } else if (window.navigator.onLine == false) {
             alert('İnternet bağlantısını kontrol ediniz')
         }
     })
@@ -144,20 +144,17 @@ function LoadList(response, sound) {
     let count = 0;
     $('#message').remove()
 
-    
-
-
     if (sCount == null)
         sCount = response.length
     else if (sCount != response.length) {
-        if(sound)
+        if (sound)
             audio.play();
         sCount = response.length
     }
 
     $('#list').html('')
     response.forEach(element => {
-        if (element.status == 3){
+        if (element.status == 3) {
             $('#list').append(getRowHTML(element))
             count++;
         }
@@ -173,8 +170,8 @@ function getRowHTML(element) {
     let create = new Date(element.recordTime)
     return `<tr>
     <td>${element.customer.title}</td>
-    <td>${create.getDate()}.${create.getMonth()+1}.${create.getFullYear()} ${create.getHours()+3}:${create.getMinutes()}</td>
-    <td>${dt.getDate()+1}.${dt.getMonth()+1}.${dt.getFullYear()}</td>
+    <td>${create.getDate()}.${create.getMonth() + 1}.${create.getFullYear()} ${create.getHours() + 3}:${create.getMinutes()}</td>
+    <td>${dt.getDate() + 1}.${dt.getMonth() + 1}.${dt.getFullYear()}</td>
     <td class="py-1"><a href="/detay?id=${element.id}" target="_blank" class="btn btn-sm btn-outline-primary" aria-pressed="true">Detay</a></td>
     </tr>
     `
