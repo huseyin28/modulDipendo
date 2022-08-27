@@ -1,4 +1,9 @@
 $(document).ready(ready);
+let stok ;
+let kalan;
+let groupUnit = {
+    "meter" : "m"
+}
 
 function ready(){
     getDetay(purchaseItemId)
@@ -29,23 +34,30 @@ function writeDetay(response){
             </div>`)
         }
     }
-    $('#stok').html(`<div class="col-6">STOK</div><div class="col-6">${response.stockCount}</div>`)
-    $('#stok').append(`<div class="col-6">SATILABİLİR</div><div class="col-6">${response.saleableCount}</div>`)
-    $('#stok').append(`<div class="col-6">REZERVE EDİLEBİLİR</div><div class="col-6">${response.reservableCount}</div>`)
+    $('#stok').html(`<div class="col-6">STOK</div><div class="col-6">${response.stockCount}${groupUnit[response.product.groupUnit]}</div>`)
+    $('#stok').append(`<div class="col-6">SATILABİLİR</div><div class="col-6">${response.saleableCount}${groupUnit[response.product.groupUnit]}</div>`)
+    $('#stok').append(`<div class="col-6">REZERVE EDİLEBİLİR</div><div class="col-6">${response.reservableCount}${groupUnit[response.product.groupUnit]}</div>`)
+    stok = response.stockCount;
+    kalan = response.purchaseCount;
     GetStatu1(response.product.id, response.purchaseItemId)
     GetStatu2(response.product.id, response.purchaseItemId)
+    GetStatu3(response.product.id, response.purchaseItemId)
 }
 
 function GetStatu1(productId, PurItemId){
+    let ekle = 0;
     $.ajax({
         url : `https://app.dipendo.com/api/sale-items?productId=${productId}&status=1&offset=0&limit=1000`,
         headers: { "Authorization": Authorization }
     }).then(response => {
         response.forEach(element => {
             if(element.purchaseItem.purchaseItemId == PurItemId){
+                ekle += element.saleCount;
                 $('#satildi').append(`<div class="col-9">${element.customer.title}</div><div class="col-3">${element.saleCount}m</div>`)
             }
         });
+        stok += ekle
+        $('#anlik').html(stok);
         console.log(response);
     }).fail(ajaxFail)
 }
@@ -61,5 +73,27 @@ function GetStatu2(productId, PurItemId){
             }
         });
         console.log(response);
+    }).fail(ajaxFail)
+}
+
+function GetStatu3(productId, PurItemId){
+    $.ajax({
+        url : `https://app.dipendo.com/api/sale-items?productId=${productId}&status=3&offset=0&limit=1000`,
+        headers: { "Authorization": Authorization }
+    }).then(response => {
+        for (let i = response.length-1; i >= 0; i--) {
+            const element = response[i];
+            if(element.purchaseItem.purchaseItemId == PurItemId){
+                $('#gonderildi').append(`<div class="col-9">${element.customer.title}</div><div class="col-3">${element.saleCount}m</div>`)
+                console.log(`${kalan}-${element.saleCount}=${kalan-element.saleCount}`);
+                kalan-=element.saleCount
+            }
+        }
+        // response.forEach(element => {
+        //     if(element.purchaseItem.purchaseItemId == PurItemId){
+        //         $('#gonderildi').append(`<div class="col-9">${element.customer.title}</div><div class="col-3">${element.saleCount}m</div>`)
+        //         console.log(purchaseCount);
+        //     }
+        // });
     }).fail(ajaxFail)
 }
