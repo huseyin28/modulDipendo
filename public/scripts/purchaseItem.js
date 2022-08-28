@@ -2,9 +2,10 @@ $(document).ready(ready);
 let stok ;
 let kalan;
 let groupUnit = {
-    "meter" : "m"
+    "meter" : "m",
+    "piece" : " adet"
 }
-
+let unit ;
 function ready(){
     getDetay(purchaseItemId)
 }
@@ -34,9 +35,10 @@ function writeDetay(response){
             </div>`)
         }
     }
-    $('#stok').html(`<div class="col-6">STOK</div><div class="col-6">${response.stockCount}${groupUnit[response.product.groupUnit]}</div>`)
-    $('#stok').append(`<div class="col-6">SATILABİLİR</div><div class="col-6">${response.saleableCount}${groupUnit[response.product.groupUnit]}</div>`)
-    $('#stok').append(`<div class="col-6">REZERVE EDİLEBİLİR</div><div class="col-6">${response.reservableCount}${groupUnit[response.product.groupUnit]}</div>`)
+    unit = groupUnit[response.product.groupUnit]
+    $('#stok').html(`<div class="col-6">STOK</div><div class="col-6">${response.stockCount}${unit}</div>`)
+    $('#stok').append(`<div class="col-6">SATILABİLİR</div><div class="col-6">${response.saleableCount}${unit}</div>`)
+    $('#stok').append(`<div class="col-6">REZERVE EDİLEBİLİR</div><div class="col-6">${response.reservableCount}${unit}</div>`)
     stok = response.stockCount;
     kalan = response.purchaseCount;
     GetStatu1(response.product.id, response.purchaseItemId)
@@ -53,7 +55,7 @@ function GetStatu1(productId, PurItemId){
         response.forEach(element => {
             if(element.purchaseItem.purchaseItemId == PurItemId){
                 ekle += element.saleCount;
-                $('#satildi').append(`<div class="col-9">${element.customer.title}</div><div class="col-3">${element.saleCount}m</div>`)
+                $('#satildi').append(`<div class="col-9">${element.customer.title}</div><div class="col-3">${element.saleCount}${unit}</div>`)
             }
         });
         stok += ekle
@@ -69,7 +71,7 @@ function GetStatu2(productId, PurItemId){
     }).then(response => {
         response.forEach(element => {
             if(element.purchaseItem.purchaseItemId == PurItemId){
-                $('#hazir').append(`<div class="col-9">${element.customer.title}</div><div class="col-3">${element.saleCount}m</div>`)
+                $('#hazir').append(`<div class="col-9">${element.customer.title}</div><div class="col-3">${element.saleCount}${unit}</div>`)
             }
         });
         console.log(response);
@@ -84,7 +86,7 @@ function GetStatu3(productId, PurItemId){
         for (let i = response.length-1; i >= 0; i--) {
             const element = response[i];
             if(element.purchaseItem.purchaseItemId == PurItemId){
-                $('#gonderildi').append(`<div class="col-9">${element.customer.title}</div><div class="col-3">${element.saleCount}m</div>`)
+                $('#gonderildi').append(`<div class="col-9">${element.customer.title}</div><div class="col-3">${element.saleCount}${unit}</div>`)
                 console.log(`${kalan}-${element.saleCount}=${kalan-element.saleCount}`);
                 kalan-=element.saleCount
             }
