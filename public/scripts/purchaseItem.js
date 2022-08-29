@@ -23,7 +23,6 @@ function ajaxFail(e){
 }
 
 function writeDetay(response){
-    console.log(response);
     $('#productName').html(response.product.name);
     $('#purchaseItemId').html(response.purchaseItemId);
     for (const i in response.product.propertyValues) {
@@ -60,7 +59,6 @@ function GetStatu1(productId, PurItemId){
         });
         stok += ekle
         $('#anlik').html(stok);
-        console.log(response);
     }).fail(ajaxFail)
 }
 
@@ -74,7 +72,6 @@ function GetStatu2(productId, PurItemId){
                 $('#hazir').append(`<div class="col-9">${element.customer.title}</div><div class="col-3">${element.saleCount}${unit}</div>`)
             }
         });
-        console.log(response);
     }).fail(ajaxFail)
 }
 
@@ -86,8 +83,9 @@ function GetStatu3(productId, PurItemId){
         for (let i = response.length-1; i >= 0; i--) {
             const element = response[i];
             if(element.purchaseItem.purchaseItemId == PurItemId){
+                console.log(element);
                 $('#gonderildi').append(`<div class="col-9">${element.customer.title}</div><div class="col-3">${element.saleCount}${unit}</div>`)
-                console.log(`${kalan}-${element.saleCount}=${kalan-element.saleCount}`);
+                // console.log(`${kalan}-${element.saleCount}=${kalan-element.saleCount}`);
                 kalan-=element.saleCount
             }
         }
