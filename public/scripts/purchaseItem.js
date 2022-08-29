@@ -1,6 +1,5 @@
 $(document).ready(ready);
 let stok ;
-let kalan;
 let groupUnit = {
     "meter" : "m",
     "piece" : " adet"
@@ -39,12 +38,13 @@ function writeDetay(response){
     $('#stok').append(`<div class="col-6">SATILABİLİR</div><div class="col-6">${response.saleableCount}${unit}</div>`)
     $('#stok').append(`<div class="col-6">REZERVE EDİLEBİLİR</div><div class="col-6">${response.reservableCount}${unit}</div>`)
     stok = response.stockCount;
-    kalan = response.purchaseCount;
     GetStatu1(response.product.id, response.purchaseItemId)
     GetStatu2(response.product.id, response.purchaseItemId)
     GetStatu3(response.product.id, response.purchaseItemId)
+    GetStatu4(response.product.id, response.purchaseItemId)
 }
 
+// Satıldılar statu 1
 function GetStatu1(productId, PurItemId){
     let ekle = 0;
     $.ajax({
@@ -62,38 +62,45 @@ function GetStatu1(productId, PurItemId){
     }).fail(ajaxFail)
 }
 
+// Sevke hazırlar statu 2
 function GetStatu2(productId, PurItemId){
     $.ajax({
         url : `https://app.dipendo.com/api/sale-items?productId=${productId}&status=2&offset=0&limit=1000`,
         headers: { "Authorization": Authorization }
     }).then(response => {
         response.forEach(element => {
-            if(element.purchaseItem.purchaseItemId == PurItemId){
+            if(element.purchaseItem.purchaseItemId == PurItemId)
                 $('#hazir').append(`<div class="col-9">${element.customer.title}</div><div class="col-3">${element.saleCount}${unit}</div>`)
-            }
         });
     }).fail(ajaxFail)
 }
 
+// gönderilenler statu 3
 function GetStatu3(productId, PurItemId){
     $.ajax({
         url : `https://app.dipendo.com/api/sale-items?productId=${productId}&status=3&offset=0&limit=1000`,
         headers: { "Authorization": Authorization }
     }).then(response => {
         for (let i = response.length-1; i >= 0; i--) {
-            const element = response[i];
-            if(element.purchaseItem.purchaseItemId == PurItemId){
-                console.log(element);
-                $('#gonderildi').append(`<div class="col-9">${element.customer.title}</div><div class="col-3">${element.saleCount}${unit}</div>`)
-                // console.log(`${kalan}-${element.saleCount}=${kalan-element.saleCount}`);
-                kalan-=element.saleCount
-            }
+            if(response[i].purchaseItem.purchaseItemId == PurItemId)
+                $('#gonderildi').append(`<div class="col-9">${response[i].customer.title}</div><div class="col-3">${response[i].saleCount}${unit}</div>`)
         }
-        // response.forEach(element => {
-        //     if(element.purchaseItem.purchaseItemId == PurItemId){
-        //         $('#gonderildi').append(`<div class="col-9">${element.customer.title}</div><div class="col-3">${element.saleCount}m</div>`)
-        //         console.log(purchaseCount);
-        //     }
-        // });
     }).fail(ajaxFail)
 }
+
+// rezerveler statu 4 
+function GetStatu4(productId, PurItemId){
+    $.ajax({
+        url : `https://app.dipendo.com/api/sale-items?productId=${productId}&status=4&offset=0&limit=1000`,
+        headers: { "Authorization": Authorization }
+    }).then(response => {
+        console.log(response);
+    }).fail(ajaxFail)
+}
+
+
+/*
+https://app.dipendo.com/api/purchase-items?status=3&limit=300
+depoda giriş bekleyenlerin linki yukarıdadır.
+
+*/
