@@ -33,6 +33,8 @@ function setStatu() {
 function allStatus(statu) {
     Sale.saleItems.forEach(item => {
         item.status = statu;
+        // item.deliveryTime = '2022-09-05T21:00:00'
+        console.log('deliveryTime');
     })
     updateSale();
 }

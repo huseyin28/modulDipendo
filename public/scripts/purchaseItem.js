@@ -6,6 +6,9 @@ let groupUnit = {
 }
 let unit ;
 function ready(){
+    $('#goDipendo').on('click',()=>{
+        window.open('https://app.dipendo.com/purchase-items/'+purchaseItemId+'/detail', '_blank');
+    })
     getDetay(purchaseItemId)
 }
 
@@ -38,10 +41,19 @@ function writeDetay(response){
     $('#stok').append(`<div class="col-6">SATILABİLİR</div><div class="col-6">${response.saleableCount}${unit}</div>`)
     $('#stok').append(`<div class="col-6">REZERVE EDİLEBİLİR</div><div class="col-6">${response.reservableCount}${unit}</div>`)
     stok = response.stockCount;
+    console.log(response);
+    writeLogs(response.activities);
     GetStatu1(response.product.id, response.purchaseItemId)
     GetStatu2(response.product.id, response.purchaseItemId)
     GetStatu3(response.product.id, response.purchaseItemId)
     GetStatu4(response.product.id, response.purchaseItemId)
+}
+
+function writeLogs(activities){
+    activities.forEach(element => {
+        $('#logs').append(``)
+    });
+    // #logs
 }
 
 // Satıldılar statu 1

@@ -14,3 +14,14 @@ function getUnit(u){
             return "";
     }
 }
+
+getGirisBekleyenCount();
+
+function getGirisBekleyenCount(){
+    $.ajax({
+        url : `https://app.dipendo.com/api/purchase-items?status=3&limit=300`,
+        headers: { "Authorization": Authorization }
+    }).then(response => {
+        $('#girisBekleyenCount').html(response.length);
+    })
+}

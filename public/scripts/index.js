@@ -90,17 +90,6 @@ function ready() {
         queryParams.startTime.setDate(queryParams.startTime.getDate() - 1)
 
     setURL()
-    getGirisBekleyenCount();
-}
-
-function getGirisBekleyenCount(){
-    $.ajax({
-        url : `https://app.dipendo.com/api/purchase-items?status=3&limit=300`,
-        headers: { "Authorization": Authorization }
-    }).then(response => {
-        console.log(response);
-        $('#girisBekleyenCount').html(response.length);
-    })
 }
 
 function setURL() {

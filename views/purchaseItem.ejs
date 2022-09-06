@@ -1,6 +1,8 @@
 <div class="card">
 	<div class="card-body">
-		<h4 class="card-title" id="productName"></h4>
+		<h4 class="card-title"><span id="productName"></span>
+			<img src="/public/images/dipendo.png" id="goDipendo" style="float: left; cursor: pointer; width: 20px; height: 20px; margin-top: 4px;">
+		</h4>
 		<h6 class="card-subtitle mb-2 text-muted"><b>Nesne Kimliği :</b> <span id="purchaseItemId"></span></h6>
 	</div>
 </div>
@@ -13,38 +15,51 @@
 				<div class="row" id="stok"></div>
 			</div>
 		</div>
-	</div>
-	<div class="mt-4 col-3 col-sm-6">
-		<div class="card">
+		<div class="card mt-3">
 			<div class="card-body">
-				<span class="badge badge-danger badge-counter" id="anlik" style="position: absolute; transform-origin: top right; right: 0.25rem; margin-top: -0.25rem;"></span>
-				<h6 class="card-title font-weight-bold">SATILDI</h6>
-				<div class="row" id="satildi"></div>
+				<h6 class="card-title font-weight-bold">GÖNDERİLENLER</h6>
+				<div class="row" id="gonderildi"></div>
 			</div>
 		</div>
 	</div>
 	<div class="mt-4 col-3 col-sm-6">
 		<div class="card">
 			<div class="card-body">
-				<h6 class="card-title font-weight-bold">SEVKE HAZIR</h6>
+				<span class="badge badge-danger badge-counter" id="anlik"
+					style="position: absolute; transform-origin: top right; right: 0.25rem; margin-top: -0.25rem;"></span>
+				<h6 class="card-title font-weight-bold">SATILANLAR</h6>
+				<div class="row" id="satildi"></div>
+			</div>
+		</div>
+		<div class="card mt-3">
+			<div class="card-body">
+				<h6 class="card-title font-weight-bold">SEVKE HAZIRLAR</h6>
 				<div class="row" id="hazir"></div>
 			</div>
 		</div>
 	</div>
 	<div class="mt-4 col-4 col-sm-6">
-		<div class="card">
-			<div class="card-body">
-				<h6 class="card-title font-weight-bold">GÖNDERİLDİ</h6>
-				<div class="row" id="gonderildi"></div>
-			</div>
-		</div>
+
 	</div>
 </div>
 
-
-<div class="card mt-4">
-	<div class="card-body">
-		<h6 class="card-title">ÖZELLİKLER</h6>
-		<div name="propertyValues"></div>
+<div class="row mt-4">
+	<div class="col">
+		<div class="card">
+			<div class="card-body">
+				<h6 class="card-title">ÖZELLİKLER</h6>
+				<div name="propertyValues"></div>
+			</div>
+		</div>
+	</div>
+	<div class="col">
+		<div class="card">
+			<div class="card-body">
+				<h6 class="card-title">HAREKETLER</h6>
+				<div id="logs">
+					
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
