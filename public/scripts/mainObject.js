@@ -3,3 +3,14 @@ const Authorization = 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkIzNzkxNUQ1QUYzMkNBM0
 function setAlert(str, type = 'danger'){
     $(`<div class="alert alert-${type} alert-dismissible fade show" role="alert">${str}</div>`).appendTo('.alerts').delay(5555).queue(function() { $(this).remove(); });
 }
+
+function getUnit(u){
+    switch (u) {
+        case "meter":
+            return "m"
+        case "piece":
+            return " adet"
+        default:
+            return "";
+    }
+}

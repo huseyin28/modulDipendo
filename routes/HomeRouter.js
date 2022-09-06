@@ -32,4 +32,11 @@ router.get('/purchaseItem/detay/:id', (req, res) => {
     })
 })
 
+router.get('/girisBekleyen', (req, res) => {
+    res.render('girisBekleyen', {
+        title: 'Depo Giriş Bekleyenler',
+        scripts: `<script src="/public/scripts/girisBekleyen.js"></script>`,
+    })
+})
+
 module.exports = router

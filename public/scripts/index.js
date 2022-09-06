@@ -90,6 +90,17 @@ function ready() {
         queryParams.startTime.setDate(queryParams.startTime.getDate() - 1)
 
     setURL()
+    getGirisBekleyenCount();
+}
+
+function getGirisBekleyenCount(){
+    $.ajax({
+        url : `https://app.dipendo.com/api/purchase-items?status=3&limit=300`,
+        headers: { "Authorization": Authorization }
+    }).then(response => {
+        console.log(response);
+        $('#girisBekleyenCount').html(response.length);
+    })
 }
 
 function setURL() {
@@ -167,11 +178,12 @@ function LoadList(response, sound) {
 
 function getRowHTML(element) {
     let dt = new Date(element.deliveryTime)
+    dt.setDate(dt.getDate() + 1)
     let create = new Date(element.recordTime)
     return `<tr>
     <td>${element.customer.title}</td>
     <td>${create.getDate()}.${create.getMonth() + 1}.${create.getFullYear()} ${create.getHours() + 3}:${create.getMinutes()}</td>
-    <td>${dt.getDate() + 1}.${dt.getMonth() + 1}.${dt.getFullYear()}</td>
+    <td>${dt.getDate()}.${dt.getMonth() + 1}.${dt.getFullYear()}</td>
     <td class="py-1"><a href="/detay?id=${element.id}" target="_blank" class="btn btn-sm btn-outline-primary" aria-pressed="true">Detay</a></td>
     </tr>
     `

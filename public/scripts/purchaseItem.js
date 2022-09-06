@@ -82,8 +82,10 @@ function GetStatu3(productId, PurItemId){
         headers: { "Authorization": Authorization }
     }).then(response => {
         for (let i = response.length-1; i >= 0; i--) {
-            if(response[i].purchaseItem.purchaseItemId == PurItemId)
-                $('#gonderildi').append(`<div class="col-9">${response[i].customer.title}</div><div class="col-3">${response[i].saleCount}${unit}</div>`)
+            if(response[i].purchaseItem.purchaseItemId == PurItemId){
+                console.log(response[i]);
+                $('#gonderildi').append(`<div class="col-7">${response[i].customer.title}</div><div class="col-3">${response[i].saleCount}${unit}</div><div class="col-2">t</div>`)
+            }
         }
     }).fail(ajaxFail)
 }
@@ -94,13 +96,6 @@ function GetStatu4(productId, PurItemId){
         url : `https://app.dipendo.com/api/sale-items?productId=${productId}&status=4&offset=0&limit=1000`,
         headers: { "Authorization": Authorization }
     }).then(response => {
-        console.log(response);
+        //console.log(response);
     }).fail(ajaxFail)
 }
-
-
-/*
-https://app.dipendo.com/api/purchase-items?status=3&limit=300
-depoda giriş bekleyenlerin linki yukarıdadır.
-
-*/
