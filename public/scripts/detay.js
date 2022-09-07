@@ -59,7 +59,7 @@ let PAGE = {
     writeForm: function () {
         $('#HtmlForm #htmlCustomer').html(Sale.customer.title)
         $('#HtmlForm #htmlSendDate').html(`Sevk Tarihi : &ensp;${FORM.getTarih(Sale.deliveryTime)}`)
-        $('#HtmlForm #htmlExplanation').html(Sale.explanation.replaceAll('\n','<br>'))
+        $('#HtmlForm #htmlExplanation').html((Sale.explanation || '').replaceAll('\n','<br>'))
         $('#HtmlForm #htmlUser').html(Sale.user.firstName + ' ' + Sale.user.lastName + ' / <small>' + FORM.getTarih(Sale.recordTime) + '</small>')
         $('#htmlSaleCode').html(`Sipariş No : &ensp; ${Sale.externalSaleCode || ''}`)
         PAGE.writeProducts()
@@ -162,7 +162,7 @@ let PAGE = {
 let FORM = {
     createPrintForm: function () {
         $('#customer').html(Sale.customer.title)
-        $('#explanation').html(Sale.explanation.replaceAll('\n','<br>'))
+        $('#explanation').html((Sale.explanation || '').replaceAll('\n','<br>'))
         $('#record').html(FORM.getTarih(Sale.recordTime))
         $('#teslimat').html(FORM.getTarih(Sale.deliveryTime))
         $('#externalSaleCode').html(Sale.externalSaleCode)
