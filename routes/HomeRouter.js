@@ -39,4 +39,11 @@ router.get('/girisBekleyen', (req, res) => {
     })
 })
 
+router.get('/currentStatusScreen', (req, res) => {
+    res.render('currentStatusScreen', {
+        title: 'Gencel Durum Ekranı',
+        scripts: `<script src="/public/scripts/currentStatusScreen.js"></script>`,
+    })
+})
+
 module.exports = router
