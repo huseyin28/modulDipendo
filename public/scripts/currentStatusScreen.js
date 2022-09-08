@@ -18,10 +18,11 @@ class main {
 
     writeGirisBekleyenler(items) {
         // purchaseItemId 
+        $('#girisBekleyen').html('')
         items.forEach(element => {
             $('#girisBekleyen').append(`<div class="row">
             <div class="col">${element.product.name} 
-            <span class="float-right mr-4"><i onclick="${element.purchaseItemId}" style="cursor: pointer;" class="fa-solid fa-fw fa-arrow-right-to-bracket text-success"></i></span></div>
+            <span class="float-right mr-4"><i onclick="mymain.depoyaAl(${element.purchaseItemId})" style="cursor: pointer;" class="fa-solid fa-fw fa-arrow-right-to-bracket text-success"></i></span></div>
         </div>`)
         /*
         depodaya giriş fonksiyonu yazılacak
@@ -30,6 +31,18 @@ class main {
         */
             console.log(element);
         });
+    }
+
+    depoyaAl(pid){
+        $.ajax({
+            type : "PATCH",
+            url : `https://app.dipendo.com/api/purchase-items/${pid}`,
+            data : {"status":4},
+            headers : { "Authorization": Authorization }
+        }).then(response => {
+            console.log(response)
+            this.getGirisBeklenler()
+        }).fail(this.ajaxFail)
     }
 
     getLastSales() {
@@ -50,4 +63,4 @@ class main {
 
 }
 
-new main()
+let mymain = new main()
