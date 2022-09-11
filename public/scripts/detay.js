@@ -14,6 +14,9 @@ function ready() {
             window.open('/formPrint/'+ urlParams.get('id'), "_blank") 
         })
         Sale.listItems = []
+        $('#goDipendo').on('click',()=>{
+            window.open(`https://app.dipendo.com/sales/${urlParams.get('id')}/detail/`, '_blank');
+        })
         PAGE.joinItems()
         FORM.createPrintForm();
         PAGE.writeForm();
@@ -31,10 +34,12 @@ function setStatu() {
 }
 
 function allStatus(statu) {
+    let dt = new Date();
+    dt.setDate(dt.getDate() - 1)
+    let deliveryTime = `${dt.getFullYear()}-${(dt.getMonth()+1) > 9 ? dt.getMonth()+1 : '0'+(dt.getMonth()+1)}-${(dt.getDate()) > 9 ? (dt.getDate()) : '0'+(dt.getDate())}T21:00:00`;
     Sale.saleItems.forEach(item => {
         item.status = statu;
-        // item.deliveryTime = '2022-09-05T21:00:00'
-        console.log('deliveryTime');
+        item.deliveryTime = deliveryTime
     })
     updateSale();
 }

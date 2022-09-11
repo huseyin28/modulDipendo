@@ -108,14 +108,14 @@ function setURL() {
 function getDipendoParamsStr() {
     queryParams.startTime.setDate(queryParams.startTime.getDate() - 1)
     let ret = '';
-    ret += `search=${queryParams.search}&offset=${queryParams.offset}&limit=${queryParams.limit}&`
+    ret += `search=${queryParams.search}&offset=${queryParams.offset}&limit=${queryParams.limit}&status=3&`
     ret += `startTime=${queryParams.startTime.getFullYear()}-${queryParams.startTime.getMonth() + 1}-${queryParams.startTime.getDate()}T21:00:00.000Z&`
     ret += `endTime=${queryParams.endTime.getFullYear()}-${queryParams.endTime.getMonth() + 1}-${queryParams.endTime.getDate()}T21:00:00.000Z`
     queryParams.startTime.setDate(queryParams.startTime.getDate() + 1)
     return ret
 }
 function getParamsStr() {
-    let ret = `search=${queryParams.search}&offset=${queryParams.offset}&limit=${queryParams.limit}&`;
+    let ret = `search=${queryParams.search}&offset=${queryParams.offset}&limit=${queryParams.limit}&status=3&`;
     ret += `startTime=${queryParams.startTime.getFullYear()}-${queryParams.startTime.getMonth() + 1}-${queryParams.startTime.getDate()}&`
     ret += `endTime=${queryParams.endTime.getFullYear()}-${queryParams.endTime.getMonth() + 1}-${queryParams.endTime.getDate()}`
     return ret
@@ -154,10 +154,8 @@ function LoadList(response, sound) {
 
     $('#list').html('')
     response.forEach(element => {
-        if (element.status == 3) {
-            $('#list').append(getRowHTML(element))
-            count++;
-        }
+        $('#list').append(getRowHTML(element))
+        count++;
     });
 
     $('title').html(`(${count}) ${pageTitle}`)

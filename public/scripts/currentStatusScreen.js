@@ -28,7 +28,9 @@ class main {
 
     depodanGonder(saleItemId){
         let dt = new Date();
-        let deliveryTime = `${dt.getFullYear()}-${(dt.getMonth()+1).length > 9 ? dt.getMonth()+1 : '0'+(dt.getMonth()+1)}-${(dt.getDate()).length > 9 ? dt.getDate() : '0'+(dt.getDate())}T21:00:00`;
+        dt.setDate(dt.getDate() - 1)
+        let deliveryTime = `${dt.getFullYear()}-${(dt.getMonth()+1) > 9 ? dt.getMonth()+1 : '0'+(dt.getMonth()+1)}-${(dt.getDate()) > 9 ? (dt.getDate()) : '0'+(dt.getDate())}T21:00:00`;
+        console.log(deliveryTime);
         $.ajax({
             type : "PATCH",
             url : `https://app.dipendo.com/api/sale-items/${saleItemId}`,
@@ -36,7 +38,21 @@ class main {
             headers : { "Authorization": Authorization }
         }).then(response => {
             this.getSevkeHazir()
+            this.demo()
         }).fail(this.ajaxFail)
+    }
+
+    demo(){
+        console.log('demo başlatılıyor 75082');
+        let dt = new Date();
+        dt.setDate(dt.getDate() - 1)
+        let deliveryTime = `${dt.getFullYear()}-${(dt.getMonth()+1) > 9 ? dt.getMonth()+1 : '0'+(dt.getMonth()+1)}-${(dt.getDate()) > 9 ? (dt.getDate()) : '0'+(dt.getDate())}T21:00:00`;
+        $.ajax({
+            type : "PATCH",
+            url : `https://app.dipendo.com/api/sale-items/75082`,
+            data : {"deliveryTime" : deliveryTime},
+            headers : { "Authorization": Authorization }
+        })
     }
 
     getCikisBekleyenler(){
@@ -63,6 +79,7 @@ class main {
         }).then(response => {
             console.log(response)
             this.getCikisBekleyenler()
+            this.getSevkeHazir()
         }).fail(this.ajaxFail)
     }
 
