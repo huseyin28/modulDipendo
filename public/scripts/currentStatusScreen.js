@@ -19,7 +19,7 @@ class main {
             $('#sevkeHazir').html('');
             response.forEach(element => {
                 $('#sevkeHazir').append(`<div class="row hover">
-                <div class="col">${element.customer.title} - ${element.purchaseItem.product.name}
+                <div class="col">${element.customer.title.slice(0, 15)} - ${element.purchaseItem.product.name}
                 <span class="float-right mr-4"><i onclick="mymain.depodanGonder(${element.saleItemId})" style="cursor: pointer;" class="fa-solid fa-fw fa-arrow-right-from-bracket text-success"></i></span></div>
             </div>`)
             });
@@ -63,7 +63,7 @@ class main {
             $('#cikisBekleyen').html('');
             response.forEach(element => {
                 $('#cikisBekleyen').append(`<div class="row hover">
-                <div class="col">${element.customer.title} - ${element.purchaseItem.product.name}
+                <div class="col">${element.customer.title.slice(0, 15)} - ${element.purchaseItem.product.name}
                 <span class="float-right mr-4"><i onclick="mymain.Hazirla(${element.saleItemId})" style="cursor: pointer;" class="fa-solid fa-fw fa-check text-success"></i></span></div>
             </div>`)
             });
