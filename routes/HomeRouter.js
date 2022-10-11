@@ -39,10 +39,32 @@ router.get('/girisBekleyen', (req, res) => {
     })
 })
 
+router.get('/SevkeHazir', (req, res) => {
+    res.render('sevkeHazir', {
+        title: 'Sevke Hazır',
+        scripts: `<script src="/public/scripts/sevkeHazir.js"></script>`,
+    })
+})
+
+router.get('/CikisBekleyen', (req, res) => {
+    res.render('CikisBekleyen', {
+        title: 'Çıkış Bekleyen',
+        scripts: `<script src="/public/scripts/CikisBekleyen.js"></script>`,
+    })
+})
+
+
 router.get('/currentStatusScreen', (req, res) => {
     res.render('currentStatusScreen', {
         title: 'Gencel Durum Ekranı',
         scripts: `<script src="/public/scripts/currentStatusScreen.js"></script>`,
+    })
+})
+
+router.get('/sbf', (req, res) => {
+    res.render('sbf',{
+        title : "Sevkiyat Bildirim Formu",
+        scripts : '<script src="/public/scripts/sbf.js"></script>'
     })
 })
 
