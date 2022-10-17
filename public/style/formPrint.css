@@ -4,34 +4,46 @@ body {
     font-size: 10pt !important;
 }
 
-.container-form{
+.container-form {
     width: 210mm;
 }
 
-.page{
+.page {
     width: 210mm;
     height: 297mm;
     float: left;
 }
 
-.nusha{
+.kontrol{
+    bottom: 0;
+    left: 40px;
+    right: 40px;
+    position: absolute;
+}
+
+.kutu {
+    width: 30px;
+    height: 30px;
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.nusha {
+    position: relative;
     padding: 8mm;
     min-height: 148mm;
     max-height: 297mm;
-
-    background-image: url(../images/kontrol.png);
-    background-repeat: no-repeat;
-    background-position: 50% 100%;
 }
 
-.pb{
-    padding-bottom: 100px;
-}
+.pb {
+    padding-bottom: 95px;
+} 
 
-@media print
-{    
-    .no-print, .no-print *
-    {
+@media print {
+
+    .no-print,
+    .no-print * {
         display: none !important;
     }
 }
