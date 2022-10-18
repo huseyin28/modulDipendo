@@ -15,7 +15,7 @@ body {
 }
 
 .kontrol{
-    bottom: 0;
+    bottom: 10px;
     left: 40px;
     right: 40px;
     position: absolute;
@@ -37,7 +37,7 @@ body {
 }
 
 .pb {
-    padding-bottom: 95px;
+    padding-bottom: 105px;
 } 
 
 @media print {
