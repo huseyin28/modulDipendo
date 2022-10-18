@@ -39,8 +39,8 @@ function writeForm(s){
     Obj.writeProducts()
     // Pristine.writeProducts()
 
-    // window.print(); 
-    // window.close();
+    window.print(); 
+    window.close();
 }
 
 function getDt(str, time = false){
