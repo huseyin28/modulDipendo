@@ -1,31 +1,31 @@
 $(document).ready(ready);
 let purchaseItem = null;
-let stok ;
+let stok;
 let groupUnit = {
-    "meter" : "m",
-    "piece" : " adet"
+    "meter": "m",
+    "piece": " adet"
 }
-let unit ;
-function ready(){
-    $('#goDipendo').on('click',()=>{
-        window.open('https://app.dipendo.com/purchase-items/'+purchaseItemId+'/detail', '_blank');
+let unit;
+function ready() {
+    $('#goDipendo').on('click', () => {
+        window.open('https://app.dipendo.com/purchase-items/' + purchaseItemId + '/detail', '_blank');
     })
     getDetay(purchaseItemId)
 }
 
-function getDetay(id){
+function getDetay(id) {
     $.ajax({
-        url : `https://app.dipendo.com/api/purchase-items/${id}`,
+        url: `https://app.dipendo.com/api/purchase-items/${id}`,
         headers: { "Authorization": Authorization }
     }).then(writeDetay).fail(ajaxFail)
 }
 
-function ajaxFail(e){
+function ajaxFail(e) {
     alert("Sunucuya erişemedik lütfen daha sonra tekrar deneyin")
     console.error(e)
 }
 
-function writeDetay(response){
+function writeDetay(response) {
     purchaseItem = response;
     $('#productName').html(response.product.name);
     $('#purchaseItemId').html(response.purchaseItemId);
@@ -52,37 +52,37 @@ function writeDetay(response){
     GetStatu3(response.product.id, response.purchaseItemId)
     GetStatu4(response.product.id, response.purchaseItemId)
 
-    $('#openFireFazlaModal').off('click').on('click', function(){
-        $('#txtFF').keypress(function(event){
+    $('#openFireFazlaModal').off('click').on('click', function () {
+        $('#txtFF').keypress(function (event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
-            if(keycode == '13') savePurchaseCount()
-          });
+            if (keycode == '13') savePurchaseCount()
+        });
         $('#modalFireFazla').on('shown.bs.modal', function (e) {
             document.getElementById("txtFF").focus();
         })
         $('#modalFireFazla').modal('show');
-    
+
     })
 }
 
-function writeLogs(activities){
+function writeLogs(activities) {
     $('#logs').html('');
+    
     activities.forEach(element => {
-        $('#logs').append(``)
+        $('#logs').append(`<div class="mb-3">${element.content} <span class="float-right"><small>${element.user.firstName} ${element.user.lastName} - ${getDT(element.recordTime)} ${getTM(element.recordTime)}</small></span></div>`)
     });
-    // #logs
 }
 
 // Satıldılar statu 1
-function GetStatu1(productId, PurItemId){
+function GetStatu1(productId, PurItemId) {
     $('#satildi').html('')
     let ekle = 0;
     $.ajax({
-        url : `https://app.dipendo.com/api/sale-items?productId=${productId}&status=1&offset=0&limit=1000`,
+        url: `https://app.dipendo.com/api/sale-items?productId=${productId}&status=1&offset=0&limit=1000`,
         headers: { "Authorization": Authorization }
     }).then(response => {
         response.forEach(element => {
-            if(element.purchaseItem.purchaseItemId == PurItemId){
+            if (element.purchaseItem.purchaseItemId == PurItemId) {
                 ekle += element.saleCount;
                 $('#satildi').append(`<div class="col-9">${element.customer.title}</div><div class="col-3">${element.saleCount}${unit}</div>`)
             }
@@ -93,66 +93,73 @@ function GetStatu1(productId, PurItemId){
 }
 
 // Sevke hazırlar statu 2
-function GetStatu2(productId, PurItemId){
+function GetStatu2(productId, PurItemId) {
     $('#hazir').html('')
     $.ajax({
-        url : `https://app.dipendo.com/api/sale-items?productId=${productId}&status=2&offset=0&limit=1000`,
+        url: `https://app.dipendo.com/api/sale-items?productId=${productId}&status=2&offset=0&limit=1000`,
         headers: { "Authorization": Authorization }
     }).then(response => {
         response.forEach(element => {
-            if(element.purchaseItem.purchaseItemId == PurItemId)
+            if (element.purchaseItem.purchaseItemId == PurItemId)
                 $('#hazir').append(`<div class="col-9">${element.customer.title}</div><div class="col-3">${element.saleCount}${unit}</div>`)
         });
     }).fail(ajaxFail)
 }
 
-// gönderilenler statu 3
-function GetStatu3(productId, PurItemId){
+// gönderilenler statu 3 
+function GetStatu3(productId, PurItemId) {
     $('#gonderildi').html('')
     $.ajax({
-        url : `https://app.dipendo.com/api/sale-items?productId=${productId}&status=3&offset=0&limit=1000`,
+        url: `https://app.dipendo.com/api/sale-items?productId=${productId}&status=3&offset=0&limit=1000`,
         headers: { "Authorization": Authorization }
     }).then(response => {
-        for (let i = response.length-1; i >= 0; i--) {
-            if(response[i].purchaseItem.purchaseItemId == PurItemId){
-                $('#gonderildi').append(`<div class="col-7">${response[i].customer.title}</div><div class="col-3">${response[i].saleCount}${unit}</div><div class="col-2">t</div>`)
+        let dt = new Date();
+        response.reverse().forEach(element => {
+            if (element.purchaseItem.purchaseItemId == PurItemId){
+                dt = new Date(element.deliveryTime)
+                $('#gonderildi').append(`<div class="col-7">${element.customer.title}</div><div class="col-3">${element.saleCount}${unit}</div><div class="col-2">${dt.getDate()}.${dt.getMonth()+1}.${dt.getFullYear()}</div>`)
             }
-        }
+        })
     }).fail(ajaxFail)
 }
 
 // rezerveler statu 4 
-function GetStatu4(productId, PurItemId){
+function GetStatu4(productId, PurItemId) {
     $.ajax({
-        url : `https://app.dipendo.com/api/sale-items?productId=${productId}&status=4&offset=0&limit=1000`,
+        url: `https://app.dipendo.com/api/sale-items?productId=${productId}&status=4&offset=0&limit=1000`,
         headers: { "Authorization": Authorization }
     }).then(response => {
         //console.log(response);
     }).fail(ajaxFail)
 }
 
-function savePurchaseCount(){
-    // https://app.dipendo.com/api/purchase-items?fields=purchaseCount
-    // [{"id":48716,"op":"update","purchaseCount":3964.6}]
-    // purchaseItem.purchaseCount
-
+function savePurchaseCount() {
     let val = $('#txtFF').val();
     val = Number(val)
-    if(isNaN(val)) val = 0;
+    if (isNaN(val)) val = 0;
 
     val += purchaseItem.purchaseCount
 
     $.ajax({
-        type : "PATCH",
+        type: "PATCH",
         headers: { "Authorization": Authorization },
         dataType: "json",
         contentType: "application/json",
-        url : "https://app.dipendo.com/api/purchase-items?fields=purchaseCount",
-        data : JSON.stringify([{"id": purchaseItemId ,"op":"update","purchaseCount":val}]),
+        url: "https://app.dipendo.com/api/purchase-items?fields=purchaseCount",
+        data: JSON.stringify([{ "id": purchaseItemId, "op": "update", "purchaseCount": val }]),
         success: response => {
-            console.log(response);
             $('#modalFireFazla').modal('hide');
             getDetay(purchaseItemId)
         }
     })
+}
+
+function getDT(dt) {
+    let mydt = new Date(dt)
+    return `${mydt.getDate()}.${mydt.getMonth()+1}.${mydt.getFullYear()}`
+}
+
+function getTM(dt){
+    let mydt = new Date(dt)
+    return `${mydt.getHours()}:${mydt.getMinutes()}`
 }
