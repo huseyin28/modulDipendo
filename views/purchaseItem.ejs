@@ -1,7 +1,8 @@
 <div class="card">
 	<div class="card-body">
 		<h4 class="card-title"><span id="productName"></span>
-			<img src="/public/images/dipendo.png" id="goDipendo" style="float: left; cursor: pointer; width: 20px; height: 20px; margin-top: 4px;">
+			<img src="/public/images/dipendo.png" id="goDipendo"
+				style="float: left; cursor: pointer; width: 20px; height: 20px; margin-top: 4px;">
 		</h4>
 		<h6 class="card-subtitle mb-2 text-muted"><b>Nesne Kimliği :</b> <span id="purchaseItemId"></span></h6>
 	</div>
@@ -57,8 +58,25 @@
 			<div class="card-body">
 				<h6 class="card-title">HAREKETLER</h6>
 				<div id="logs">
-					
+
 				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalFireFazla" tabindex="-1" role="dialog" >
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<h5>Fire/Fazla</h5>
+				<div class="input-group mb-3">
+					<input id="txtFF" type="text" class="form-control">
+					<div class="input-group-append">
+						<button class="btn btn-outline-secondary" onclick="savePurchaseCount()" type="button">Kaydet</button>
+					</div>
+				</div>
+				<small class="form-text text-muted">Eklemek için (+) çıkar için (-) ifadesiyle değeri yazınız</small>
 			</div>
 		</div>
 	</div>
