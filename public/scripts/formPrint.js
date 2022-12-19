@@ -95,7 +95,7 @@ let Obj = {
             $('[data-id="products"]').append(Obj.getRow(Sale.listItems[i]))
 
         if(Math.ceil($('.nusha')[0].clientHeight * 0.2645833333) > 148){
-            $('.nusha').height(1122);
+            $('.nusha').height(1050);
         }
     },
     getRow: function (item) {
