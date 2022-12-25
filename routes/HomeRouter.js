@@ -68,4 +68,11 @@ router.get('/sbf', (req, res) => {
     })
 })
 
+router.get('/createQRCode', (req, res) => {
+    res.render('createQRCode',{
+        title : "QR Code Üret",
+        scripts : '<script src="/public/qrcode/qrcode.min.js"></script><script src="/public/scripts/createQRCode.js"></script>'
+    })
+})
+
 module.exports = router
