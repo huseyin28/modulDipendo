@@ -10,7 +10,7 @@ function ready() {
 function loadBekleyenler() {
     $.ajax({
         url: "https://app.dipendo.com/api/purchase-items?status=4&limit=20",
-        headers: { "Authorization": Authorization },
+        headers: { "Authorization": localStorage.getItem('token') },
         success: response => {
             $('#tblList').html('')
             if (response.length > 0) {

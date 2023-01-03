@@ -7,7 +7,7 @@ function ready() {
     const urlParams = new URLSearchParams(location.search);
     $.ajax({
         url: "https://app.dipendo.com/api/sales/" + urlParams.get('id'),
-        headers: { "Authorization": Authorization }
+        headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => {
         Sale = response
         $('#print').off('click').on('click',function(){
@@ -50,7 +50,7 @@ function updateSale() {
         type: "PUT",
         dataType: "JSON",
         data: Sale,
-        headers: { "Authorization": Authorization }
+        headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => {
         setAlert('İşlem başarılı', "success")
         ready()

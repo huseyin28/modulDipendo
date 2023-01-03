@@ -9,7 +9,7 @@ function ready(){
 function getList(){
     $.ajax({
         url : `https://app.dipendo.com/api/purchase-items?status=3&limit=300`,
-        headers: { "Authorization": Authorization }
+        headers: { "Authorization": localStorage.getItem('token') }
     })
     .then(writeList)
     .fail(ajaxFail)

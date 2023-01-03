@@ -7,7 +7,7 @@ function ready(){
 function getSevkeHazir(){
     $.ajax({
         url : `https://app.dipendo.com/api/sale-items?status=2&limit=3000`,
-        headers: { "Authorization": Authorization }
+        headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => {
         $('#list').html('');
         response.forEach(element => {
@@ -29,7 +29,7 @@ function depodanGonder(saleItemId){
         type : "PATCH",
         url : `https://app.dipendo.com/api/sale-items/${saleItemId}`,
         data : {"status":3, "deliveryTime" : deliveryTime},
-        headers : { "Authorization": Authorization }
+        headers : { "Authorization": localStorage.getItem('token') }
     }).then(response => {
         getSevkeHazir()
     })

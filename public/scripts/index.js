@@ -130,10 +130,12 @@ function eventSetDate(start, end) {
 function getList(sound = false) {
     $.ajax({
         url: url,
-        headers: { "Authorization": Authorization }
+        headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => LoadList(response, sound)).fail(error => {
         if (error.status == 401) {
-
+            if(Login()){
+                getList(sound)
+            }
         } else if (window.navigator.onLine == false) {
             alert('İnternet bağlantısını kontrol ediniz')
         }

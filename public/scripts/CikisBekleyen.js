@@ -7,7 +7,7 @@ function ready(){
 function getCikisBekleyenler(){
     $.ajax({
         url : `https://app.dipendo.com/api/sale-items?status=1&limit=3000`,
-        headers: { "Authorization": Authorization }
+        headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => {
         $('#list').html('');
         response.forEach(element => {
@@ -26,7 +26,7 @@ function Hazirla(saleItemId){
         type : "PATCH",
         url : `https://app.dipendo.com/api/sale-items/${saleItemId}`,
         data : {"status":2},
-        headers : { "Authorization": Authorization }
+        headers : { "Authorization": localStorage.getItem('token') }
     }).then(response => {
         getCikisBekleyenler()
     })

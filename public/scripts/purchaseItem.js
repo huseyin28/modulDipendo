@@ -16,7 +16,7 @@ function ready() {
 function getDetay(id) {
     $.ajax({
         url: `https://app.dipendo.com/api/purchase-items/${id}`,
-        headers: { "Authorization": Authorization }
+        headers: { "Authorization": localStorage.getItem('token') }
     }).then(writeDetay).fail(ajaxFail)
 }
 
@@ -79,7 +79,7 @@ function GetStatu1(productId, PurItemId) {
     let ekle = 0;
     $.ajax({
         url: `https://app.dipendo.com/api/sale-items?productId=${productId}&status=1&offset=0&limit=1000`,
-        headers: { "Authorization": Authorization }
+        headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => {
         response.forEach(element => {
             if (element.purchaseItem.purchaseItemId == PurItemId) {
@@ -97,7 +97,7 @@ function GetStatu2(productId, PurItemId) {
     $('#hazir').html('')
     $.ajax({
         url: `https://app.dipendo.com/api/sale-items?productId=${productId}&status=2&offset=0&limit=1000`,
-        headers: { "Authorization": Authorization }
+        headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => {
         response.forEach(element => {
             if (element.purchaseItem.purchaseItemId == PurItemId)
@@ -111,7 +111,7 @@ function GetStatu3(productId, PurItemId) {
     $('#gonderildi').html('')
     $.ajax({
         url: `https://app.dipendo.com/api/sale-items?productId=${productId}&status=3&offset=0&limit=1000`,
-        headers: { "Authorization": Authorization }
+        headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => {
         let dt = new Date();
         response.reverse().forEach(element => {
@@ -127,7 +127,7 @@ function GetStatu3(productId, PurItemId) {
 function GetStatu4(productId, PurItemId) {
     $.ajax({
         url: `https://app.dipendo.com/api/sale-items?productId=${productId}&status=4&offset=0&limit=1000`,
-        headers: { "Authorization": Authorization }
+        headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => {
         //console.log(response);
     }).fail(ajaxFail)
@@ -142,7 +142,7 @@ function savePurchaseCount() {
 
     $.ajax({
         type: "PATCH",
-        headers: { "Authorization": Authorization },
+        headers: { "Authorization": localStorage.getItem('token') },
         dataType: "json",
         contentType: "application/json",
         url: "https://app.dipendo.com/api/purchase-items?fields=purchaseCount",

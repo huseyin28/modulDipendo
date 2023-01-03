@@ -23,7 +23,7 @@ $(document).ready(ready)
 function ready(){
     $.ajax({
         url: "https://app.dipendo.com/api/sales/" + SaleID,
-        headers: { "Authorization": Authorization }
+        headers: { "Authorization": localStorage.getItem('token') }
     }).then(writeForm)
 }
 

@@ -14,7 +14,7 @@ class main {
     getSevkeHazir(){
         $.ajax({
             url : `https://app.dipendo.com/api/sale-items?status=2&limit=3000`,
-            headers: { "Authorization": Authorization }
+            headers: { "Authorization": localStorage.getItem('token') }
         }).then(response => {
             $('#sevkeHazir').html('');
             response.forEach(element => {
@@ -35,7 +35,7 @@ class main {
             type : "PATCH",
             url : `https://app.dipendo.com/api/sale-items/${saleItemId}`,
             data : {"status":3, "deliveryTime" : deliveryTime},
-            headers : { "Authorization": Authorization }
+            headers : { "Authorization": localStorage.getItem('token') }
         }).then(response => {
             this.getSevkeHazir()
             this.demo()
@@ -51,14 +51,14 @@ class main {
             type : "PATCH",
             url : `https://app.dipendo.com/api/sale-items/75082`,
             data : {"deliveryTime" : deliveryTime},
-            headers : { "Authorization": Authorization }
+            headers : { "Authorization": localStorage.getItem('token') }
         })
     }
 
     getCikisBekleyenler(){
         $.ajax({
             url : `https://app.dipendo.com/api/sale-items?status=1&limit=3000`,
-            headers: { "Authorization": Authorization }
+            headers: { "Authorization": localStorage.getItem('token') }
         }).then(response => {
             $('#cikisBekleyen').html('');
             response.forEach(element => {
@@ -75,7 +75,7 @@ class main {
             type : "PATCH",
             url : `https://app.dipendo.com/api/sale-items/${saleItemId}`,
             data : {"status":2},
-            headers : { "Authorization": Authorization }
+            headers : { "Authorization": localStorage.getItem('token') }
         }).then(response => {
             console.log(response)
             this.getCikisBekleyenler()
@@ -86,7 +86,7 @@ class main {
     getGirisBeklenler() {
         $.ajax({
             url: `https://app.dipendo.com/api/purchase-items?status=3&limit=300`,
-            headers: { "Authorization": Authorization }
+            headers: { "Authorization": localStorage.getItem('token') }
         }).then(this.writeGirisBekleyenler)
     }
 
@@ -106,7 +106,7 @@ class main {
             type : "PATCH",
             url : `https://app.dipendo.com/api/purchase-items/${pid}`,
             data : {"status":4},
-            headers : { "Authorization": Authorization }
+            headers : { "Authorization": localStorage.getItem('token') }
         }).then(response => {
             console.log(response)
             this.getGirisBeklenler()
@@ -116,7 +116,7 @@ class main {
     getLastSales() {
         $.ajax({
             url: 'https://app.dipendo.com/api/sales?limit=30&status=3',
-            headers: { Authorization: Authorization }
+            headers: { Authorization: localStorage.getItem('token') }
         }).then(this.writeLastSales).fail(this.ajaxFail)
     }
 
