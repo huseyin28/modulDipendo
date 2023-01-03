@@ -29,6 +29,7 @@ function loadList(response){
 /*
 NOT : ürün ismini "propertyValues" ile markasız bir şekilde oluşturucam
 note kısmını elle yazıcam
+adetli ürünlerin birleştirilmesi mevzusu
 */
 
 
