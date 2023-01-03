@@ -9,23 +9,75 @@ function main() {
 
 function loadList(response){
     $('#list').html("");
-    console.log(response);
     for (const i in response) {
         if (Object.hasOwnProperty.call(response, i)) {
             const element = response[i];
-            $('#list').append(`<div class="row">
-                <div class="col-3"><i class="fa-solid fa-plus fa-fw text-success"></i> ${strReplace.getCustomer(element.customer.title)}</div>
-                <div class="col-5">${strReplace.getProduct(element.purchaseItem.product.name)}</div>
-            </div>`)
+            $('#SBF').append(`<tr id="${element.saleItemId}">
+                <td>${Number(i)+1}</td>
+                <td>${strReplace.getCustomer(element.customer.title)}</div>
+                <td>${strReplace.getProduct(element.purchaseItem.product.name)}</div>
+                <td>${element.saleCount}</div>
+                <td>${strReplace.getMarka(getVal(element.purchaseItem.product.propertyValues,'Marka'))}</div>
+                <td>${getNote(element)}</div>
+            </tr>`)
 
         }
     }
+    $('#SBF tr').off('click').on('click', selectItem);
+}
+
+/*
+NOT : ürün ismini "propertyValues" ile markasız bir şekilde oluşturucam
+note kısmını elle yazıcam
+*/
+
+
+function getNote(element){
+    if(element.purchaseItem.product.groupUnit == 'piece'){
+        return 'Verildi'
+    }else{
+        return '-'
+    }
+
+}
+
+function selectItem(){
+    $(this).css("background-color", "#c4ffc4");
+
+    console.log($(this).attr('id'));
+}
+
+function getVal(vals,Name){
+    let sonuc = '';
+    vals.forEach(element => {
+        if(element.propertyName == Name){
+            sonuc = element.value
+        }
+    });
+    return sonuc
 }
 
 class strReplace{
     static getCustomer(title){
         let exp = title.split(" ")
         return `${exp[0]} ${exp[1]}`
+    }
+
+    static getMarka(Marka){
+        Marka = Marka.replaceAll('SHANDONG', 'SHD')
+        Marka = Marka.replaceAll('ERCİYES', 'ERC')
+        Marka = Marka.replaceAll('Erciyes', 'ERC')
+        Marka = Marka.replaceAll('MS ASANSÖR', 'MS')
+        Marka = Marka.replaceAll('KAPTAN', 'KPT')
+        Marka = Marka.replaceAll('DRAKO', 'DRK')
+        Marka = Marka.replaceAll('KISWIRE', 'KSW')
+        Marka = Marka.replaceAll('KİSWİRE', 'KSW')
+        Marka = Marka.replaceAll('GÖVER', 'GVR')
+        Marka = Marka.replaceAll('KÖŞKER', 'KŞKR')
+        Marka = Marka.replaceAll('Köşkerler', 'KŞKR')
+        Marka = Marka.replaceAll('ARAS KALIP', 'ARAS')
+        Marka = Marka.replaceAll('VAN BEEST', 'VANB')
+        return Marka
     }
 
     static getProduct(name){
@@ -50,7 +102,8 @@ class strReplace{
         name = name.replaceAll(' WS', '')
         name = name.replaceAll(' KÖ', '+1')
         name = name.replaceAll(' SEALE', 'S')
-        name = name.replaceAll(' Van Beest', ' VANB')
+        name = name.replaceAll(' Van Beest', '')
+        name = name.replaceAll('SHANDONG', 'SHD')
         return name
     }
 }

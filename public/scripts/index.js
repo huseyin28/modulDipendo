@@ -137,7 +137,7 @@ function getList(sound = false) {
                 getList(sound)
             }
         } else if (window.navigator.onLine == false) {
-            alert('İnternet bağlantısını kontrol ediniz')
+            setAlert('İnternet bağlantısını kontrol ediniz')
         }
     })
 }
