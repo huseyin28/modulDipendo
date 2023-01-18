@@ -1,6 +1,7 @@
 $(document).ready(main)
 
 function main() {
+    $('#btnOnay').on('click',createForm)
     $.ajax({
         url: `https://app.dipendo.com/api/sale-items?status=3&offset=0&limit=150`,
         headers: { "Authorization": localStorage.getItem('token') }
@@ -24,6 +25,10 @@ function loadList(response){
         }
     }
     $('#SBF tr').off('click').on('click', selectItem);
+}
+
+function createForm(){
+    
 }
 
 /*
