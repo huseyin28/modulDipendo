@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .conteiner {
+            width: 210mm;
+        }
+
+        .a4 {
+            padding: 6mm 10mm;
+            box-sizing: border-box;
+            width: 210mm;
+            height: 297mm;
+            border-bottom: 1px solid purple;
+            float: left;
+            page-break-inside: avoid;
+        }
+
+        .a4>.row:last-child {
+            border-bottom-width: 0px;
+        }
+
+        .row {
+            font-size: 13pt;
+            padding-top: 4mm;
+            padding-bottom: 4mm;
+            border-bottom: 1px solid grey;
+            page-break-inside: avoid;
+            float: left;
+        }
+
+        .row>span:first-child {
+            margin-top: 0mm !important;
+        }
+
+        span {
+            display: block;
+            width: 100%;
+        }
+
+        .qr {
+            border: 1px solid red;
+            width: 27mm;
+            height: 27mm;
+            float: left;
+        }
+
+        .atr {
+            padding-left: 10mm;
+            width: 140mm;
+            height: 27mm;
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="conteiner"></div>
+    <script src="/public/jquery/jquery-3.6.0.min.js"></script>
+    <script src="/public/scripts/printQRCode.js"></script>
+</body>
+
+</html>

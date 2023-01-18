@@ -1,14 +1,13 @@
-<div class="card shadow-sm">
-	<div class="card-body">
-		<table class="table table-sm">
-			<thead>
-				<th style="width : 40px;">Seçim</th>
-				<th style="width : 80px;">ID</th>
-				<th>Ürün</th>
-				<th>Miktar</th>
-			</thead>
-			<tbody id="tblList"></tbody>
-		</table>
-		<p><small><span id="lblInfo"></span></small></p>
+<div class="row">
+	<div class="col-6">
+		<div class="input-group mb-3">
+			<input type="text" class="form-control" id="txtCode">
+			<div class="input-group-append">
+				<button class="btn btn-outline-secondary" type="button" onclick="addCode()">Ekle</button>
+			</div>
+		</div>
+		<button class="btn mb-2 btn-outline-secondary" type="button" onclick="print()">Yazdır</button>
+		<h5>Şecili QRCode'lar</h5>
+		<div id="codes"></div>
 	</div>
 </div>

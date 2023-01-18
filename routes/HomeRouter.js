@@ -25,6 +25,12 @@ router.get('/formPrint/:id', (req, res) => {
     })
 })
 
+router.get('/printQRCode', (req, res) => {
+    res.render('printQRCode', {
+        layout : false,
+    })
+})
+
 router.get('/purchaseItem/detay/:id', (req, res) => {
     res.render('purchaseItem', {
         title: 'Ürün Detayı',
