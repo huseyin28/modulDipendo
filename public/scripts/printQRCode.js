@@ -4,6 +4,7 @@ codes.forEach((element,index) => {
     if((index)%8 == 0){
         $('.conteiner').append('<div class="a4"></div>')
     }
+    addQRCode(element)
     $('.a4:last-child').append(`<div class="row">
             <div class="qr">${element}</div>
             <div class="atr">
@@ -14,4 +15,15 @@ codes.forEach((element,index) => {
             </div>
         </div>`)
 });
+
+function addQRCode(id){
+    $.ajax({
+        url: `https://app.dipendo.com/api/purchase-items/${id}`,
+        headers: { "Authorization": localStorage.getItem('token') },
+        async : false,
+        success : response => {
+            console.log(response);
+        }
+    })
+}
 
