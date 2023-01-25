@@ -1,28 +1,38 @@
 let searchParams = new URLSearchParams(window.location.search)
 let codes = searchParams.get('codes').split(',')
-codes.forEach((element,index) => {
-    if((index)%8 == 0){
+
+
+
+
+codes.forEach((element, index) => {
+    if ((index) % 8 == 0) {
         $('.conteiner').append('<div class="a4"></div>')
     }
     addQRCode(element)
-    $('.a4:last-child').append(`<div class="row">
-            <div class="qr">${element}</div>
-            <div class="atr">
-                <span>${element}</span>
-                <span>36mm 6x36 ÇÖ UNGALV 1960 A2 RHRL Erciyes</span>
-                <span>2000 m</span>
-                <span>2351 kg</span>
-            </div>
-        </div>`)
+
 });
 
-function addQRCode(id){
+function addQRCode(id) {
+
     $.ajax({
         url: `https://app.dipendo.com/api/purchase-items/${id}`,
         headers: { "Authorization": localStorage.getItem('token') },
-        async : false,
-        success : response => {
-            console.log(response);
+        async: false,
+        success: response => {
+            $('.a4:last-child').append(`<div class="row">
+                <div class="qr" id="div${response.purchaseItemId}"></div>
+                <div class="atr">
+                    <span>${response.purchaseItemId}</span>
+                    <span>${response.product.name}</span>
+                    <span>${response.purchaseCount}</span>
+                    <span>${Math.floor(response.product.unitMass * response.purchaseCount)} ${response.product.unitOfMass}</span>
+                </div>
+            </div>`)
+            new QRCode(document.getElementById("div" + response.purchaseItemId), {
+                text: "dipendo://info?id=" + response.purchaseItemId,
+                width: 104,
+                height: 104,
+            });
         }
     })
 }

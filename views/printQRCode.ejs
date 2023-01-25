@@ -8,12 +8,12 @@
     <title>Document</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Ubuntu', sans-serif;
         }
 
         .conteiner {
@@ -53,7 +53,6 @@
         }
 
         .qr {
-            border: 1px solid red;
             width: 27mm;
             height: 27mm;
             float: left;
@@ -64,6 +63,8 @@
             width: 140mm;
             height: 27mm;
             float: left;
+            line-height: 25px;
+            font-size: 14pt;
         }
     </style>
 </head>
@@ -71,6 +72,7 @@
 <body>
     <div class="conteiner"></div>
     <script src="/public/jquery/jquery-3.6.0.min.js"></script>
+    <script src="/public/qrcode/qrcode.min.js"></script>
     <script src="/public/scripts/printQRCode.js"></script>
 </body>
 
