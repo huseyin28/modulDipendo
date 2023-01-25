@@ -13,18 +13,28 @@ function loadList(response){
     for (const i in response) {
         if (Object.hasOwnProperty.call(response, i)) {
             const element = response[i];
+            let marka = strReplace.getMarka(getVal(element.purchaseItem.product.propertyValues,'Marka'));
             $('#SBF').append(`<tr id="${element.saleItemId}">
-                <td>${Number(i)+1}</td>
                 <td>${strReplace.getCustomer(element.customer.title)}</div>
-                <td>${strReplace.getProduct(element.purchaseItem.product.name)}</div>
+                <td>${strReplace.getProduct(Join(element.purchaseItem.product.propertyValues))}</div>
                 <td>${element.saleCount}</div>
-                <td>${strReplace.getMarka(getVal(element.purchaseItem.product.propertyValues,'Marka'))}</div>
+                <td>${marka}</div>
                 <td>${getNote(element)}</div>
             </tr>`)
 
         }
     }
     $('#SBF tr').off('click').on('click', selectItem);
+}
+
+function Join(vals){
+    let str = '';
+    for (let i = 0; i < vals.length-1; i++) {
+        const element = vals[i];
+        if(i != 0) str += ' ';
+        str += element.value;
+    }
+    return str
 }
 
 function createForm(){
