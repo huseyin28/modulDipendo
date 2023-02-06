@@ -1,3 +1,5 @@
+let selectesItems = [];
+let list = {};
 $(document).ready(main)
 
 function main() {
@@ -9,7 +11,8 @@ function main() {
 }
 
 function loadList(response){
-    $('#list').html("");
+    console.log("liste yazılıyor");
+    $('#SBF').html("");
     for (const i in response) {
         if (Object.hasOwnProperty.call(response, i)) {
             const element = response[i];
@@ -38,29 +41,49 @@ function Join(vals){
 }
 
 function createForm(){
-    
-}
+    list = {}
+    selectesItems.forEach(element => {
+        $.ajax({
+            url : "https://app.dipendo.com/api/sale-items/"+element,
+            async : false,
+            headers: { "Authorization": localStorage.getItem('token') },
+            success : response => {
+                let kod = '';
+                if(response.saleCount == response.purchaseItem.purchaseCount && response.purchaseItem.product.groupUnit == "meter"){
+                    kod = `${response.customer.id}-${response.purchaseItem.product.id}`
+                }else if(response.purchaseItem.product.groupUnit == "piece") // Adetli ürün 
+                    kod = `${response.customer.id}-${response.purchaseItem.product.id}`;
+                else if(response.purchaseItem.product.groupUnit == "meter") // halat
+                    kod = `${response.customer.id}-${response.purchaseItem.purchaseItemId}`;
 
-/*
-NOT : ürün ismini "propertyValues" ile markasız bir şekilde oluşturucam
-note kısmını elle yazıcam
-adetli ürünlerin birleştirilmesi mevzusu
-*/
+                if (kod in list){
+                    list[kod].saleCount += response.saleCount;
+                }else{
+                    list[kod] = response
+                }
+            }
+        })
+    })
+    loadList(Object.values(list))
+    // Object.keys(list).forEach(element => {
+    //     console.log(list[element].purchaseItem.product.name, list[element].saleCount);
+    // })
+}
 
 
 function getNote(element){
     if(element.purchaseItem.product.groupUnit == 'piece'){
         return 'Verildi'
     }else{
-        return '-'
+        return ``;
     }
 
 }
 
 function selectItem(){
     $(this).css("background-color", "#c4ffc4");
-
-    console.log($(this).attr('id'));
+    // Burası toggle olacak ekliyse çıkartıcak yoksa ekleyecek. !!! 
+    selectesItems.push($(this).attr('id'));
 }
 
 function getVal(vals,Name){
@@ -93,6 +116,10 @@ class strReplace{
         Marka = Marka.replaceAll('Köşkerler', 'KŞKR')
         Marka = Marka.replaceAll('ARAS KALIP', 'ARAS')
         Marka = Marka.replaceAll('VAN BEEST', 'VANB')
+        Marka = Marka.replaceAll('SEVERSTAL', 'SVR')
+        Marka = Marka.replaceAll('KJ CHAIN', 'KJC')
+        Marka = Marka.replaceAll('Yeni Doğan', 'YD')
+        Marka = Marka.replaceAll('NEMAG', 'NMG')
         return Marka
     }
 
