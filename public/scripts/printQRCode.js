@@ -24,7 +24,7 @@ function addQRCode(id) {
                 <div class="atr">
                     <span>${response.purchaseItemId}</span>
                     <span>${response.product.name}</span>
-                    <span>${response.purchaseCount}</span>
+                    <span>${response.purchaseCount} ${getBirim(response.product.groupUnit)}</span>
                     <span>${Math.floor(response.product.unitMass * response.purchaseCount)} ${response.product.unitOfMass}</span>
                 </div>
             </div>`)
@@ -37,3 +37,11 @@ function addQRCode(id) {
     })
 }
 
+function getBirim(nt){
+    if(nt == "meter"){
+        return "m"
+    }else{
+        return ''
+    }
+
+}
