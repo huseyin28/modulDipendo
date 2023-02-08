@@ -19,7 +19,7 @@ function loadList(response){
             let marka = strReplace.getMarka(getVal(element.purchaseItem.product.propertyValues,'Marka'));
             $('#SBF').append(`<tr id="${element.saleItemId}">
                 <td>${strReplace.getCustomer(element.customer.title)}</div>
-                <td>${strReplace.getProduct(Join(element.purchaseItem.product.propertyValues))}</div>
+                <td>${strReplace.getProduct(element.purchaseItem.product.name)}</div>
                 <td>${element.saleCount}</div>
                 <td>${marka}</div>
                 <td>${getNote(element)}</div>
@@ -124,6 +124,9 @@ class strReplace{
     }
 
     static getProduct(name){
+        name = name.replaceAll('MS ASANSÖR', 'MS')
+        name = name.replaceAll('ARAS KALIP', 'ARAS')
+        name = name.replaceAll('VAN BEEST', 'VANB')
         name = name.replaceAll('Omega ', 'O ')
         name = name.replaceAll(' Ton ', 'T ')
         name = name.replaceAll(' Yellow Pin ', ' YP ')
@@ -145,8 +148,12 @@ class strReplace{
         name = name.replaceAll(' WS', '')
         name = name.replaceAll(' KÖ', '+1')
         name = name.replaceAll(' SEALE', 'S')
-        name = name.replaceAll(' Van Beest', '')
-        name = name.replaceAll('SHANDONG', 'SHD')
-        return name
+        name = name.replaceAll('1370/1770', '')
+        name = name.replaceAll('Zincir Kancası Gözlü B Tipi', 'Kanca B Gözlü')
+
+        
+        let dm = name.split(' ')
+        dm.splice(dm.length - 1, 1)
+        return dm.join(' ');
     }
 }
