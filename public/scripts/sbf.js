@@ -1,13 +1,27 @@
+
+
 let selectesItems = [];
 let list = {};
 $(document).ready(main)
 
 function main() {
+    products()
     $('#btnOnay').on('click',createForm)
     $.ajax({
         url: `https://app.dipendo.com/api/sale-items?status=3&offset=0&limit=150`,
         headers: { "Authorization": localStorage.getItem('token') }
     }).then(loadList)
+}
+
+function products(){
+    $.ajax({
+        url : "/public/data/productsLite.json",
+        dataType : "JSON",
+        success : response => {
+            console.log(Object.values(response).length);
+            // console.log(response.length);
+        }
+    })
 }
 
 function loadList(response){
