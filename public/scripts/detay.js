@@ -41,6 +41,7 @@ function allStatus(statu) {
         item.status = statu;
         item.deliveryTime = deliveryTime
     })
+    Sale.deliveryTime = deliveryTime;
     updateSale();
 }
 
