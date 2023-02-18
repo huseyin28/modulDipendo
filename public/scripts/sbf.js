@@ -164,6 +164,7 @@ class strReplace{
         name = name.replaceAll(' SEALE', 'S')
         name = name.replaceAll('1370/1770', '')
         name = name.replaceAll('Zincir Kancası Gözlü B Tipi', 'Kanca B Gözlü')
+        
 
         
         let dm = name.split(' ')
