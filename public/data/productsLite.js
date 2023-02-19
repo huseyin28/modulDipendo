@@ -1,3 +1,4 @@
+let productsLite = 
 {
     "251680": {
         "longName": "08mm Hyfil 8 GALV KSW",

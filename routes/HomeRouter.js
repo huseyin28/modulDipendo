@@ -70,7 +70,7 @@ router.get('/currentStatusScreen', (req, res) => {
 router.get('/sbf', (req, res) => {
     res.render('sbf',{
         title : "Sevkiyat Bildirim Formu",
-        scripts : '<script src="/public/scripts/sbf.js"></script>'
+        scripts : '<script src="/public/data/productsLite.js"></script><script src="/public/scripts/sbf.js"></script>'
     })
 })
 
