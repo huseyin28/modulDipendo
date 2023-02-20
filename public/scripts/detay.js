@@ -60,7 +60,6 @@ function updateSale() {
     })
 }
 
-
 let PAGE = {
     writeForm: function () {
         $('#HtmlForm #htmlCustomer').html(Sale.customer.title)

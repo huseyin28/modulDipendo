@@ -1,25 +1,19 @@
 let selectesItems = [];
 let list = {};
+let today = new Date(Date.now());
 $(document).ready(main)
 
 function main() {
-    products()
+    $('#start').val(`${today.getFullYear()}-${("0"+(today.getMonth() + 1)).slice(-2)}-${("0"+today.getDate()).slice(-2)}`)
+    $('#start').off('change').on('change', () => {
+        today = new Date($('#start').val());
+        main();
+    })
     $('#btnOnay').on('click', createForm)
     $.ajax({
         url: `https://app.dipendo.com/api/sale-items?status=3&offset=0&limit=500`,
         headers: { "Authorization": localStorage.getItem('token') }
     }).then(loadList)
-}
-
-function products() {
-    $.ajax({
-        url: "/public/data/productsLite.json",
-        dataType: "JSON",
-        success: response => {
-            console.log(Object.values(response).length);
-            // console.log(response.length);
-        }
-    })
 }
 
 function loadList(response) {
@@ -28,8 +22,7 @@ function loadList(response) {
     for (const i in response) {
         if (Object.hasOwnProperty.call(response, i)) {
             const element = response[i];
-            console.log(element);
-            if (element) {
+            if (element.deliveryTime == `${today.getFullYear()}-${("0"+(today.getMonth() + 1)).slice(-2)}-${("0"+(today.getDate() - 1)).slice(-2)}T21:00:00`) {
                 /***85044 */
                 $('#SBF').append(`<tr id="${element.saleItemId}">
                     <td>${strReplace.getCustomer(element.customer.title)}</div>
@@ -113,7 +106,10 @@ function getVal(vals, Name) {
 class strReplace {
     static getCustomer(title) {
         let exp = title.split(" ")
-        return `${exp[0]} ${exp[1]}`
+        let str = `${exp[0]} ${exp[1]}`
+        if(str.length > 10)
+            str = str.slice(0, 11)
+        return str
     }
 
     static getMarka(Marka) {
