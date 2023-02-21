@@ -22,15 +22,18 @@ function loadList(response) {
     for (const i in response) {
         if (Object.hasOwnProperty.call(response, i)) {
             const element = response[i];
-            if (element.deliveryTime == `${today.getFullYear()}-${("0"+(today.getMonth() + 1)).slice(-2)}-${("0"+(today.getDate() - 1)).slice(-2)}T21:00:00`) {
+            let strToday = `${today.getFullYear()}-${("0"+(today.getMonth() + 1)).slice(-2)}-${("0"+(today.getDate() - 1)).slice(-2)}T21:00:00`
+            if (element.deliveryTime == strToday) {
                 /***85044 */
                 $('#SBF').append(`<tr id="${element.saleItemId}">
                     <td>${strReplace.getCustomer(element.customer.title)}</div>
-                    <td>${productsLite[element.purchaseItem.product.id].name}</div>
+                    <td>${productsLite[element.purchaseItem.product.id].name || element.purchaseItem.product.name}</div>
                     <td>${element.saleCount}</div>
-                    <td>${productsLite[element.purchaseItem.product.id].brand}</div>
+                    <td>${productsLite[element.purchaseItem.product.id].brand || ''}</div>
                     <td>${getNote(element)}</div>
                 </tr>`)
+            }else{
+                console.log(element.deliveryTime == strToday, element.deliveryTime, strToday);
             }
         }
     }

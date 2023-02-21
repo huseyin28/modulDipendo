@@ -1,5 +1,20 @@
 let productsLite = 
 {
+    "254087": {
+        "longName": "Kilit Pimi 4x32 VANB",
+        "name": "Kilit Pimi 4x32",
+        "brand": "VANB"
+    },
+    "254088": {
+        "longName": "Kilit Pimi 6x45 VANB",
+        "name": "Kilit Pimi 6x45",
+        "brand": "VANB"
+    },
+    "254089": {
+        "longName": "Kilit Pimi 8x63 VANB",
+        "name": "Kilit Pimi 8x63",
+        "brand": "VANB"
+    },
     "251680": {
         "longName": "08mm Hyfil 8 GALV KSW",
         "name": "08mm Hyfil 8 GALV",
