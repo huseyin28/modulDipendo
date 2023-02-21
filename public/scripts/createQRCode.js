@@ -11,6 +11,9 @@ function addCode() {
     let txtCode = $('#txtCode').val().trim();
     if (txtCode.length < 5) {
         console.log('geçersiz code gidiniz ' + txtCode)
+    } else if (txtCode.length == 5) {
+        qrCodes.push(txtCode)
+        write()
     } else if (txtCode.indexOf(",") > -1) {
         let sp = txtCode.split(',')
         sp.forEach(element => qrCodes.push(element));
