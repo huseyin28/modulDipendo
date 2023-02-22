@@ -1,5 +1,25 @@
 let productsLite = 
 {
+    "254086": {
+        "longName": "5,00 Ton Kilit Omega Somunlu Süper Van Beest",
+        "name": "Kilit O Som. Süper 5T",
+        "brand": "VANB"
+    },
+    "254090": {
+        "longName": "24mm ADAL M24x112 4 Ton Van Beest",
+        "name": "ADAL M24x112 4T",
+        "brand": "VANB"
+    },
+    "254091": {
+        "longName": "30mm ADAL M30x101 6,3 Ton Van Beest",
+        "name": "ADAL M30x101 6,3T",
+        "brand": "VANB"
+    },
+    "254092": {
+        "longName": "36mm ADAL M36x110 10 Ton Van Beest",
+        "name": "ADAL M36x110 10T",
+        "brand": "VANB"
+    },
     "254087": {
         "longName": "Kilit Pimi 4x32 VANB",
         "name": "Kilit Pimi 4x32",

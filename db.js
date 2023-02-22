@@ -16,7 +16,18 @@ init();
 
 async function init() {
 	const db = await open(dbOptions);
+	controlProducts(db);
 	//startProductsShortName(db)
+}
+
+async function controlProducts(db) {
+	const response = await axios.get("https://app.dipendo.com/api/products?offset=0&limit=99999&groupIds=", {
+		headers: reqHeaders
+	});
+	const result = await db.get(`SELECT COUNT(id) as ct FROM products`);
+
+	console.log(response.data.length);
+	console.log(result);
 }
 
 async function startProductsShortName(db){
