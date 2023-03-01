@@ -22,7 +22,8 @@ async function init() {
 
 async function controlProducts(db) {
 	const response = await axios.get("https://app.dipendo.com/api/products?offset=0&limit=99999&groupIds=", {
-		headers: reqHeaders
+		headers: reqHeaders,
+		cache : false
 	});
 	const result = await db.get(`SELECT COUNT(id) as ct FROM products`);
 
