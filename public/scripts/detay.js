@@ -34,7 +34,7 @@ function setStatu() {
 }
 
 function allStatus(statu) {
-    let dt = new Date();
+    let dt = new Date($('#SendDate').val());
     dt.setDate(dt.getDate() - 1)
     let deliveryTime = `${dt.getFullYear()}-${(dt.getMonth()+1) > 9 ? dt.getMonth()+1 : '0'+(dt.getMonth()+1)}-${(dt.getDate()) > 9 ? (dt.getDate()) : '0'+(dt.getDate())}T21:00:00`;
     Sale.saleItems.forEach(item => {
@@ -63,7 +63,7 @@ function updateSale() {
 let PAGE = {
     writeForm: function () {
         $('#HtmlForm #htmlCustomer').html(Sale.customer.title)
-        $('#HtmlForm #htmlSendDate').html(`Sevk Tarihi : &ensp;${FORM.getTarih(Sale.deliveryTime)}`)
+        $('#HtmlForm #htmlSendDate').html(`Sevk Tarihi : &ensp;<input type="date" id="SendDate" name="trip-start" value="${FORM.getTarih(Sale.deliveryTime, true)}">`)
         $('#HtmlForm #htmlExplanation').html((Sale.explanation || '').replaceAll('\n','<br>'))
         $('#HtmlForm #htmlUser').html(Sale.user.firstName + ' ' + Sale.user.lastName + ' / <small>' + FORM.getTarih(Sale.recordTime) + '</small>')
         $('#htmlSaleCode').html(`Sipariş No : &ensp; ${Sale.externalSaleCode || ''}`)
@@ -189,9 +189,14 @@ let FORM = {
         <td>${item.saleCount} ${units[item.purchaseItem.product.productGroupId]}</td>
     </tr>`;
     },
-    getTarih: function (dt) {
+    getTarih: function (dt, input=false) {
         let d = new Date(dt);
         d.setTime(d.getTime() + 3 * 60 * 60 * 1000);
+        if(input){
+            let month = '0' + (d.getMonth() + 1);
+            let day = '0' + (d.getDate());
+            return `${d.getFullYear()}-${month.slice(-2)}-${day.slice(-2)}`;
+        }
         return `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
     }
 }
