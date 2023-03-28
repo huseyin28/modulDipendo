@@ -4,7 +4,7 @@ let today = new Date(Date.now());
 $(document).ready(main)
 
 function main() {
-    $('#start').val(`${today.getFullYear()}-${("0"+(today.getMonth() + 1)).slice(-2)}-${("0"+today.getDate()).slice(-2)}`)
+    $('#start').val(`${today.getFullYear()}-${("0" + (today.getMonth() + 1)).slice(-2)}-${("0" + today.getDate()).slice(-2)}`)
     $('#start').off('change').on('change', () => {
         today = new Date($('#start').val());
         main();
@@ -21,15 +21,25 @@ function loadList(response) {
     for (const i in response) {
         if (Object.hasOwnProperty.call(response, i)) {
             const element = response[i];
-            let strToday = `${today.getFullYear()}-${("0"+(today.getMonth() + 1)).slice(-2)}-${("0"+(today.getDate() - 1)).slice(-2)}T21:00:00`
+            let strToday = `${today.getFullYear()}-${("0" + (today.getMonth() + 1)).slice(-2)}-${("0" + (today.getDate() - 1)).slice(-2)}T21:00:00`
             if (element.deliveryTime == strToday) {
-                $('#SBF').append(`<tr id="${element.saleItemId}">
-                    <td>${strReplace.getCustomer(element.customer.title)}</div>
-                    <td>${productsLite[element.purchaseItem.product.id].name || element.purchaseItem.product.name}</div>
-                    <td>${element.saleCount}</div>
-                    <td>${productsLite[element.purchaseItem.product.id].brand || ''}</div>
-                    <td>${getNote(element)}</div>
-                </tr>`)
+                if (productsLite[element.purchaseItem.product.id]) {
+                    $('#SBF').append(`<tr id="${element.saleItemId}">
+                        <td>${strReplace.getCustomer(element.customer.title)}</div>
+                        <td>${productsLite[element.purchaseItem.product.id].name || element.purchaseItem.product.name}</div>
+                        <td>${element.saleCount}</div>
+                        <td>${productsLite[element.purchaseItem.product.id].brand || ''}</div>
+                        <td>${getNote(element)}</div>
+                    </tr>`)
+                }else{
+                    $('#SBF').append(`<tr id="${element.saleItemId}">
+                        <td>${strReplace.getCustomer(element.customer.title)}</div>
+                        <td>${element.purchaseItem.product.name}</div>
+                        <td>${element.saleCount}</div>
+                        <td></div>
+                        <td>${getNote(element)}</div>
+                    </tr>`)
+                }
             }
         }
     }
@@ -106,7 +116,7 @@ class strReplace {
     static getCustomer(title) {
         let exp = title.split(" ")
         let str = `${exp[0]} ${exp[1]}`
-        if(str.length > 10)
+        if (str.length > 10)
             str = str.slice(0, 11)
         return str
     }
