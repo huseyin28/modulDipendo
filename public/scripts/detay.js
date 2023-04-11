@@ -60,10 +60,35 @@ function updateSale() {
     })
 }
 
+function setToday(gun){
+    let d = new Date(Date.now());
+    d.setDate(d.getDate()+gun)
+    if(gun == -1){
+        if(d.getDay() == 0)
+            d.setDate(d.getDate() - 2) // pazar ise cuma yap
+        else if(d.getDay() == 6)
+            d.setDate(d.getDate() - 1) // cumartesi ise cuma yap
+    }
+
+    $('#SendDate').val(`${d.getFullYear()}-${zeroDolgu(d.getMonth() + 1)}-${zeroDolgu(d.getDate())}`, gun);
+    allStatus(3)
+}
+
+function zeroDolgu(sy){
+    sy = '0'+sy;
+    return sy.slice(-2);
+}
+
 let PAGE = {
+    getSendDateItems : function(){
+        let cont = `Sevk Tarihi : &ensp;<input type="date" id="SendDate" name="trip-start" value="${FORM.getTarih(Sale.deliveryTime, true)}">`;
+        cont += `<button class="btn btn-primary btn-sm ml-2" onclick="setToday(-1)">Dün</button>`;
+        cont += `<button class="btn btn-success btn-sm ml-2" onclick="setToday(0)">Bugün</button>`;
+        return cont;
+    },
     writeForm: function () {
         $('#HtmlForm #htmlCustomer').html(Sale.customer.title)
-        $('#HtmlForm #htmlSendDate').html(`Sevk Tarihi : &ensp;<input type="date" id="SendDate" name="trip-start" value="${FORM.getTarih(Sale.deliveryTime, true)}">`)
+        $('#HtmlForm #htmlSendDate').html(PAGE.getSendDateItems())
         $('#HtmlForm #htmlExplanation').html((Sale.explanation || '').replaceAll('\n','<br>'))
         $('#HtmlForm #htmlUser').html(Sale.user.firstName + ' ' + Sale.user.lastName + ' / <small>' + FORM.getTarih(Sale.recordTime) + '</small>')
         $('#htmlSaleCode').html(`Sipariş No : &ensp; ${Sale.externalSaleCode || ''}`)
