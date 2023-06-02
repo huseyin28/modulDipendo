@@ -18,11 +18,16 @@ function main() {
 
 function loadList(response) {
     $('#SBF').html("");
+    today.setHours(0)
+    today.setMinutes(0)
+    today.setSeconds(0)
+    today.setHours(today.getHours() - 3)
     for (const i in response) {
         if (Object.hasOwnProperty.call(response, i)) {
             const element = response[i];
-            let strToday = `${today.getFullYear()}-${("0" + (today.getMonth() + 1)).slice(-2)}-${("0" + (today.getDate() - 1)).slice(-2)}T21:00:00`
+            let strToday = `${today.getFullYear()}-${("0" + (today.getMonth() + 1)).slice(-2)}-${("0" + (today.getDate())).slice(-2)}T21:00:00`
             if (element.deliveryTime == strToday) {
+                console.log(element.deliveryTime , strToday);
                 if (productsLite[element.purchaseItem.product.id]) {
                     $('#SBF').append(`<tr id="${element.saleItemId}">
                         <td>${strReplace.getCustomer(element.customer.title)}</div>
