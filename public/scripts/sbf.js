@@ -16,12 +16,12 @@ function main() {
     }).then(loadList)
 }
 
-function getDateString(dt){
+function getDateString(dt) {
     return `${dt.getFullYear()}-${("0" + (dt.getMonth() + 1)).slice(-2)}-${("0" + dt.getDate()).slice(-2)}`
 }
 
-function getDateStringDipendo(dt){
-    let dpdt = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate())
+function getDateStringDipendo(dt) {
+    let dpdt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate())
     dpdt.setDate(dpdt.getDate() - 1)
     return `${dpdt.getFullYear()}-${("0" + (dpdt.getMonth() + 1)).slice(-2)}-${("0" + dpdt.getDate()).slice(-2)}T21:00:00`
 }
@@ -40,7 +40,7 @@ function loadList(response) {
                         <td>${productsLite[element.purchaseItem.product.id].brand || ''}</div>
                         <td>${getNote(element)}</div>
                     </tr>`)
-                }else{
+                } else {
                     $('#SBF').append(`<tr id="${element.saleItemId}">
                         <td>${strReplace.getCustomer(element.customer.title)}</div>
                         <td>${element.purchaseItem.product.name}</div>
@@ -106,9 +106,16 @@ function getNote(element) {
 }
 
 function selectItem() {
-    $(this).css("background-color", "#c4ffc4");
-    // Burası toggle olacak ekliyse çıkartıcak yoksa ekleyecek. !!! 
-    selectesItems.push($(this).attr('id'));
+    let id = $(this).attr('id');
+    const index = selectesItems.indexOf(id);
+    if (index > -1) {
+        selectesItems.splice(index, 1);
+        $(this).removeClass('bg-success text-white')
+    }else{
+        $(this).addClass('bg-success text-white')
+        selectesItems.push($(this).attr('id'));
+    }
+    console.log(selectesItems);
 }
 
 function getVal(vals, Name) {
