@@ -1,33 +1,37 @@
 let selectesItems = [];
 let list = {};
-let today = new Date(Date.now());
+let bugun = new Date(Date.now());
 $(document).ready(main)
 
 function main() {
-    $('#start').val(`${today.getFullYear()}-${("0" + (today.getMonth() + 1)).slice(-2)}-${("0" + today.getDate()).slice(-2)}`)
+    $('#start').val(getDateString(bugun))
     $('#start').off('change').on('change', () => {
-        today = new Date($('#start').val());
+        bugun = new Date($('#start').val());
         main();
     })
-    $('#btnOnay').on('click', createForm)
+    $('#btnOnay').off('click').on('click', createForm)
     $.ajax({
         url: `https://app.dipendo.com/api/sale-items?status=3&offset=0&limit=500`,
         headers: { "Authorization": localStorage.getItem('token') }
     }).then(loadList)
 }
 
+function getDateString(dt){
+    return `${dt.getFullYear()}-${("0" + (dt.getMonth() + 1)).slice(-2)}-${("0" + dt.getDate()).slice(-2)}`
+}
+
+function getDateStringDipendo(dt){
+    let dpdt = new Date(dt.getFullYear(),dt.getMonth(),dt.getDate())
+    dpdt.setDate(dpdt.getDate() - 1)
+    return `${dpdt.getFullYear()}-${("0" + (dpdt.getMonth() + 1)).slice(-2)}-${("0" + dpdt.getDate()).slice(-2)}T21:00:00`
+}
+
 function loadList(response) {
     $('#SBF').html("");
-    today.setHours(0)
-    today.setMinutes(0)
-    today.setSeconds(0)
-    today.setHours(today.getHours() - 3)
     for (const i in response) {
         if (Object.hasOwnProperty.call(response, i)) {
             const element = response[i];
-            let strToday = `${today.getFullYear()}-${("0" + (today.getMonth() + 1)).slice(-2)}-${("0" + (today.getDate())).slice(-2)}T21:00:00`
-            if (element.deliveryTime == strToday) {
-                console.log(element.deliveryTime , strToday);
+            if (element.deliveryTime == getDateStringDipendo(bugun)) {
                 if (productsLite[element.purchaseItem.product.id]) {
                     $('#SBF').append(`<tr id="${element.saleItemId}">
                         <td>${strReplace.getCustomer(element.customer.title)}</div>
