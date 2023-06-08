@@ -208,7 +208,7 @@ let FORM = {
     },
     getRow: function (item) {
         return `<tr>
-        <td>${item.purchaseItem.product.name}</td>
+        <td>${FORM.nameReplace(item.purchaseItem.product.name)}</td>
         <td>${units[item.purchaseItem.product.productGroupId] == "m" ? item.purchaseItemId : ""}</td>
         <td>${(item.purchaseItem.product.unitMass * item.saleCount).toFixed(2)} ${item.purchaseItem.product.unitOfMass}</td>
         <td>${item.saleCount} ${units[item.purchaseItem.product.productGroupId]}</td>
@@ -223,5 +223,10 @@ let FORM = {
             return `${d.getFullYear()}-${month.slice(-2)}-${day.slice(-2)}`;
         }
         return `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
+    },
+    nameReplace : function(name){
+        name = name.replaceAll(' GALV ', ' <b>GALV</b> ')
+        name = name.replaceAll(' LHRL ', ' <b>LHRL</b> ')
+        return name;
     }
 }

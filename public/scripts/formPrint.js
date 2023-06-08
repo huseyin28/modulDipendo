@@ -99,21 +99,28 @@ let Obj = {
         }
     },
     getRow: function (item) {
+        console.log(item);
         return `
         <div class="d-flex">
-            <div class="flex-fill">${item.purchaseItem.product.name}</div>
+            <div class="flex-fill">${Obj.nameReplace(item.purchaseItem.product.name)}</div>
             <div style="width: 90px;text-align: center;">${units[item.purchaseItem.product.productGroupId] == "m" ? item.purchaseItemId : ""}</div>
             <div style="width: 90px;text-align: center;">${(item.purchaseItem.product.unitMass * item.saleCount).toFixed(2)} ${item.purchaseItem.product.unitOfMass}</div>
             <div style="width: 90px;text-align: center;">${item.saleCount} ${units[item.purchaseItem.product.productGroupId]}</div>
-        </div>`;
-
-        return `<div class="row">
-            <div class="col-6">${item.purchaseItem.product.name}</div>
-            <div class="col-2">${units[item.purchaseItem.product.productGroupId] == "m" ? item.purchaseItemId : ""}</div>
-            <div class="col-2">${(item.purchaseItem.product.unitMass * item.saleCount).toFixed(2)} ${item.purchaseItem.product.unitOfMass}</div>
-            <div class="col-2">${item.saleCount} ${units[item.purchaseItem.product.productGroupId]}</div>
-        </div>`;
+            </div>`;
+        // <div style="width: 90px;text-align: center;">${this.getKactan(item)}</div>
     },
+    getKactan : function(item){
+        if(units[item.purchaseItem.product.productGroupId] == "m")
+            return `<small style="color : grey;">${item.saleCount+item.purchaseItem.stockCount}m'den</small>`
+        else
+            return ''
+
+    },
+    nameReplace : function(name){
+        name = name.replaceAll(' GALV ', ' <b><u>GALV</u></b> ')
+        name = name.replaceAll(' LHRL ', ' <b><u>LHRL</u></b> ')
+        return name;
+    }
 }
 
 let Pristine = {
