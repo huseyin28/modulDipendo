@@ -10,11 +10,12 @@ function ready() {
         headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => {
         Sale = response
-        $('#print').off('click').on('click',function(){
-            window.open('/formPrint/'+ urlParams.get('id'), "_blank") 
+        $('#print').off('click').on('click', function () {
+            addPrintList(urlParams.get('id'))
+            window.open('/formPrint/' + urlParams.get('id'), "_blank")
         })
         Sale.listItems = []
-        $('#goDipendo').on('click',()=>{
+        $('#goDipendo').on('click', () => {
             window.open(`https://app.dipendo.com/sales/${urlParams.get('id')}/detail/`, '_blank');
         })
         PAGE.joinItems()
@@ -23,8 +24,20 @@ function ready() {
     })
 }
 
+function addPrintList(id) {
+    if (localStorage.getItem('printList') !== null) {
+        let list = JSON.parse(localStorage.getItem('printList'))
+        if (list.indexOf(id) == -1) {
+            list.push(id)
+            localStorage.setItem('printList', JSON.stringify(list))
+        }
+    } else {
+        localStorage.setItem('printList', JSON.stringify([id]))
+    }
+}
+
 function setStatu() {
-    for(let i = 1; i < arguments.length; i++){
+    for (let i = 1; i < arguments.length; i++) {
         Sale.saleItems.forEach(item => {
             if (item.saleItemId == arguments[i])
                 item.status = arguments[0];
@@ -36,7 +49,7 @@ function setStatu() {
 function allStatus(statu) {
     let dt = new Date($('#SendDate').val());
     dt.setDate(dt.getDate() - 1)
-    let deliveryTime = `${dt.getFullYear()}-${(dt.getMonth()+1) > 9 ? dt.getMonth()+1 : '0'+(dt.getMonth()+1)}-${(dt.getDate()) > 9 ? (dt.getDate()) : '0'+(dt.getDate())}T21:00:00`;
+    let deliveryTime = `${dt.getFullYear()}-${(dt.getMonth() + 1) > 9 ? dt.getMonth() + 1 : '0' + (dt.getMonth() + 1)}-${(dt.getDate()) > 9 ? (dt.getDate()) : '0' + (dt.getDate())}T21:00:00`;
     Sale.saleItems.forEach(item => {
         item.status = statu;
         item.deliveryTime = deliveryTime
@@ -60,13 +73,13 @@ function updateSale() {
     })
 }
 
-function setToday(gun){
+function setToday(gun) {
     let d = new Date(Date.now());
-    d.setDate(d.getDate()+gun)
-    if(gun == -1){
-        if(d.getDay() == 0)
+    d.setDate(d.getDate() + gun)
+    if (gun == -1) {
+        if (d.getDay() == 0)
             d.setDate(d.getDate() - 2) // pazar ise cuma yap
-        else if(d.getDay() == 6)
+        else if (d.getDay() == 6)
             d.setDate(d.getDate() - 1) // cumartesi ise cuma yap
     }
 
@@ -74,13 +87,13 @@ function setToday(gun){
     allStatus(3)
 }
 
-function zeroDolgu(sy){
-    sy = '0'+sy;
+function zeroDolgu(sy) {
+    sy = '0' + sy;
     return sy.slice(-2);
 }
 
 let PAGE = {
-    getSendDateItems : function(){
+    getSendDateItems: function () {
         let cont = `Sevk Tarihi : &ensp;<input type="date" id="SendDate" name="trip-start" value="${FORM.getTarih(Sale.deliveryTime, true)}">`;
         cont += `<button class="btn btn-primary btn-sm ml-2" onclick="setToday(-1)">Dün</button>`;
         cont += `<button class="btn btn-success btn-sm ml-2" onclick="setToday(0)">Bugün</button>`;
@@ -89,7 +102,7 @@ let PAGE = {
     writeForm: function () {
         $('#HtmlForm #htmlCustomer').html(Sale.customer.title)
         $('#HtmlForm #htmlSendDate').html(PAGE.getSendDateItems())
-        $('#HtmlForm #htmlExplanation').html((Sale.explanation || '').replaceAll('\n','<br>'))
+        $('#HtmlForm #htmlExplanation').html((Sale.explanation || '').replaceAll('\n', '<br>'))
         $('#HtmlForm #htmlUser').html(Sale.user.firstName + ' ' + Sale.user.lastName + ' / <small>' + FORM.getTarih(Sale.recordTime) + '</small>')
         $('#htmlSaleCode').html(`Sipariş No : &ensp; ${Sale.externalSaleCode || ''}`)
         PAGE.writeProducts()
@@ -97,7 +110,7 @@ let PAGE = {
     joinItems: function () {
         for (const i in Sale.saleItems)
             PAGE.addItem(Sale.saleItems[i])
-       
+
     },
     addItem: function (item) {
         if (units[item.purchaseItem.product.productGroupId] == "m") {
@@ -135,9 +148,9 @@ let PAGE = {
 
     },
     getRow: function (item) {
-        let params = item.saleItemId+''
-        if (Object.hasOwnProperty.call(item, 'otherItems')){
-            params += ','+item.otherItems.join(',')
+        let params = item.saleItemId + ''
+        if (Object.hasOwnProperty.call(item, 'otherItems')) {
+            params += ',' + item.otherItems.join(',')
         }
         let btnStatus =
             `<div class="btn-group" role="group">
@@ -192,7 +205,7 @@ let PAGE = {
 let FORM = {
     createPrintForm: function () {
         $('#customer').html(Sale.customer.title)
-        $('#explanation').html((Sale.explanation || '').replaceAll('\n','<br>'))
+        $('#explanation').html((Sale.explanation || '').replaceAll('\n', '<br>'))
         $('#record').html(FORM.getTarih(Sale.recordTime))
         $('#teslimat').html(FORM.getTarih(Sale.deliveryTime))
         $('#externalSaleCode').html(Sale.externalSaleCode)
@@ -214,17 +227,17 @@ let FORM = {
         <td>${item.saleCount} ${units[item.purchaseItem.product.productGroupId]}</td>
     </tr>`;
     },
-    getTarih: function (dt, input=false) {
+    getTarih: function (dt, input = false) {
         let d = new Date(dt);
         d.setTime(d.getTime() + 3 * 60 * 60 * 1000);
-        if(input){
+        if (input) {
             let month = '0' + (d.getMonth() + 1);
             let day = '0' + (d.getDate());
             return `${d.getFullYear()}-${month.slice(-2)}-${day.slice(-2)}`;
         }
         return `${d.getDate()}.${d.getMonth() + 1}.${d.getFullYear()}`;
     },
-    nameReplace : function(name){
+    nameReplace: function (name) {
         name = name.replaceAll(' GALV ', ' <b>GALV</b> ')
         name = name.replaceAll(' LHRL ', ' <b>LHRL</b> ')
         return name;

@@ -90,9 +90,6 @@ function createForm() {
         })
     })
     loadList(Object.values(list))
-    // Object.keys(list).forEach(element => {
-    //     console.log(list[element].purchaseItem.product.name, list[element].saleCount);
-    // })
 }
 
 
@@ -111,7 +108,7 @@ function selectItem() {
     if (index > -1) {
         selectesItems.splice(index, 1);
         $(this).removeClass('bg-success text-white')
-    }else{
+    } else {
         $(this).addClass('bg-success text-white')
         selectesItems.push($(this).attr('id'));
     }
@@ -185,8 +182,6 @@ class strReplace {
         name = name.replaceAll(' SEALE', 'S')
         name = name.replaceAll('1370/1770', '')
         name = name.replaceAll('Zincir Kancası Gözlü B Tipi', 'Kanca B Gözlü')
-
-
 
         let dm = name.split(' ')
         dm.splice(dm.length - 1, 1)

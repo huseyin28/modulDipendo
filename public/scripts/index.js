@@ -3,6 +3,7 @@ let pageTitle = $('title').html();
 
 let sCount = null;
 var audio = new Audio('/public/sounds/s1.wav');
+let printList = JSON.parse(localStorage.getItem('printList'))
 
 let daterangepickerOptions = {
     opens: 'left',
@@ -93,6 +94,8 @@ function ready() {
 }
 
 function setURL() {
+    printList = JSON.parse(localStorage.getItem('printList'))
+    console.log(printList);
     url = `https://app.dipendo.com/api/sales?` + getDipendoParamsStr()
 
     var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + getParamsStr();
@@ -133,7 +136,7 @@ function getList(sound = false) {
         headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => LoadList(response, sound)).fail(error => {
         if (error.status == 401) {
-            if(Login()){
+            if (Login()) {
                 getList(sound)
             }
         } else if (window.navigator.onLine == false) {
@@ -169,7 +172,7 @@ function getRowHTML(element) {
     let dt = new Date(element.deliveryTime)
     dt.setDate(dt.getDate() + 1)
     let create = new Date(element.recordTime)
-    return `<tr>
+    return `<tr class="${printList.indexOf(`${element.id}`) !== -1 ? 'text-primary' : ''}">
     <td>${element.customer.title}</td>
     <td>${create.getDate()}.${create.getMonth() + 1}.${create.getFullYear()} ${create.getHours() + 3}:${create.getMinutes()}</td>
     <td>${dt.getDate()}.${dt.getMonth() + 1}.${dt.getFullYear()}</td>
