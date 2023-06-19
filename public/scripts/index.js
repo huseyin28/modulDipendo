@@ -172,7 +172,7 @@ function getRowHTML(element) {
     let dt = new Date(element.deliveryTime)
     dt.setDate(dt.getDate() + 1)
     let create = new Date(element.recordTime)
-    return `<tr class="${printList.indexOf(`${element.id}`) !== -1 ? 'text-primary' : ''}">
+    return `<tr class="${(printList || []).indexOf(`${element.id}`) !== -1 ? 'text-primary' : ''}">
     <td>${element.customer.title}</td>
     <td>${create.getDate()}.${create.getMonth() + 1}.${create.getFullYear()} ${create.getHours() + 3}:${create.getMinutes()}</td>
     <td>${dt.getDate()}.${dt.getMonth() + 1}.${dt.getFullYear()}</td>
