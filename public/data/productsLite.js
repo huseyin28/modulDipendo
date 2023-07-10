@@ -1,5 +1,20 @@
 let productsLite = 
 {
+    "254172":{
+        "longName": "12mm Hyfil 8 ÇÖ 1960 UNGALV A3 RHRL Kiswire",
+        "name": "12mm Hyfil 8",
+        "brand": "KSW"
+    },
+    "254201":{
+        "longName": "42,50 Ton Kilit U Somunlu Van Beest",
+        "name": "Kilit U Som. 42,50T",
+        "brand": "VANB"
+    },
+    "254200":{
+        "longName": "35,00 Ton Kilit Omega Vidalı Van Beest",
+        "name": "Kilit O Vidalı 35T",
+        "brand": "VANB"
+    },
     "254086": {
         "longName": "5,00 Ton Kilit Omega Somunlu Süper Van Beest",
         "name": "Kilit O Som. Süper 5T",

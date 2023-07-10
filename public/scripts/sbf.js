@@ -35,7 +35,7 @@ function loadList(response) {
                 if (productsLite[element.purchaseItem.product.id]) {
                     $('#SBF').append(`<tr id="${element.saleItemId}">
                         <td>${strReplace.getCustomer(element.customer.title)}</div>
-                        <td>${productsLite[element.purchaseItem.product.id].name || element.purchaseItem.product.name}</div>
+                        <td>${productsLite[element.purchaseItem.product.id].name || logNonLiteName(element.purchaseItem.product)}</div>
                         <td>${element.saleCount}</div>
                         <td>${productsLite[element.purchaseItem.product.id].brand || ''}</div>
                         <td>${getNote(element)}</div>
@@ -43,7 +43,7 @@ function loadList(response) {
                 } else {
                     $('#SBF').append(`<tr id="${element.saleItemId}">
                         <td>${strReplace.getCustomer(element.customer.title)}</div>
-                        <td>${element.purchaseItem.product.name}</div>
+                        <td>${logNonLiteName(element.purchaseItem.product)}</div>
                         <td>${element.saleCount}</div>
                         <td></div>
                         <td>${getNote(element)}</div>
@@ -53,6 +53,11 @@ function loadList(response) {
         }
     }
     $('#SBF tr').off('click').on('click', selectItem);
+}
+
+function logNonLiteName(product){
+    console.log(product);
+    return `<span class="text-danger">${product.name}</span>`;
 }
 
 function Join(vals) {
@@ -112,7 +117,6 @@ function selectItem() {
         $(this).addClass('bg-success text-white')
         selectesItems.push($(this).attr('id'));
     }
-    console.log(selectesItems);
 }
 
 function getVal(vals, Name) {

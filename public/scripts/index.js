@@ -54,6 +54,7 @@ let queryParams = {
 }
 
 $(document).ready(ready)
+window.addEventListener("focus", ready, false);
 
 function ready() {
     $('#txtSearch').off('keyup').on('keyup', (e) => {
@@ -65,6 +66,7 @@ function ready() {
             setURL()
         }, 500, e.target.value)
     })
+    
 
     const searchParams = new URLSearchParams(location.search);
 
@@ -95,7 +97,6 @@ function ready() {
 
 function setURL() {
     printList = JSON.parse(localStorage.getItem('printList'))
-    console.log(printList);
     url = `https://app.dipendo.com/api/sales?` + getDipendoParamsStr()
 
     var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + getParamsStr();
@@ -146,6 +147,7 @@ function getList(sound = false) {
 }
 
 function LoadList(response, sound) {
+    printList = JSON.parse(localStorage.getItem('printList'))
     let count = 0;
     $('#message').remove()
 
