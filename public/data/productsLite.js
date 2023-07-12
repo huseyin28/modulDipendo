@@ -1,5 +1,15 @@
 let productsLite = 
 {
+    "254185":{
+        "longName": "12mm Hyfil 8 ÇÖ 2160 GALV A3 RHRL Kiswire",
+        "name": "12mm Hyfil 8 GALV",
+        "brand": "KSW"
+    },
+    "254171":{
+        "longName": "12mm Hylift 16 ÇÖ 1960 GALV A3 RHLL Kiswire",
+        "name": "12mm Hylift 16 GALV",
+        "brand": "KSW"
+    },
     "254172":{
         "longName": "12mm Hyfil 8 ÇÖ 1960 UNGALV A3 RHRL Kiswire",
         "name": "12mm Hyfil 8",
