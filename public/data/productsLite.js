@@ -1,5 +1,10 @@
 let productsLite = 
 {
+    "254194":{
+        "longName": "13mm Fırdöndülü Zincir Kancası B Tipi 13-8 Van Beest",
+        "name": "Kanca B Fır. 13-8",
+        "brand": "VANB"
+    },
     "254185":{
         "longName": "12mm Hyfil 8 ÇÖ 2160 GALV A3 RHRL Kiswire",
         "name": "12mm Hyfil 8 GALV",
