@@ -1,6 +1,10 @@
 <div class="row">
-    <div class="col-12">
-        <input type="date" id="start">
+    <div class="col-12 col-sm-6 col-md-3 col-lg-2 mb-2">
+        <input class="form-control" type="date" id="start">
+    </div>
+    <div class="col-12 col-sm-6 col-md-8 col-lg-10 mb-2">
+        <button type="button" onclick="setYesterday()" class="btn btn-outline-primary">Dün</button>
+        <button type="button" onclick="$('#SBF tr').trigger('click')" class="btn btn-outline-primary float-right">Tümünü Seç</button>
     </div>
 </div>
 <table class="table">

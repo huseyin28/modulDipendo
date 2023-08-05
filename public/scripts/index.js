@@ -66,7 +66,7 @@ function ready() {
             setURL()
         }, 500, e.target.value)
     })
-    
+
 
     const searchParams = new URLSearchParams(location.search);
 
@@ -174,11 +174,11 @@ function getRowHTML(element) {
     let dt = new Date(element.deliveryTime)
     dt.setDate(dt.getDate() + 1)
     let create = new Date(element.recordTime)
+
     return `<tr class="${(printList || []).indexOf(`${element.id}`) !== -1 ? 'text-primary' : ''}">
-    <td>${element.customer.title}</td>
-    <td>${create.getDate()}.${create.getMonth() + 1}.${create.getFullYear()} ${create.getHours() + 3}:${create.getMinutes()}</td>
-    <td>${dt.getDate()}.${dt.getMonth() + 1}.${dt.getFullYear()}</td>
-    <td class="py-1"><a href="/detay?id=${element.id}" target="_blank" class="btn btn-sm btn-outline-primary" aria-pressed="true">Detay</a></td>
-    </tr>
-    `
+                <td>${element.customer.title}</td>
+                <td class="d-none d-sm-table-cell">${create.getDate()}.${create.getMonth() + 1}.${create.getFullYear()} ${create.getHours() + 3}:${create.getMinutes()}</td>
+                <td class="d-none d-sm-table-cell">${dt.getDate()}.${dt.getMonth() + 1}.${dt.getFullYear()}</td>
+                <td class="py-1"><a href="/detay?id=${element.id}" target="_blank" class="btn btn-sm btn-outline-primary" aria-pressed="true">Detay</a></td>
+            </tr>`
 }

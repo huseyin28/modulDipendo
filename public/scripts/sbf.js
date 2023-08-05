@@ -55,8 +55,7 @@ function loadList(response) {
     $('#SBF tr').off('click').on('click', selectItem);
 }
 
-function logNonLiteName(product){
-    console.log(product);
+function logNonLiteName(product) {
     return `<span class="text-danger">${product.name}</span>`;
 }
 
@@ -117,6 +116,10 @@ function selectItem() {
         $(this).addClass('bg-success text-white')
         selectesItems.push($(this).attr('id'));
     }
+}
+
+function selectAll() {
+    console.log($('#SBF tr').attr('id'))
 }
 
 function getVal(vals, Name) {
@@ -191,4 +194,11 @@ class strReplace {
         dm.splice(dm.length - 1, 1)
         return dm.join(' ');
     }
+}
+
+function setYesterday() {
+    bugun.setDate(bugun.getDate() - 1)
+    $('#start').val(getDateString(bugun))
+    bugun.setDate(bugun.getDate() + 1)
+    $('#start').trigger('change')
 }

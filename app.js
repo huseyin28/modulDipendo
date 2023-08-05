@@ -2,7 +2,7 @@ const express = require('express')
 const expressLayouts = require('express-ejs-layouts')
 const path = require('path');
 const app = express()
-const port = 80
+const port = 5555
 const bodyParser = require('body-parser')
 const BaseRouter = require('./routes/BaseRouter')
 
