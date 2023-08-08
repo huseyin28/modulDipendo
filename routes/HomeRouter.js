@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/detay', (req, res) => {
-    res.render('detay',{
+    res.render('detay', {
         title: 'Detay',
         scripts: `<script src="/public/scripts/detay.js"></script>`
     })
@@ -19,15 +19,15 @@ router.get('/detay', (req, res) => {
 
 router.get('/formPrint/:id', (req, res) => {
     res.render('formPrint', {
-        layout : false,
+        layout: false,
         scripts: `<script src="/public/scripts/formPrint.js"></script>`,
-        saleId : `<script>const saleId = ${req.params.id}; </script>`
+        saleId: `<script>const saleId = ${req.params.id}; </script>`
     })
 })
 
 router.get('/printQRCode', (req, res) => {
     res.render('printQRCode', {
-        layout : false,
+        layout: false,
     })
 })
 
@@ -45,40 +45,22 @@ router.get('/girisBekleyen', (req, res) => {
     })
 })
 
-router.get('/SevkeHazir', (req, res) => {
-    res.render('sevkeHazir', {
-        title: 'Sevke Hazır',
-        scripts: `<script src="/public/scripts/sevkeHazir.js"></script>`,
-    })
-})
-
-router.get('/CikisBekleyen', (req, res) => {
-    res.render('CikisBekleyen', {
-        title: 'Çıkış Bekleyen',
-        scripts: `<script src="/public/scripts/CikisBekleyen.js"></script>`,
-    })
-})
-
-
-router.get('/currentStatusScreen', (req, res) => {
-    res.render('currentStatusScreen', {
-        title: 'Gencel Durum Ekranı',
-        scripts: `<script src="/public/scripts/currentStatusScreen.js"></script>`,
-    })
-})
-
 router.get('/sbf', (req, res) => {
-    res.render('sbf',{
-        title : "Sevkiyat Bildirim Formu",
-        scripts : '<script src="/public/data/productsLite.js"></script><script src="/public/scripts/sbf.js"></script>'
+    res.render('sbf', {
+        title: "Sevkiyat Bildirim Formu",
+        scripts: '<script src="/public/data/productsLite.js"></script><script src="/public/scripts/sbf.js"></script>'
     })
 })
 
 router.get('/createQRCode', (req, res) => {
-    res.render('createQRCode',{
-        title : "QR Code Üret",
-        scripts : '<script src="/public/qrcode/qrcode.min.js"></script><script src="/public/scripts/createQRCode.js"></script>'
+    res.render('createQRCode', {
+        title: "QR Code Üret",
+        scripts: '<script src="/public/qrcode/qrcode.min.js"></script><script src="/public/scripts/createQRCode.js"></script>'
     })
+})
+
+router.post('/addProduct', (req, res) => {
+
 })
 
 module.exports = router

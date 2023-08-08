@@ -1,6 +1,6 @@
 const express = require('express')
 const expressLayouts = require('express-ejs-layouts')
-const path = require('path');
+const path = require('path')
 const app = express()
 const port = 5555
 const bodyParser = require('body-parser')
