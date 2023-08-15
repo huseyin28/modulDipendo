@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon ./app.js"
+    "dev": "nodemon ./app.js",
+    "ins": "npm install",
+    "sqlite": "npm i sqlite3"
   },
   "author": "",
   "license": "ISC",
