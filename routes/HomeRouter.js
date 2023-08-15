@@ -45,6 +45,13 @@ router.get('/girisBekleyen', (req, res) => {
     })
 })
 
+router.get('/productImages', (req, res) => {
+    res.render('productImages', {
+        title: 'Ürün Görselleri',
+        scripts: `<script src="/public/scripts/productImages.js"></script>`,
+    })
+})
+
 router.get('/sbf', (req, res) => {
     res.render('sbf', {
         title: "Sevkiyat Bildirim Formu",
@@ -56,6 +63,13 @@ router.get('/createQRCode', (req, res) => {
     res.render('createQRCode', {
         title: "QR Code Üret",
         scripts: '<script src="/public/qrcode/qrcode.min.js"></script><script src="/public/scripts/createQRCode.js"></script>'
+    })
+})
+
+router.get('/product/detail/:id', (req, res) => {
+    res.render('productDetail', {
+        title: "Ürün Detayı",
+        scripts: '<script>let productId = ' + req.params.id + '</script><script src="/public/scripts/productDetail.js"></script>'
     })
 })
 

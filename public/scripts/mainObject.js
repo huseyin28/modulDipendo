@@ -1,12 +1,15 @@
-function setAlert(str, type = 'danger'){
-    $(`<div class="alert alert-${type} alert-dismissible fade show" role="alert">${str}</div>`).appendTo('.alerts').delay(5555).queue(function() { $(this).remove(); });
+function setAlert(str, type = 'danger', delay = 60000) {
+    let closeButton = `<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>`
+    $(`<div class="alert alert-${type} alert-dismissible fade show" role="alert">${str} ${closeButton}</div>`).appendTo('.alerts').delay(delay).queue(function () { $(this).remove(); });
 }
 
 function Login() {
     let res = false;
     $.ajax({
         type: "POST",
-        async : false,
+        async: false,
         url: 'https://app.dipendo.com/oauth/token',
         data: { "username": "huseyinyilmaz@celsancelik.com", "password": "asdasd528", "grant_type": "password", "client_id": "DipendoWeb" },
         success: response => {
@@ -20,7 +23,7 @@ function Login() {
     return res;
 }
 
-function getUnit(u){
+function getUnit(u) {
     switch (u) {
         case "meter":
             return "m"
@@ -33,9 +36,9 @@ function getUnit(u){
 
 getGirisBekleyenCount();
 
-function getGirisBekleyenCount(){
+function getGirisBekleyenCount() {
     $.ajax({
-        url : `https://app.dipendo.com/api/purchase-items?status=3&limit=300`,
+        url: `https://app.dipendo.com/api/purchase-items?status=3&limit=300`,
         headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => {
         $('#girisBekleyenCount').html(response.length);

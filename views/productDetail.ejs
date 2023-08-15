@@ -1,0 +1,26 @@
+<h1><%- title %></h1>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title" id="name"></h5>
+        <h6 class="card-subtitle mb-2 text-muted">Ürün Kimliği : <span id="id"></span></h6>
+    </div>
+</div>
+
+<h5 class="card-title d-block mt-4">Görseller</h5>
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="fileImage">Yüklemek istediğiniz görseli seçiniz</label>
+                    <input type="file" class="form-control-file" id="fileImage">
+                </div>
+            </div>
+            <div class="col-12">
+                <button type="submit" onclick="imgUpload()" class="btn btn-primary">Yükle</button>
+            </div>
+        </div>
+        <div class="row" id="images"></div>
+    </div>
+</div>
