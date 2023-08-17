@@ -1,33 +1,36 @@
-let sqlite3 = require('sqlite3')
-let { open } = require('sqlite')
 let ResponseObj = require('./ResponseObj')
-let dbOptions = {
-    filename: 'db.db',
-    driver: sqlite3.cached.Database
-};
+let connection = require('./DBManager')
 
 class Group {
-    static async getAll(req, res) {
-        const db = await open(dbOptions);
+    static getAll(req, res) {
         let response = new ResponseObj()
         try {
-            response.setData(await db.all('SELECT id, name FROM groups'))
+            connection.query('SELECT id, name FROM groups', function (error, results, fields) {
+                if (error)
+                    response.setError(error)
+                else
+                    response.setData(results)
+                res.json(response)
+            })
         } catch (error) {
             console.log(error);
             response.setError(error)
-        } finally {
             res.json(response)
         }
     }
 
-    static async get(req, res) {
-        const db = await open(dbOptions);
+    static get(req, res) {
         let response = new ResponseObj()
         try {
-            response.setData(await db.get('SELECT id, name FROM groups WHERE id = ?', req.params.id))
+            connection.query('SELECT id, name FROM groups WHERE id = ?', [req.params.id], (err, result) => {
+                if (err)
+                    response.setError(err)
+                else
+                    response.setData(result[0])
+                res.json(response)
+            })
         } catch (error) {
             response.setError(error)
-        } finally {
             res.json(response)
         }
     }

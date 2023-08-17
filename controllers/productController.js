@@ -1,35 +1,36 @@
-
-let sqlite3 = require('sqlite3')
-let { open } = require('sqlite')
+let connection = require('./DBManager')
 let ResponseObj = require('./ResponseObj')
-let dbOptions = {
-    filename: 'db.db',
-    driver: sqlite3.cached.Database
-};
+
 
 class Product {
     static async getByGroupId(req, res) {
-        const db = await open(dbOptions);
         let response = new ResponseObj()
         try {
-            response.setData(await db.all('SELECT id, name FROM products WHERE groupId=?', [req.params.groupId]))
+            connection.query('SELECT id, name FROM products WHERE groupId=?', [req.params.groupId], function (error, results, fields) {
+                if (error)
+                    response.setError(error)
+                else
+                    response.setData(results)
+                res.json(response)
+            });
         } catch (error) {
             console.log(error);
             response.setError(error)
-        } finally {
             res.json(response)
         }
     }
 
     static async getById(req, res) {
-        const db = await open(dbOptions);
         let response = new ResponseObj()
         try {
-            response.setData(await db.get('SELECT * FROM products WHERE id=?', [req.params.id]))
+            connection.query('SELECT * FROM products WHERE id=?', [req.params.id], (err, result) => {
+                if (err) response.setError(err)
+                else response.setData(result[0])
+                res.json(response)
+            })
         } catch (error) {
             console.log(error);
             response.setError(error)
-        } finally {
             res.json(response)
         }
     }
@@ -41,7 +42,6 @@ class Product {
                 response.setError('Lütfen görsel seçiniz')
                 res.json(response)
             } else {
-
                 let imgFile = req.files.img
                 imgFile.name = Date.now() + imgFile.name
                 let uploadPath = __dirname + '/../public/images/products/' + imgFile.name;
@@ -52,13 +52,24 @@ class Product {
                         response.setError(err)
                         res.json(response)
                     } else {
-                        const db = await open(dbOptions);
-                        const result = await db.get('SELECT images FROM products WHERE id = ?', req.params.id)
-                        let jsn = JSON.parse(result.images)
-                        jsn.push(imgFile.name)
-                        await db.run('UPDATE products SET images = ? WHERE id = ?', JSON.stringify(jsn), req.params.id)
-                        response.setData(imgFile.name)
-                        res.json(response)
+                        connection.query('SELECT images FROM products WHERE id = ?', [req.params.id], (error, result) => {
+                            if (error) {
+                                response.setError(error)
+                                res.json(response)
+                            } else {
+                                let jsn = JSON.parse(result[0].images)
+                                jsn.push(imgFile.name)
+                                connection.query('UPDATE products SET images = ? WHERE id = ?', [JSON.stringify(jsn), req.params.id], (err2, result2) => {
+                                    if (err2) {
+                                        response.setError(error)
+                                    } else {
+                                        response.setData(imgFile.name)
+                                    }
+                                    res.json(response)
+                                })
+                            }
+
+                        })
                     }
                 })
             }
