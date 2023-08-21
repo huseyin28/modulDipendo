@@ -10,6 +10,20 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/capacity', (req, res) => {
+    res.render('capacity', {
+        title: 'Kapasite Hesapla',
+        scripts: `<script src="/public/scripts/capacity.js"></script>`
+    })
+})
+
+router.get('/qrcodescan', (req, res) => {
+    res.render('qrcodescan', {
+        title: 'QR Code Tarat',
+        scripts: `<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script><script src="/public/scripts/qrcodescan.js"></script>`
+    })
+})
+
 router.get('/detay', (req, res) => {
     res.render('detay', {
         title: 'Detay',
