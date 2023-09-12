@@ -10,12 +10,19 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/login', (req, res) => {
+    res.render('login', {
+        layout: false
+    })
+})
+
 router.get('/capacity', (req, res) => {
     res.render('capacity', {
         title: 'Kapasite Hesapla',
         scripts: `<script src="/public/scripts/capacity.js"></script>`
     })
 })
+
 
 router.get('/qrcodescan', (req, res) => {
     res.render('qrcodescan', {

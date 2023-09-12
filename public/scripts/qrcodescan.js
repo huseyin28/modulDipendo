@@ -1,5 +1,11 @@
 var html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10 });
+let loc = false;
+$(document).ready(function () {
+    loc = false;
+})
 html5QrcodeScanner.render(function (decodedText, decodedResult) {
-    console.log(decodedText, decodedResult);
-    location.assign('/purchaseItem/detay/' + decodedText.replaceAll('dipendo://info?id=', ''))
+    if (!loc) {
+        location.assign('/purchaseItem/detay/' + decodedText.replaceAll('dipendo://info?id=', ''))
+        loc = true
+    }
 });
