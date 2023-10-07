@@ -1,7 +1,9 @@
-function setAlert(str, type = 'danger', delay = 60000) {
+function setAlert(str, type = 'danger', delay = 10000) {
     let closeButton = `<button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>`
+
+
     $(`<div class="alert alert-${type} alert-dismissible fade show" role="alert">${str} ${closeButton}</div>`).appendTo('.alerts').delay(delay).queue(function () { $(this).remove(); });
 }
 

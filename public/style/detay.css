@@ -1,13 +1,15 @@
 .alerts {
     position: fixed;
-    width: 500px;
-    bottom: 15px;
-    right: 15px;
+    max-width: 500px;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    padding: 15px;
 }
 
 #page-top select.print-form {
     color: black;
- }
+}
 
 .print-form {
     color: black !important;
@@ -19,11 +21,11 @@
 }
 
 
-.print-form .form{
+.print-form .form {
     width: 210mm;
 }
 
-.print-form .form .n{
+.print-form .form .n {
     height: 148mm;
     background-color: antiquewhite;
 }
@@ -39,12 +41,12 @@
     }
 }
 
-.hover:hover{
+.hover:hover {
     background-color: rgba(0, 0, 0, 0.05);
 }
 
 
-.sbf-onay{
+.sbf-onay {
     width: 50px;
     height: 50px;
     position: fixed;
