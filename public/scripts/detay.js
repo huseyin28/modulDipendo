@@ -94,9 +94,9 @@ function zeroDolgu(sy) {
 
 let PAGE = {
     getSendDateItems: function () {
-        let cont = `Sevk Tarihi : &ensp;<input type="date" id="SendDate" name="trip-start" value="${FORM.getTarih(Sale.deliveryTime, true)}">`;
-        cont += `<button class="btn btn-primary btn-sm ml-2" onclick="setToday(-1)">Dün</button>`;
-        cont += `<button class="btn btn-success btn-sm ml-2" onclick="setToday(0)">Bugün</button>`;
+        let cont = `<div class="col-12 col-md-6"><input type="date" class="form-control" id="SendDate" name="trip-start" value="${FORM.getTarih(Sale.deliveryTime, true)}"></div>`;
+        cont += `<div class="col-6 col-md-3"><button class="btn btn-primary btn-block mt-2 mt-sm-0" onclick="setToday(-1)">Dün</button></div>`;
+        cont += `<div class="col-6 col-md-3"><button class="btn btn-success btn-block mt-2 mt-sm-0" onclick="setToday(0)">Bugün</button></div>`;
         return cont;
     },
     writeForm: function () {
@@ -161,10 +161,10 @@ let PAGE = {
         let btnCreateEtiket = `<button type="button" onclick="PAGE.createEtiket(${item.saleItemId})" class="ml-2 btn btn-primary btn-sm my-1"><i class="fa-solid fa-tag"></i></button>`
 
         return `<div class="row" style="line-height: 39px;">
-            <div class="col-12 col-sm-8 col-lg-5"><a href="/purchaseItem/detay/${item.purchaseItemId}">${item.purchaseItem.product.name}</a></div>
+            <div class="col-8 col-sm-8 col-lg-5"><a href="/purchaseItem/detay/${item.purchaseItemId}">${item.purchaseItem.product.name}</a></div>
             <div class="d-none d-lg-block col-lg-2">${units[item.purchaseItem.product.productGroupId] == "m" ? item.purchaseItemId : ""}</div>
             <div class="d-none d-lg-block col-lg-2">${(item.purchaseItem.product.unitMass * item.saleCount).toFixed(2)} ${item.purchaseItem.product.unitOfMass}</div>
-            <div class="d-none d-lg-block col-lg-1">${item.saleCount} ${units[item.purchaseItem.product.productGroupId]}</div>
+            <div class="col-4 col-lg-1">${item.saleCount} ${units[item.purchaseItem.product.productGroupId]}</div>
             <div class="d-none d-sm-block col-sm-4 col-lg-2">${btnStatus}  ${units[item.purchaseItem.product.productGroupId] == "m" ? btnCreateEtiket : ""}</div>
         </div>`;
     },

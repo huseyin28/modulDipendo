@@ -1,11 +1,4 @@
-// dipendo://info?id=49795
-
 let qrCodes = [];
-$(document).ready(ready);
-
-function ready() {
-    qr();
-}
 
 function addCode() {
     let txtCode = $('#txtCode').val().trim();
@@ -29,18 +22,10 @@ function addCode() {
 function write() {
     $('#codes').html('')
     qrCodes.forEach(element => {
-        $('#codes').append(element+'<br>')
+        $('#codes').append(element + '<br>')
     });
 }
 
-function print(){
-    location.href = location.origin+"/printQRCode?codes="+qrCodes.join(',');
-}
-
-function qr() {
-    // new QRCode(document.getElementById("qrcode"), {
-    //     text: "dipendo://info?id=49795",
-    //     width: 94,
-    //     height: 94,
-    // });
+function print() {
+    location.href = location.origin + "/printQRCode?codes=" + qrCodes.join(',');
 }

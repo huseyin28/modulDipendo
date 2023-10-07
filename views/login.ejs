@@ -2,14 +2,13 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>Hoşgeldin! | ÇelsanApp</title>
 
     <!-- Custom fonts for this template-->
     <link href="public/template/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -39,7 +38,7 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Hoşgeldin!</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" id="form">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user" id="inpEmail" placeholder="Email Adresinizi Giriniz">
                                         </div>
@@ -67,17 +66,45 @@
         </div>
 
     </div>
-
-    <!-- Bootstrap core JavaScript-->
     <script src="public/template/vendor/jquery/jquery.min.js"></script>
     <script src="public/template/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            if (localStorage.getItem('remember') == 'true') {
+                $('#remember').prop('checked', true)
+                $('#inpEmail').val(localStorage.getItem('mail'))
+                $('#inpPass').val(localStorage.getItem('pass'))
+            }
+        })
 
-    <!-- Core plugin JavaScript-->
-    <script src="public/template/vendor/jquery-easing/jquery.easing.min.js"></script>
+        $('#form').submit(function (evt) {
+            evt.preventDefault();
+            $.ajax({
+                type: "POST",
+                async: false,
+                url: 'https://app.dipendo.com/oauth/token',
+                data: { "username": $('#inpEmail').val(), "password": $('#inpPass').val(), "grant_type": "password", "client_id": "DipendoWeb" },
+                success: response => {
+                    localStorage.setItem('token', response.token_type + ' ' + response.access_token);
+                    if ($('#remember').prop('checked')) {
+                        localStorage.setItem('remember', true)
+                        localStorage.setItem('mail', $('#inpEmail').val())
+                        localStorage.setItem('pass', $('#inpPass').val())
+                    } else {
+                        localStorage.setItem('remember', false)
+                        localStorage.removeItem('mail')
+                        localStorage.removeItem('pass')
+                    }
+                    location.assign('./')
+                },
+                error: err => {
+                    alert('Giriş yapılamadı daha sonra tekrar deneyin')
+                    console.log(err);
+                }
+            })
+        });
 
-    <!-- Custom scripts for all pages-->
-    <script src="public/template/js/sb-admin-2.min.js"></script>
-
+    </script>
 </body>
 
 </html>

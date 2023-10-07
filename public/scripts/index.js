@@ -137,9 +137,7 @@ function getList(sound = false) {
         headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => LoadList(response, sound)).fail(error => {
         if (error.status == 401) {
-            if (Login()) {
-                getList(sound)
-            }
+            location.assign('./login')
         } else if (window.navigator.onLine == false) {
             setAlert('İnternet bağlantısını kontrol ediniz')
         }
@@ -175,10 +173,9 @@ function getRowHTML(element) {
     dt.setDate(dt.getDate() + 1)
     let create = new Date(element.recordTime)
 
-    return `<tr class="${(printList || []).indexOf(`${element.id}`) !== -1 ? 'text-primary' : ''}">
-                <td>${element.customer.title}</td>
+    return `<tr>
+                <td><a class="${(printList || []).indexOf(`${element.id}`) !== -1 ? 'text-primary' : 'text-body'}" href="/detay?id=${element.id}" target="_blank" aria-pressed="true">${element.customer.title}</a></td>
                 <td class="d-none d-sm-table-cell">${create.getDate()}.${create.getMonth() + 1}.${create.getFullYear()} ${create.getHours() + 3}:${create.getMinutes()}</td>
                 <td class="d-none d-sm-table-cell">${dt.getDate()}.${dt.getMonth() + 1}.${dt.getFullYear()}</td>
-                <td class="py-1"><a href="/detay?id=${element.id}" target="_blank" class="btn btn-sm btn-outline-primary" aria-pressed="true">Detay</a></td>
             </tr>`
 }

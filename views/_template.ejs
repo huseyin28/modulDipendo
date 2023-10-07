@@ -23,7 +23,7 @@
                 <div id="content-wrapper" class="d-flex flex-column">
                     <div id="content">
                         <%- include('partial/navbar') %>
-                            <div class="container-fluid">
+                            <div class="container-fluid px-0">
                                 <%- body %>
                             </div>
                     </div>
@@ -51,7 +51,7 @@
                     <div class="modal-body">Oturumu kapatmak istediğinize emin misiniz?</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Kapat</button>
-                        <a class="btn btn-primary" href="login.html">Çıkış Yap</a>
+                        <button class="btn btn-primary" onclick="logout()">Çıkış Yap</button>
                     </div>
                 </div>
             </div>
