@@ -1,15 +1,14 @@
-<div class="card">
-	<div class="card-body">
-		<h4 class="card-title"><span id="productName"></span>
-			<img src="/public/images/dipendo.png" id="goDipendo"
-				style="float: left; cursor: pointer; width: 20px; height: 20px; margin-top: 4px;">
-		</h4>
-		<h6 class="card-subtitle mb-2 text-muted"><b>Nesne Kimliği :</b> <span id="purchaseItemId"></span></h6>
+<div class="row mx-1 mx-md-4">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title"><span id="productName"></span>
+					<img src="/public/images/dipendo.png" id="goDipendo" style="float: left; cursor: pointer; width: 20px; height: 20px; margin-top: 4px;">
+				</h4>
+				<h6 class="card-subtitle mb-2 text-muted"><b>Nesne Kimliği :</b> <span id="purchaseItemId"></span></h6>
+			</div>
+		</div>
 	</div>
-</div>
-
-<div class="row">
-
 	<div class="mt-4 col-12 col-sm-6">
 		<div class="card">
 			<div class="card-body">
@@ -23,7 +22,7 @@
 				<div class="row" id="stok"></div>
 			</div>
 		</div>
-		<div class="card mt-3 mb-3">
+		<div class="card mt-3 mb-3 d-none d-md-block">
 			<div class="card-body">
 				<h6 class="card-title font-weight-bold">HAREKETLER</h6>
 				<div id="logs"></div>
@@ -33,8 +32,7 @@
 	<div class="mt-4 col-12 col-sm-6">
 		<div class="card">
 			<div class="card-body">
-				<span class="badge badge-danger badge-counter" id="anlik"
-					style="position: absolute; transform-origin: top right; right: 0.25rem; margin-top: -0.25rem;"></span>
+				<span class="badge badge-danger badge-counter" id="anlik" style="position: absolute; transform-origin: top right; right: 0.25rem; margin-top: -0.25rem;"></span>
 				<h6 class="card-title font-weight-bold">SATILANLAR</h6>
 				<div class="row" id="satildi"></div>
 			</div>
@@ -54,7 +52,7 @@
 	</div>
 </div>
 
-<div class="modal fade" id="modalFireFazla" tabindex="-1" role="dialog" >
+<div class="modal fade" id="modalFireFazla" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-body">

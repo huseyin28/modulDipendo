@@ -94,9 +94,9 @@ function zeroDolgu(sy) {
 
 let PAGE = {
     getSendDateItems: function () {
-        let cont = `<div class="col-12 col-md-6"><input type="date" class="form-control" id="SendDate" name="trip-start" value="${FORM.getTarih(Sale.deliveryTime, true)}"></div>`;
-        cont += `<div class="col-6 col-md-3"><button class="btn btn-primary btn-block mt-2 mt-sm-0" onclick="setToday(-1)">Dün</button></div>`;
-        cont += `<div class="col-6 col-md-3"><button class="btn btn-success btn-block mt-2 mt-sm-0" onclick="setToday(0)">Bugün</button></div>`;
+        let cont = `<div class="col-12 col-md-3 col-xl-2 mb-2 mb-md-0"><input type="date" class="form-control" id="SendDate" name="trip-start" value="${FORM.getTarih(Sale.deliveryTime, true)}"></div>`;
+        cont += `<div class="col-6 col-md-2 col-xl-1"><button class="btn btn-primary btn-block" onclick="setToday(-1)">Dün</button></div>`;
+        cont += `<div class="col-6 col-md-2 col-xl-1"><button class="btn btn-success btn-block" onclick="setToday(0)">Bugün</button></div>`;
         return cont;
     },
     writeForm: function () {
@@ -158,47 +158,14 @@ let PAGE = {
             <button type="button" onclick="setStatu(2, ${params})" class="btn btn-sm btn-${item.status == 2 ? '' : 'outline-'}primary"><i class="fa-solid fa-hourglass-end"></i></button>
             <button type="button" onclick="setStatu(3, ${params})" class="btn btn-sm btn-${item.status == 3 ? '' : 'outline-'}success"><i class="fa-solid fa-check"></i></button>
         </div>`
-        let btnCreateEtiket = `<button type="button" onclick="PAGE.createEtiket(${item.saleItemId})" class="ml-2 btn btn-primary btn-sm my-1"><i class="fa-solid fa-tag"></i></button>`
 
-        return `<div class="row" style="line-height: 39px;">
-            <div class="col-8 col-sm-8 col-lg-5"><a href="/purchaseItem/detay/${item.purchaseItemId}">${item.purchaseItem.product.name}</a></div>
+        return `<div class="row mb-3" style="line-height:25px">
+            <div class="col-12 col-sm-8 col-lg-5"><a href="/purchaseItem/detay/${item.purchaseItemId}">${item.purchaseItem.product.name}</a></div>
             <div class="d-none d-lg-block col-lg-2">${units[item.purchaseItem.product.productGroupId] == "m" ? item.purchaseItemId : ""}</div>
             <div class="d-none d-lg-block col-lg-2">${(item.purchaseItem.product.unitMass * item.saleCount).toFixed(2)} ${item.purchaseItem.product.unitOfMass}</div>
-            <div class="col-4 col-lg-1">${item.saleCount} ${units[item.purchaseItem.product.productGroupId]}</div>
-            <div class="d-none d-sm-block col-sm-4 col-lg-2">${btnStatus}  ${units[item.purchaseItem.product.productGroupId] == "m" ? btnCreateEtiket : ""}</div>
+            <div class="col-6 col-lg-1">${item.saleCount} ${units[item.purchaseItem.product.productGroupId]}</div>
+            <div class="col-6 col-sm-4 col-lg-2">${btnStatus}</div>
         </div>`;
-    },
-    createEtiket: function (saleItemId) {
-        Sale.saleItems.forEach(element => {
-            if (element.saleItemId == saleItemId) {
-                console.log(element);
-                let pv = element.purchaseItem.product.productPropertyValues;
-                element.purchaseItem.product.productPropertyValues.forEach(item => {
-                });
-                let data = {
-                    "sipno": Sale.externalSaleCode,
-                    "customer": Sale.customer.title.slice(0, 20),
-                    "size": pv[0].propertyValue,
-                    "tanim": `${pv[1].propertyValue || ''} ${pv[2].propertyValue || ''} ${pv[4].propertyValue || ''} ${pv[6].propertyValue || ''}`,
-                    "metraj": element.saleCount,
-                    "agirlik": (element.purchaseItem.product.unitMass * element.saleCount).toFixed(0),
-                    "pid": element.purchaseItemId
-                }
-
-                $.ajax({
-                    type: "POST",
-                    url: "/createEtiket",
-                    dataType: "JSON",
-                    data: data
-                }).then(response => {
-                    if (response.success)
-                        setAlert('Etiket oluşturuldu', 'success')
-                    else
-                        setAlert('işlem başarısız')
-                })
-                return;
-            }
-        });
     }
 }
 
