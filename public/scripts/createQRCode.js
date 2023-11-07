@@ -17,12 +17,14 @@ function addCode() {
             qrCodes.push(i)
         write()
     }
+    $('#txtCode').val('')
+    $('#txtCode').focus()
 }
 
 function write() {
     $('#codes').html('')
     qrCodes.forEach(element => {
-        $('#codes').append(element + '<br>')
+        $('#codes').append(`<li class="list-group-item">${element}</li>`)
     });
 }
 

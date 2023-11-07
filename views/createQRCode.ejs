@@ -1,13 +1,18 @@
 <div class="row">
-	<div class="col-6">
-		<div class="input-group mb-3">
-			<input type="text" class="form-control" id="txtCode">
-			<div class="input-group-append">
-				<button class="btn btn-outline-secondary" type="button" onclick="addCode()">Ekle</button>
+	<div class="col-12 col-sm-10 col-md-8 col-lg-6">
+		<div class="card shadow-sm mx-md-4">
+			<div class="card-body">
+				<div class="input-group mb-3">
+					<input type="text" class="form-control" id="txtCode">
+					<div class="input-group-append">
+						<button class="btn btn-outline-secondary" type="button" onclick="addCode()"><i class="fa-solid fa-plus fa-fw"></i>Ekle</button>
+					</div>
+				</div>
+				<button class="btn mb-2 btn-outline-secondary" type="button" onclick="print()"><i class="fa-solid fa-print fa-fw"></i> Yazdır</button>
+				<hr>
+				<h5>Şecili QRCode'lar</h5>
+				<ul class="list-group" id="codes"></ul>
 			</div>
 		</div>
-		<button class="btn mb-2 btn-outline-secondary" type="button" onclick="print()">Yazdır</button>
-		<h5>Şecili QRCode'lar</h5>
-		<div id="codes"></div>
 	</div>
 </div>
