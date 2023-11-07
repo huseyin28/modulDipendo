@@ -160,11 +160,11 @@ let PAGE = {
         </div>`
 
         return `<div class="row mb-3" style="line-height:25px">
-            <div class="col-12 col-sm-8 col-lg-5"><a href="/purchaseItem/detay/${item.purchaseItemId}">${item.purchaseItem.product.name}</a></div>
+            <div class="col-6 col-sm-8 col-lg-5"><a href="/purchaseItem/detay/${item.purchaseItemId}">${item.purchaseItem.product.name}</a></div>
             <div class="d-none d-lg-block col-lg-2">${units[item.purchaseItem.product.productGroupId] == "m" ? item.purchaseItemId : ""}</div>
             <div class="d-none d-lg-block col-lg-2">${(item.purchaseItem.product.unitMass * item.saleCount).toFixed(2)} ${item.purchaseItem.product.unitOfMass}</div>
-            <div class="col-6 col-lg-1">${item.saleCount} ${units[item.purchaseItem.product.productGroupId]}</div>
-            <div class="col-6 col-sm-4 col-lg-2">${btnStatus}</div>
+            <div class="col-3 col-lg-1">${item.saleCount} ${units[item.purchaseItem.product.productGroupId]}</div>
+            <div class="col-3 col-sm-4 col-lg-2">${btnStatus}</div>
         </div>`;
     }
 }
