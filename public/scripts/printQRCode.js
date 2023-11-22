@@ -1,15 +1,11 @@
 let searchParams = new URLSearchParams(window.location.search)
 let codes = searchParams.get('codes').split(',')
 
-
-
-
 codes.forEach((element, index) => {
     if ((index) % 8 == 0) {
         $('.conteiner').append('<div class="a4"></div>')
     }
     addQRCode(element)
-
 });
 
 function addQRCode(id) {
@@ -37,10 +33,10 @@ function addQRCode(id) {
     })
 }
 
-function getBirim(nt){
-    if(nt == "meter"){
+function getBirim(nt) {
+    if (nt == "meter") {
         return "m"
-    }else{
+    } else {
         return ''
     }
 

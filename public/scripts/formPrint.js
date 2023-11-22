@@ -31,6 +31,12 @@ function writeForm(s) {
     $('[data-id="explanation"]').html('<b>AÇIKLAMA : </b>' + (Sale.explanation || '').replaceAll('\n\n', '\n').replaceAll('\n', '<br>'));
     Obj.writeProducts()
     // Pristine.writeProducts()
+    console.log(Sale);
+    new QRCode(document.getElementById("divQR"), {
+        text: "dipendo://sale?id=" + Sale.saleId,
+        width: 100,
+        height: 100,
+    });
 
     window.print();
     window.close();

@@ -10,12 +10,25 @@
     <link rel="stylesheet" href="/public/style/formPrint.css">
     <link rel="stylesheet" href="/public/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/public/fontawesome/css/all.min.css">
+    <style>
+        #divQR {
+            width: 112px;
+            height: 112px;
+            padding: 5px;
+            background-color: white;
+            border: 1px solid grey;
+            position: absolute;
+            top: 1cm;
+            right: 1cm;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container-form">
         <div class="page">
             <div class="nusha">
+                <div id="divQR"></div>
                 <div>
                     <h5 class="text-center">DEPO ÇIKIŞ FORMU</h5>
                 </div>
@@ -44,16 +57,23 @@
                         <div class="col p-1 text-center border border-dark border-bottom-0">Sevkiyat Son Kontrol</div>
                     </div>
                     <div class="row column">
-                        <div class="col text-center border border-dark p-1">Miktar <div class="kutu"></div></div>
-                        <div class="col text-center border border-start-0 border-dark p-1">Sağlamlık<div class="kutu"></div></div>
-                        <div class="col text-center border border-start-0 border-dark p-1">Ölçü<div class="kutu"></div></div>
-                        <div class="col text-center border border-start-0 border-dark p-1">Ürün Sertifikası<div class="kutu"></div></div>
-                        <div class="col text-center border border-start-0 border-dark p-1">İrsaliye Bilgileri<div class="kutu"></div></div>
-                        <div class="col text-center border-end-0 border-start-0 border border-dark p-1">Uygun<div class="kutu"></div></div>
-                        <div class="col text-center border-start-0 border border-dark p-1">Değil<div class="kutu"></div></div>
+                        <div class="col text-center border border-dark p-1">Miktar <div class="kutu"></div>
+                        </div>
+                        <div class="col text-center border border-start-0 border-dark p-1">Sağlamlık<div class="kutu"></div>
+                        </div>
+                        <div class="col text-center border border-start-0 border-dark p-1">Ölçü<div class="kutu"></div>
+                        </div>
+                        <div class="col text-center border border-start-0 border-dark p-1">Ürün Sertifikası<div class="kutu"></div>
+                        </div>
+                        <div class="col text-center border border-start-0 border-dark p-1">İrsaliye Bilgileri<div class="kutu"></div>
+                        </div>
+                        <div class="col text-center border-end-0 border-start-0 border border-dark p-1">Uygun<div class="kutu"></div>
+                        </div>
+                        <div class="col text-center border-start-0 border border-dark p-1">Değil<div class="kutu"></div>
+                        </div>
                     </div>
                     <div class="row column">
-                        <div class="col border border-top-0 border-dark p-1">Kontrol Tarihi :   ....   /  ....  /  .......</div>
+                        <div class="col border border-top-0 border-dark p-1">Kontrol Tarihi : .... / .... / .......</div>
                         <div class="col border border-top-0 border-start-0 border-end-0 border-dark p-1">Kontrol Eden : </div>
                         <div class="col border border-top-0 border-start-0 border-dark p-1"></div>
                     </div>
@@ -88,16 +108,23 @@
                         <div class="col p-1 text-center border border-dark border-bottom-0">Sevkiyat Son Kontrol</div>
                     </div>
                     <div class="row column">
-                        <div class="col text-center border border-dark p-1">Miktar <div class="kutu"></div></div>
-                        <div class="col text-center border border-start-0 border-dark p-1">Sağlamlık<div class="kutu"></div></div>
-                        <div class="col text-center border border-start-0 border-dark p-1">Ölçü<div class="kutu"></div></div>
-                        <div class="col text-center border border-start-0 border-dark p-1">Ürün Sertifikası<div class="kutu"></div></div>
-                        <div class="col text-center border border-start-0 border-dark p-1">İrsaliye Bilgileri<div class="kutu"></div></div>
-                        <div class="col text-center border-end-0 border-start-0 border border-dark p-1">Uygun<div class="kutu"></div></div>
-                        <div class="col text-center border-start-0 border border-dark p-1">Değil<div class="kutu"></div></div>
+                        <div class="col text-center border border-dark p-1">Miktar <div class="kutu"></div>
+                        </div>
+                        <div class="col text-center border border-start-0 border-dark p-1">Sağlamlık<div class="kutu"></div>
+                        </div>
+                        <div class="col text-center border border-start-0 border-dark p-1">Ölçü<div class="kutu"></div>
+                        </div>
+                        <div class="col text-center border border-start-0 border-dark p-1">Ürün Sertifikası<div class="kutu"></div>
+                        </div>
+                        <div class="col text-center border border-start-0 border-dark p-1">İrsaliye Bilgileri<div class="kutu"></div>
+                        </div>
+                        <div class="col text-center border-end-0 border-start-0 border border-dark p-1">Uygun<div class="kutu"></div>
+                        </div>
+                        <div class="col text-center border-start-0 border border-dark p-1">Değil<div class="kutu"></div>
+                        </div>
                     </div>
                     <div class="row column">
-                        <div class="col border border-top-0 border-dark p-1">Kontrol Tarihi :   ....   /  ....  /  .......</div>
+                        <div class="col border border-top-0 border-dark p-1">Kontrol Tarihi : .... / .... / .......</div>
                         <div class="col border border-top-0 border-start-0 border-end-0 border-dark p-1">Kontrol Eden : </div>
                         <div class="col border border-top-0 border-start-0 border-dark p-1"></div>
                     </div>
@@ -107,9 +134,10 @@
     </div>
     <script src="/public/jquery/jquery-3.6.0.min.js"></script>
     <script src="/public/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/public/qrcode/qrcode.min.js"></script>
     <script src="/public/scripts/mainObject.js"></script>
     <%- saleId %>
-    <%- scripts %>
+        <%- scripts %>
 </body>
 
 </html>
