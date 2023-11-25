@@ -1,11 +1,12 @@
 $('#sidebarToggle').trigger('click')
 let control = true;
+var html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10 });
 
 $(window).on("focus", function () {
+    html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10 });
     control = true;
 })
 
-var html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10 });
 
 html5QrcodeScanner.render(function (decodedText, decodedResult) {
     if (control) {
