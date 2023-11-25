@@ -1,31 +1,31 @@
-let productsLite = 
+let productsLite =
 {
-    "254194":{
+    "254194": {
         "longName": "13mm Fırdöndülü Zincir Kancası B Tipi 13-8 Van Beest",
         "name": "Kanca B Fır. 13-8",
         "brand": "VANB"
     },
-    "254185":{
+    "254185": {
         "longName": "12mm Hyfil 8 ÇÖ 2160 GALV A3 RHRL Kiswire",
         "name": "12mm Hyfil 8 GALV",
         "brand": "KSW"
     },
-    "254171":{
+    "254171": {
         "longName": "12mm Hylift 16 ÇÖ 1960 GALV A3 RHLL Kiswire",
         "name": "12mm Hylift 16 GALV",
         "brand": "KSW"
     },
-    "254172":{
+    "254172": {
         "longName": "12mm Hyfil 8 ÇÖ 1960 UNGALV A3 RHRL Kiswire",
         "name": "12mm Hyfil 8",
         "brand": "KSW"
     },
-    "254201":{
+    "254201": {
         "longName": "42,50 Ton Kilit U Somunlu Van Beest",
         "name": "Kilit U Som. 42,50T",
         "brand": "VANB"
     },
-    "254200":{
+    "254200": {
         "longName": "35,00 Ton Kilit Omega Vidalı Van Beest",
         "name": "Kilit O Vidalı 35T",
         "brand": "VANB"
@@ -7291,17 +7291,17 @@ let productsLite =
         "brand": "ULU"
     },
     "253130": {
-        "longName": "2T 5M PS 2T 5M 6:1 ULU",       
+        "longName": "2T 5M PS 2T 5M 6:1 ULU",
         "name": "PS 2T 5M",
         "brand": "ULU"
     },
     "253131": {
-        "longName": "4T 5M PS 4T 5M 6:1 ULU",               
+        "longName": "4T 5M PS 4T 5M 6:1 ULU",
         "name": "PS 4T 5M",
         "brand": "ULU"
     },
     "253132": {
-        "longName": "5T 5M PS 5T 5M 6:1 ULU", 
+        "longName": "5T 5M PS 5T 5M 6:1 ULU",
         "name": "PS 5T 5M",
         "brand": "ULU"
     },
@@ -12031,3 +12031,5 @@ let productsLite =
         "brand": "VANB"
     }
 }
+
+module.exports = productsLite

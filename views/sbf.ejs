@@ -23,3 +23,34 @@
 </div>
 
 <button class="btn btn-primary btn-lg sbf-onay" id="btnOnay"><i class="fa-solid fa-check"></i></button>
+
+<div class="modal fade" id="modalShortName" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalShortNameBaslik"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label for="shortName" class="col-sm-2 col-form-label">Kısa Ad</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="shortName">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="brand" class="col-sm-2 col-form-label">Marka</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="brand">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-primary" id="btnOK">Ekle</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -11,6 +11,7 @@ router.get('/products/getByGroupId/:groupId', Product.getByGroupId)
 router.get('/products/getById/:id', Product.getById)
 
 router.post('/products/imgUpload/:id', Product.imgUpload)
+router.post('/products/add/', Product.add)
 
 
 module.exports = router

@@ -1,5 +1,6 @@
 let selectesItems = [];
 let list = {};
+let listAdd = {};
 let bugun = new Date(Date.now());
 $(document).ready(main)
 
@@ -10,6 +11,7 @@ function main() {
         main();
     })
     $('#btnOnay').off('click').on('click', createForm)
+
     $.ajax({
         url: `https://app.dipendo.com/api/sale-items?status=3&offset=0&limit=500`,
         headers: { "Authorization": localStorage.getItem('token') }
@@ -26,26 +28,34 @@ function getDateStringDipendo(dt) {
     return `${dpdt.getFullYear()}-${("0" + (dpdt.getMonth() + 1)).slice(-2)}-${("0" + dpdt.getDate()).slice(-2)}T21:00:00`
 }
 
-function loadList(response) {
+async function loadList(response) {
     $('#SBF').html("");
     for (const i in response) {
         if (Object.hasOwnProperty.call(response, i)) {
             const element = response[i];
             if (element.deliveryTime == getDateStringDipendo(bugun)) {
-                if (productsLite[element.purchaseItem.product.id]) {
-                    $('#SBF').append(`<tr id="${element.saleItemId}">
+                let product = await getProduct(element.purchaseItem.product.id, element.purchaseItem.product)
+                if (element.saleItemId == 107063 || element.saleItemId == 107062) {
+                    console.log(element);
+                    console.log(product);
+                }
+                if (product == undefined) {
+                    console.log(element.purchaseItem.product);
+                    listAdd[element.purchaseItem.product.id] = element.purchaseItem.product
+                    let addButton = `<button onclick="addProduct(${element.purchaseItem.product.id})" type="button" class="btn btn-link"><i class="fa-solid fa-plus"></i></button>`
+                    $('#SBF').prepend(`<tr id="${element.saleItemId}">
                         <td>${strReplace.getCustomer(element.customer.title)}</div>
-                        <td>${productsLite[element.purchaseItem.product.id].name || logNonLiteName(element.purchaseItem.product)}</div>
+                        <td>${addButton}${logNonLiteName(element.purchaseItem.product)}</div>
                         <td>${element.saleCount}</div>
-                        <td>${productsLite[element.purchaseItem.product.id].brand || ''}</div>
+                        <td></div>
                         <td>${getNote(element)}</div>
                     </tr>`)
                 } else {
-                    $('#SBF').append(`<tr id="${element.saleItemId}">
+                    $('#SBF').prepend(`<tr id="${element.saleItemId}">
                         <td>${strReplace.getCustomer(element.customer.title)}</div>
-                        <td>${logNonLiteName(element.purchaseItem.product)}</div>
+                        <td>${product.shortName || logNonLiteName(element.purchaseItem.product)}</div>
                         <td>${element.saleCount}</div>
-                        <td></div>
+                        <td>${product.brand || ''}</div>
                         <td>${getNote(element)}</div>
                     </tr>`)
                 }
@@ -53,6 +63,52 @@ function loadList(response) {
         }
     }
     $('#SBF tr').off('click').on('click', selectItem);
+}
+
+function addProduct(id) {
+    console.log(listAdd[id]);
+    $('#modalShortName').modal('show')
+    $('#modalShortName #modalShortNameBaslik').html(listAdd[id].name)
+    $('#modalShortName #shortName').val(listAdd[id].name)
+    $('#modalShortName #brand').val(listAdd[id].name)
+    $('#modalShortName #btnOK').off('click').on('click', { product: listAdd[id] }, function (e) {
+        e.data.product
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/products/add',
+            data: {
+                id: e.data.product.id,
+                groupId: e.data.product.groupId,
+                isActive: 1,
+                name: e.data.product.name,
+                propertyValues: JSON.stringify(e.data.product.propertyValues),
+                unitMass: e.data.product.unitMass,
+                unitOfMass: e.data.product.unitOfMass,
+                shortName: $('#modalShortName #shortName').val(),
+                images: JSON.stringify([]),
+                brand: $('#modalShortName #brand').val()
+            },
+            success: response => {
+                if (response.success) {
+                    main();
+                    $('#modalShortName').modal('hide')
+                }
+            }
+        })
+    })
+    // id,groupId,isActive,name,propertyValues,unitMass,unitOfMass,shortName,images,brand
+    // Kaydet  butonuna event tanımlanacak  ilgili id shortname ve brand alınacak ve ardından
+    // listeden ilgili ürün çeklecek ve bunlar gerekli birleştirme yapıldıktan sonra sunucuya gönderilecek.
+}
+
+async function getProduct(pid, product) {
+    let pr = null;
+    $.ajax({
+        url: `/api/products/getById/${pid}`,
+        async: false
+    }).done(response => { if (response.success) pr = response.data })
+    return pr
 }
 
 function logNonLiteName(product) {

@@ -20,6 +20,22 @@ class Product {
         }
     }
 
+    static async add(req, res) {
+        let response = new ResponseObj()
+        try {
+            var post = req.body;
+            connection.query('INSERT INTO products SET ?', post, function (error, results, fields) {
+                if (error) response.setError(error);
+                else response.setData(results)
+                res.json(response)
+            });
+        } catch (error) {
+            console.log(error);
+            response.setError(error)
+            res.json(response)
+        }
+    }
+
     static async getById(req, res) {
         let response = new ResponseObj()
         try {
