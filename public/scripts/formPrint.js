@@ -30,13 +30,13 @@ function writeForm(s) {
     $('[data-id="user"]').html(`(${Sale.user.firstName} ${Sale.user.lastName})`);
     $('[data-id="explanation"]').html('<b>AÇIKLAMA : </b>' + (Sale.explanation || '').replaceAll('\n\n', '\n').replaceAll('\n', '<br>'));
     Obj.writeProducts()
-    // Pristine.writeProducts()
-    console.log(Sale);
-    new QRCode(document.getElementById("divQR"), {
+    let qrOption = {
         text: "dipendo://sale?id=" + Sale.saleId,
         width: 100,
         height: 100,
-    });
+    }
+    new QRCode(document.getElementById("divQR1"), qrOption);
+    new QRCode(document.getElementById("divQR2"), qrOption);
 
     window.print();
     window.close();
