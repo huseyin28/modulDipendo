@@ -1,9 +1,9 @@
 $('#sidebarToggle').trigger('click')
 let control = true;
-var html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10 });
+var html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 1 });
 
 $(window).on("focus", function () {
-    html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10 });
+    html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 1 });
     control = true;
 })
 
