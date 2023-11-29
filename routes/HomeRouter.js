@@ -90,7 +90,7 @@ router.get('/createQRCode', (req, res) => {
 router.get('/product/detail/:id', (req, res) => {
     res.render('productDetail', {
         title: "Ürün Detayı",
-        scripts: '<script>let productId = ' + req.params.id + '</script><script type="module" src="/public/scripts/productDetail.js?nocache=${Math.random()}"></script>'
+        scripts: '<script>let productId = ' + req.params.id + '</script><script type="module"  src="/public/scripts/productDetail.js?nocache=${Math.random()}"></script>'
     })
 })
 
