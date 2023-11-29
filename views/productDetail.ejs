@@ -1,26 +1,41 @@
-<h1><%- title %></h1>
+<h1 class="mx-4"><%- title %></h1>
 
-<div class="card">
+<div class="card mx-1 mx-md-4">
     <div class="card-body">
         <h5 class="card-title" id="name"></h5>
         <h6 class="card-subtitle mb-2 text-muted">Ürün Kimliği : <span id="id"></span></h6>
     </div>
 </div>
 
-<h5 class="card-title d-block mt-4">Görseller</h5>
-<div class="card">
+<h5 class="card-title d-block mt-4  mx-4">Görseller</h5>
+<div class="card mx-md-4 mx-1">
     <div class="card-body">
         <div class="row">
-            <div class="col-12">
+            <div class="col-8">
                 <div class="form-group">
-                    <label for="fileImage">Yüklemek istediğiniz görseli seçiniz</label>
                     <input type="file" class="form-control-file" id="fileImage">
                 </div>
             </div>
-            <div class="col-12">
-                <button type="submit" onclick="imgUpload()" class="btn btn-primary">Yükle</button>
+            <div class="col-4">
+                <button type="submit" id="imgUpload" class="btn btn-primary">Yükle</button>
             </div>
         </div>
         <div class="row" id="images"></div>
+        <div class="row">
+            <div class="pswp-gallery pswp-gallery--single-column" id="images2">
+                <!-- <a href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-2500.jpg" data-pswp-width="1669" data-pswp-height="2500" target="_blank">
+                    <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/2/img-200.jpg" alt="" />
+                </a>
+                <a href="https://cdn.photoswipe.com/photoswipe-demo-images/photos/7/img-2500.jpg" data-pswp-width="1875" data-pswp-height="2500" data-cropped="true" target="_blank">
+                    <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/7/img-200.jpg" alt="" />
+                </a>
+                <a href="https://unsplash.com" data-pswp-src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-2500.jpg" data-pswp-width="2500" data-pswp-height="1666" target="_blank">
+                    <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/3/img-200.jpg" alt="" />
+                </a>
+                <a href="http://example.com" data-pswp-src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/5/img-2500.jpg" data-pswp-width="2500" data-pswp-height="1668" target="_blank">
+                    <img src="https://cdn.photoswipe.com/photoswipe-demo-images/photos/5/img-200.jpg" alt="" />
+                </a> -->
+            </div>
+        </div>
     </div>
 </div>

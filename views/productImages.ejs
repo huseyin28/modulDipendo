@@ -1,7 +1,18 @@
-<h1><%- title %></h1>
-<div class="card">
+<h1 class="mx-4"><%- title %></h1>
+<div class="card shadow-sm mx-md-4 mb-2">
     <div class="card-body">
-        <select class="form-control" id="groups"></select>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <select class="form-control" id="groups"></select>
+            </div>
+            <div class="col-12 col-md-6 mt-2 mt-md-0">
+                <input type="text" id="search" class="form-control" placeholder="ara...">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card shadow-sm mx-md-4">
+    <div class="card-body">
         <table class="table mt-3" id="products"></table>
     </div>
 </div>

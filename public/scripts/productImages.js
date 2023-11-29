@@ -21,7 +21,7 @@ function getProdcuts(id = null) {
     $('#products').html('')
     $.ajax('/api/products/getByGroupId/' + id).done(response => {
         if (response.success) {
-            response.data.forEach(product => { $('#products').append(`<tr><td>${product.name}</td><td><a href="/product/detail/${product.id}" class="btn btn-info">Detay</a></td></tr>`) })
+            response.data.forEach(product => { $('#products').append(`<tr><td><a href="/product/detail/${product.id}">${product.name}</a></td></tr>`) })
         } else {
             setAlert(response.message)
         }

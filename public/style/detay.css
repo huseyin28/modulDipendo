@@ -7,6 +7,10 @@
     padding: 15px;
 }
 
+#images2 a img {
+    max-height: 200px;
+}
+
 #page-top select.print-form {
     color: black;
 }

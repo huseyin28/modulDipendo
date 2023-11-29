@@ -74,12 +74,20 @@ class Product {
                                 res.json(response)
                             } else {
                                 let jsn = JSON.parse(result[0].images)
-                                jsn.push(imgFile.name)
+                                jsn.push({
+                                    width: req.body.width,
+                                    height: req.body.height,
+                                    img: imgFile.name
+                                })
                                 connection.query('UPDATE products SET images = ? WHERE id = ?', [JSON.stringify(jsn), req.params.id], (err2, result2) => {
                                     if (err2) {
                                         response.setError(error)
                                     } else {
-                                        response.setData(imgFile.name)
+                                        response.setData({
+                                            width: req.body.width,
+                                            height: req.body.height,
+                                            img: imgFile.name
+                                        })
                                     }
                                     res.json(response)
                                 })
