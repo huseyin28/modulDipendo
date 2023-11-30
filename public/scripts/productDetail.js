@@ -7,6 +7,47 @@ const lightbox = new Lightbox({
     pswpModule: () => import('/public/photoswipe/photoswipe.esm.js')
 });
 
+lightbox.on('uiRegister', function () {
+    lightbox.pswp.ui.registerElement({
+        name: 'test-button',
+        order: 9,
+        isButton: true,
+        html: '<i class="fa-solid fa-trash"></i>',
+        onInit: (el, pswp) => {
+            pswp.on('change', () => {
+                $(el).off('click').on('click', { src: pswp.currSlide.data.src }, e => {
+                    console.log(e.data.src.split('/').pop());
+                })
+            });
+        }
+    });
+});
+
+lightbox.on('uiRegister', function () {
+    lightbox.pswp.ui.registerElement({
+        name: 'download-button',
+        order: 8,
+        isButton: true,
+        tagName: 'a',
+
+        html: {
+            isCustomSVG: true,
+            inner: '<path d="M20.5 14.3 17.1 18V10h-2.2v7.9l-3.4-3.6L10 16l6 6.1 6-6.1ZM23 23H9v2h14Z" id="pswp__icn-download"/>',
+            outlineID: 'pswp__icn-download'
+        },
+
+        onInit: (el, pswp) => {
+            el.setAttribute('download', '');
+            el.setAttribute('target', '_blank');
+            el.setAttribute('rel', 'noopener');
+
+            pswp.on('change', () => {
+                el.href = pswp.currSlide.data.src;
+            });
+        }
+    });
+});
+
 let imgWidth = 0, imgHeight = 0;
 
 $(document).ready(init)
@@ -72,9 +113,10 @@ function imgUpload() {
     }
 }
 
+
 function appendImage(img) {
     $('#images2').append(` 
-    <a href="/public/images/products/${img.img}" data-pswp-width="${img.width}" data-pswp-height="${img.height}" target="_blank">
-        <img src="/public/images/products/${img.img}" alt="" />
+    <a href="/public/images/products/${img.img}" data-pswp-width="${img.width}" data-pswp-height="${img.height}" target="_blank" data-id="${img.img}">
+        <img class="mb-1" src="/public/images/products/${img.img}" data-id="${img.img}"/>
     </a>`)
 }

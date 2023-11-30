@@ -59,7 +59,9 @@ class Product {
                 res.json(response)
             } else {
                 let imgFile = req.files.img
-                imgFile.name = Date.now() + imgFile.name
+                let imgName = imgFile.name.split('.')
+                imgName = imgName[imgName.length - 1]
+                imgFile.name = req.params.id + Date.now() + '.' + imgName
                 let uploadPath = __dirname + '/../public/images/products/' + imgFile.name;
 
                 await imgFile.mv(uploadPath, async function (err) {
