@@ -17,6 +17,7 @@ lightbox.on('uiRegister', function () {
             pswp.on('change', () => {
                 $(el).off('click').on('click', { src: pswp.currSlide.data.src }, e => {
                     console.log(e.data.src.split('/').pop());
+                    console.log(location.href.split('/').pop());
                 })
             });
         }

@@ -17,6 +17,26 @@
     <!-- Custom styles for this template-->
     <link href="public/template/css/sb-admin-2.min.css" rel="stylesheet">
 
+    <style>
+        #loading {
+            position: fixed;
+            z-index: 9999999;
+            background-color: rgba(240, 248, 255, 0.8);
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            line-height: 100vh;
+            text-align: center;
+            color: black;
+            display: none;
+        }
+
+        .loading {
+            display: block !important;
+        }
+    </style>
+
 </head>
 
 <body class="bg-gradient-primary">
@@ -66,6 +86,7 @@
         </div>
 
     </div>
+    <div id="loading"><i class="fas fa-10x fa-circle-notch fa-spin"></i></div>
     <script src="public/template/vendor/jquery/jquery.min.js"></script>
     <script src="public/template/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -76,6 +97,12 @@
                 $('#inpPass').val(localStorage.getItem('pass'))
             }
         })
+
+
+        $(document).on({
+            ajaxStart: function () { $('#loading').addClass("loading"); },
+            ajaxStop: function () { $('#loading').removeClass("loading"); }
+        });
 
         $('#form').submit(function (evt) {
             evt.preventDefault();

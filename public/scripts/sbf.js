@@ -35,23 +35,18 @@ async function loadList(response) {
             const element = response[i];
             if (element.deliveryTime == getDateStringDipendo(bugun)) {
                 let product = await getProduct(element.purchaseItem.product.id, element.purchaseItem.product)
-                if (element.saleItemId == 107063 || element.saleItemId == 107062) {
-                    console.log(element);
-                    console.log(product);
-                }
                 if (product == undefined) {
-                    console.log(element.purchaseItem.product);
                     listAdd[element.purchaseItem.product.id] = element.purchaseItem.product
                     let addButton = `<button onclick="addProduct(${element.purchaseItem.product.id})" type="button" class="btn btn-link"><i class="fa-solid fa-plus"></i></button>`
-                    $('#SBF').prepend(`<tr id="${element.saleItemId}">
-                        <td>${strReplace.getCustomer(element.customer.title)}</div>
+                    $('#SBF').append(`<tr id="${element.saleItemId}">
+                        <td>${strReplace.getCustomer(element.customer.title)}</div> 
                         <td>${addButton}${logNonLiteName(element.purchaseItem.product)}</div>
                         <td>${element.saleCount}</div>
                         <td></div>
                         <td>${getNote(element)}</div>
                     </tr>`)
                 } else {
-                    $('#SBF').prepend(`<tr id="${element.saleItemId}">
+                    $('#SBF').append(`<tr id="${element.saleItemId}">
                         <td>${strReplace.getCustomer(element.customer.title)}</div>
                         <td>${product.shortName || logNonLiteName(element.purchaseItem.product)}</div>
                         <td>${element.saleCount}</div>
@@ -66,7 +61,6 @@ async function loadList(response) {
 }
 
 function addProduct(id) {
-    console.log(listAdd[id]);
     $('#modalShortName').modal('show')
     $('#modalShortName #modalShortNameBaslik').html(listAdd[id].name)
     $('#modalShortName #shortName').val(listAdd[id].name)
@@ -97,9 +91,6 @@ function addProduct(id) {
             }
         })
     })
-    // id,groupId,isActive,name,propertyValues,unitMass,unitOfMass,shortName,images,brand
-    // Kaydet  butonuna event tanımlanacak  ilgili id shortname ve brand alınacak ve ardından
-    // listeden ilgili ürün çeklecek ve bunlar gerekli birleştirme yapıldıktan sonra sunucuya gönderilecek.
 }
 
 async function getProduct(pid, product) {

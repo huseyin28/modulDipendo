@@ -63,3 +63,21 @@ button.pswp__button--test-button {
     right: 15px;
     border-radius: 25px;
 }
+
+#loading {
+    position: fixed;
+    z-index: 9999999;
+    background-color: rgba(240, 248, 255, 0.8);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    line-height: 100vh;
+    text-align: center;
+    color: black;
+    display: none;
+}
+
+.loading {
+    display: block !important;
+}

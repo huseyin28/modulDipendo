@@ -33,3 +33,10 @@ function getGirisBekleyenCount() {
         $('#girisBekleyenCount').html(response.length);
     })
 }
+
+$(document).on("ajaxStart", function () {
+    $('#loading').addClass("loading");
+});
+$(document).on("ajaxStop", function () {
+    $('#loading').removeClass("loading");
+});
