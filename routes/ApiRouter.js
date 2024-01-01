@@ -12,6 +12,7 @@ router.get('/products/getById/:id', Product.getById)
 
 router.post('/products/imgUpload/:id', Product.imgUpload)
 router.post('/products/add/', Product.add)
+router.delete('/products/removeImage/:pid', Product.removeImage)
 
 
 module.exports = router

@@ -1,4 +1,5 @@
 let connection = require('./DBManager')
+const fs = require('node:fs');
 let ResponseObj = require('./ResponseObj')
 
 
@@ -100,6 +101,35 @@ class Product {
                 })
             }
         } catch (error) {
+            response.setError(error)
+            res.json(response)
+        }
+    }
+
+    static async removeImage(req, res) {
+        let response = new ResponseObj()
+        try {
+            connection.query('SELECT * FROM products WHERE id=?', [req.params.pid], (err, result) => {
+                if (err) {
+                    response.setError(err)
+                    res.json(response)
+                } else {
+                    let images = JSON.parse(result[0].images)
+                    let index = images.findIndex(({ img }) => img === req.body.src)
+
+                    if (index >= 0) {
+                        images.splice(index, 1)
+                        fs.unlinkSync(__dirname + '/../public/images/products/' + req.body.src);
+                    }
+                    connection.query('UPDATE products SET images=? WHERE id=?', [JSON.stringify(images), req.params.pid], (err2, result2) => {
+                        if (err2) response.setError(err2)
+                        else response.setData([])
+                        res.json(response)
+                    })
+                }
+            })
+        } catch (error) {
+            console.log(error);
             response.setError(error)
             res.json(response)
         }

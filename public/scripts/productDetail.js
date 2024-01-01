@@ -16,13 +16,33 @@ lightbox.on('uiRegister', function () {
         onInit: (el, pswp) => {
             pswp.on('change', () => {
                 $(el).off('click').on('click', { src: pswp.currSlide.data.src }, e => {
-                    console.log(e.data.src.split('/').pop());
-                    console.log(location.href.split('/').pop());
+                    if (confirm('Görseli silmek istediğinize emin misiniz?')) {
+                        removeImage(location.href.split('/').pop(), e.data.src.split('/').pop())
+                    }
                 })
             });
         }
     });
 });
+
+function removeImage(pid, src) {
+    $.ajax({
+        url: '/api/products/removeImage/' + pid,
+        type: "DELETE",
+        data: {
+            src: src
+        }
+    }).done(response => {
+        if (response.success) {
+            location.reload();
+        } else {
+            setAlert(response.message)
+        }
+    }).fail(err => {
+        setAlert("Hata oluştu daha sonra tekrar deneyin")
+        console.error(err);
+    })
+}
 
 lightbox.on('uiRegister', function () {
     lightbox.pswp.ui.registerElement({
