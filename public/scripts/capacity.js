@@ -15,7 +15,7 @@ function ekranaYaz(l, t) {
     let html = `<div class="p-3 mb-2 bg-success text-white">Tavsiye edilen : <b>${t}</b></div>
     <div class="p-3 mb-2 bg-warning text-dark">Makara limiti : <b>${l}</b></div>`
 
-    $(html).prependTo('.card-body').delay(10000).queue(function () { $(this).remove(); });
+    $(html).prependTo('.card-body').delay(100000).queue(function () { $(this).remove(); });
 }
 
 function getPay(halat) {
