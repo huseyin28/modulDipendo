@@ -6,8 +6,13 @@ let ResponseObj = require('./ResponseObj')
 class Product {
     static async getByGroupId(req, res) {
         let response = new ResponseObj()
+        let sqlString = 'SELECT id, name FROM products WHERE groupId=?'
+        let sqlParams = [req.params.groupId]
+        if (req.query.text != null && req.query.text != '') {
+            sqlString += ` AND name LIKE '%${req.query.text}%'`
+        }
         try {
-            connection.query('SELECT id, name FROM products WHERE groupId=?', [req.params.groupId], function (error, results, fields) {
+            connection.query(sqlString, sqlParams, function (error, results, fields) {
                 if (error)
                     response.setError(error)
                 else
