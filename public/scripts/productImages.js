@@ -32,15 +32,13 @@ function getProdcuts(id = null) {
         if (response.success) {
             response.data.forEach(product => { $('#products').append(`<tr><td><a href="/product/detail/${product.id}">${product.name}</a></td></tr>`) })
             $('#search').off('keyup').on('keyup', setKeyup)
+            $('#nonImg').off('change').on('change', setNonImg)
         } else {
             setAlert(response.message)
         }
     })
 }
-/*
-TODO : nonImg checkbox html olarak eklendi. Devamında dikey hizalama yapılınca event tanımlanıp ardından api kısmına dahil edilecek.
-? Kanılan nokta
-*/
+
 function setKeyup() {
     if (timeOut != null) {
         clearTimeout(timeOut)
@@ -50,5 +48,9 @@ function setKeyup() {
         filters.text = $('#search').val().trim()
         $('#groups').trigger('change')
     }, 750)
+}
 
+function setNonImg() {
+    filters.nonImg = $(this).prop('checked')
+    $('#groups').trigger('change')
 }
