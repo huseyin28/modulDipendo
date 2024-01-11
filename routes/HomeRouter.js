@@ -76,7 +76,7 @@ router.get('/productImages', (req, res) => {
 router.get('/sbf', (req, res) => {
     res.render('sbf', {
         title: "Sevkiyat Bildirim Formu",
-        scripts: '<script src="/public/scripts/sbf.js?nocache=${Math.random()}"></script>'
+        scripts: `<script src="/public/scripts/sbf.js?nocache=${Math.random()}"></script>`
 
     })
 })
@@ -84,14 +84,14 @@ router.get('/sbf', (req, res) => {
 router.get('/createQRCode', (req, res) => {
     res.render('createQRCode', {
         title: "QR Code Üret",
-        scripts: '<script src="/public/qrcode/qrcode.min.js"></script><script src="/public/scripts/createQRCode.js?nocache=${Math.random()}"></script>'
+        scripts: `<script src="/public/qrcode/qrcode.min.js"></script><script src="/public/scripts/createQRCode.js?nocache=${Math.random()}"></script>`
     })
 })
 
 router.get('/product/detail/:id', (req, res) => {
     res.render('productDetail', {
         title: "Ürün Detayı",
-        scripts: '<script>let productId = ' + req.params.id + '</script><script type="module"  src="/public/scripts/productDetail.js?nocache=${Math.random()}"></script>'
+        scripts: `<script>let productId = ${req.params.id}</script><script type="module"  src="/public/scripts/productDetail.js?nocache=${Math.random()}"></script>`
     })
 })
 
