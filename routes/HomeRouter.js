@@ -77,6 +77,7 @@ router.get('/sbf', (req, res) => {
     res.render('sbf', {
         title: "Sevkiyat Bildirim Formu",
         scripts: '<script src="/public/scripts/sbf.js?nocache=${Math.random()}"></script>'
+
     })
 })
 
