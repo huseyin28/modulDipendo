@@ -9,20 +9,28 @@
                         <input type="number" class="form-control" id="dia">
                     </div>
                     <div class="form-group">
-                        <label for="makara_cap">Makara Çapı</label>
+                        <label for="makara_cap" style="color: green;">(A) Makara Çapı <i class="fa-regular fa-lightbulb fa-fw" data-toggle="modal" data-target="#modalInfo"></i> </label>
                         <input type="number" class="form-control" id="makara_cap">
                     </div>
                     <div class="form-group">
-                        <label for="derinlik">Yanak Derinliği</label>
+                        <label for="derinlik" style="color: red;">(B) Yanak Derinliği<i class="fa-regular fa-lightbulb fa-fw" data-toggle="modal" data-target="#modalInfo"></i></label>
                         <input type="number" class="form-control" id="derinlik">
                     </div>
                     <div class="form-group">
-                        <label for="aralik">Yanak Aralığı</label>
+                        <label for="aralik" style="color: blue;">(C) Yanak Aralığı<i class="fa-regular fa-lightbulb fa-fw" data-toggle="modal" data-target="#modalInfo"></i></label>
                         <input type="number" class="form-control" id="aralik">
                     </div>
                     <button class="btn btn-primary" onclick="Start()">Hesapla</button>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <img src="/public/images/makara.png" style="width: 100%;" alt="" srcset="">
         </div>
     </div>
 </div>
