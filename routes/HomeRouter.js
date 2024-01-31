@@ -16,14 +16,6 @@ router.get('/login', (req, res) => {
     })
 })
 
-router.get('/capacity', (req, res) => {
-    res.render('capacity', {
-        title: 'Kapasite Hesapla',
-        scripts: `<script src="/public/scripts/capacity.js?nocache=${Math.random()}"></script>`
-    })
-})
-
-
 router.get('/qrcodescan', (req, res) => {
     res.render('qrcodescan', {
         title: 'QR Code Tarat',
