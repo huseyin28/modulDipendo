@@ -30,7 +30,10 @@ function getProdcuts(id = null) {
         data: filters
     }).done(response => {
         if (response.success) {
-            response.data.forEach(product => { $('#products').append(`<tr><td><a href="/product/detail/${product.id}">${product.name}</a></td></tr>`) })
+            response.data.forEach(product => {
+                $('#products').append(
+                    `<tr><td><a href="/product/detail/${product.id}">${product.name} <small class="text-secondary float-right">( ${product.shortName} ${product.brand} )</small></a></td></tr>`)
+            })
             $('#search').off('keyup').on('keyup', setKeyup)
             $('#nonImg').off('change').on('change', setNonImg)
         } else {
