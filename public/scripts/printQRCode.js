@@ -18,8 +18,8 @@ function addQRCode(id) {
             $('.a4:last-child').append(`<div class="row">
                 <div class="qr" id="div${response.purchaseItemId}"></div>
                 <div class="atr">
-                    <span>${response.purchaseItemId}</span>
-                    <span>${response.product.name}</span>
+                    <span><b>${response.purchaseItemId}</b></span>
+                    <span>${getname(response.product.name)}</span>
                     <span>${response.purchaseCount} ${getBirim(response.product.groupUnit)}</span>
                     <span>${Math.floor(response.product.unitMass * response.purchaseCount)} ${response.product.unitOfMass}</span>
                 </div>
@@ -31,6 +31,13 @@ function addQRCode(id) {
             });
         }
     })
+}
+
+function getname(name) {
+    name = name.replaceAll(' GALV ', ' <b>GALV</b> ')
+    name = name.replaceAll(' LHRL ', ' <b>LHRL</b> ')
+    name = name.replaceAll(' LHLL ', ' <b>LHLL</b> ')
+    return name;
 }
 
 function getBirim(nt) {
