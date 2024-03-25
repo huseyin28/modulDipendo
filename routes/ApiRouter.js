@@ -14,7 +14,6 @@ router.get('/aut/getKey', Base.getPublicKey)
 
 router.post('/products/imgUpload/:id', Product.imgUpload)
 router.post('/products/add/', Product.add)
-router.put('/products/update/', Product.update)
 router.delete('/products/removeImage/:pid', Product.removeImage)
 
 

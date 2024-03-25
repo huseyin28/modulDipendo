@@ -93,32 +93,10 @@ function getProdcutDetail() {
         if (response.success) {
             response.data.images = JSON.parse(response.data.images)
             $('#name').html(response.data.name)
-            $('#shortName').html(`${response.data.shortName} ${response.data.brand} (<button type="button" data-toggle="modal" data-target="#modalProduct" class="btn btn-sm btn-link">Düzenle</button>)`)
-            $('#txtShortName').val(response.data.shortName)
-            $('#txtBrand').val(response.data.brand)
-            $('#modalProduct #btnOK').off('click').on('click', { id: response.data.id }, setShortName)
             $('#id').html(response.data.id)
             loadImages(response.data.images)
         } else {
             setAlert(response.message)
-        }
-    })
-}
-
-function setShortName(e) {
-    console.log(e.data.id);
-    $.ajax({
-        type: 'PUT',
-        url: '/api/products/update',
-        data: {
-            id: e.data.id,
-            shortName: $('#txtShortName').val(),
-            brand: $('#txtBrand').val()
-        },
-        success: response => {
-            if (response.success) {
-                alert('işlem başarılı')
-            }
         }
     })
 }
