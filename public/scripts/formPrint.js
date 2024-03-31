@@ -47,7 +47,8 @@ function getDt(str, time = false) {
     dt.setHours(dt.getHours() + 3)
     let ret = `${dt.getDate()}.${dt.getMonth() + 1}.${dt.getFullYear()}`
     if (time)
-        ret += ` ${dt.getHours()}:${dt.getMinutes()}`
+        ret += ` ${('0' + dt.getHours()).slice(-2)}:${('0' + dt.getMinutes()).slice(-2)}`
+
     return ret
 }
 
