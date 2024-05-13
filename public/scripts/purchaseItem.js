@@ -29,6 +29,7 @@ function writeDetay(response) {
     purchaseItem = response;
     $('#productName').html(response.product.name);
     $('#purchaseItemId').html(response.purchaseItemId);
+    $('#purchaseItemId').attr('onclick',`/product/detail/${response.product.id}`)
     $('div[name="propertyValues"]').html('')
     for (const i in response.product.propertyValues) {
         if (Object.hasOwnProperty.call(response.product.propertyValues, i)) {
