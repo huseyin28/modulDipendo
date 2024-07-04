@@ -23,9 +23,9 @@ function writeList(list) {
     $('#tblList').html('')
     list.forEach((element, i) => {
         $('#tblList').append(`<tr>
-            <th scope="row">${i + 1}</th>
-            <td>${element.product.groupName}</td>
-            <td>
+            <th class="d-none d-md-table-cell" scope="row">${i + 1}</th>
+            <td class="d-none d-md-table-cell">${element.product.groupName}</td>
+            <td class="d-none d-md-table-cell">
                 <div class="form-check mr-1">
                     <input class=" form-check-input" type="checkbox" value="${element.purchaseItemId}" id="${element.purchaseItemId}">
                     <label class="form-check-label" for="${element.purchaseItemId}">${element.purchaseItemId}</label>
