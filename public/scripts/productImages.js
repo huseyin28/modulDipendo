@@ -32,7 +32,7 @@ function getProdcuts(id = null) {
         if (response.success) {
             response.data.forEach(product => { $('#products').append(`<tr><td><a href="/product/detail/${product.id}">${product.name}</a></td></tr>`) })
             $('#search').off('keyup').on('keyup', setKeyup)
-            $('#nonImg').off('change').on('change', setNonImg)
+            $('#imgOption').off('change').on('change', setNonImg)
         } else {
             setAlert(response.message)
         }
@@ -51,6 +51,6 @@ function setKeyup() {
 }
 
 function setNonImg() {
-    filters.nonImg = $(this).prop('checked')
+    filters.nonImg = $(this).val()
     $('#groups').trigger('change')
 }

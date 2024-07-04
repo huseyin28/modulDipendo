@@ -11,8 +11,10 @@ class Product {
         if (req.query.text != null && req.query.text != '') {
             sqlString += ` AND name LIKE '%${req.query.text}%'`
         }
-        if (req.query.nonImg == "true") {
+        if (req.query.nonImg == "2") {
             sqlString += ` AND images LIKE '[]'`
+        } else if (req.query.nonImg == "1") {
+            sqlString += ` AND images NOT LIKE '[]'`
         }
         try {
             connection.query(sqlString, sqlParams, function (error, results, fields) {
