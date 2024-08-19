@@ -9,7 +9,6 @@ codes.forEach((element, index) => {
 });
 
 function addQRCode(id) {
-
     $.ajax({
         url: `https://app.dipendo.com/api/purchase-items/${id}`,
         headers: { "Authorization": localStorage.getItem('token') },
@@ -44,7 +43,6 @@ function getBirim(nt) {
     if (nt == "meter") {
         return "m"
     } else {
-        return ''
+        return ' adet'
     }
-
 }
