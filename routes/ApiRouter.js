@@ -12,6 +12,7 @@ router.get('/products/getByGroupId/:groupId', Product.getByGroupId)
 router.get('/products/getById/:id', Product.getById)
 router.get('/aut/getKey', Base.getPublicKey)
 
+router.post('/products/update/:id', Product.update)
 router.post('/products/imgUpload/:id', Product.imgUpload)
 router.post('/products/add/', Product.add)
 router.delete('/products/removeImage/:pid', Product.removeImage)

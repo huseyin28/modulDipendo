@@ -6,7 +6,7 @@ let ResponseObj = require('./ResponseObj')
 class Product {
     static async getByGroupId(req, res) {
         let response = new ResponseObj()
-        let sqlString = 'SELECT id, name FROM products WHERE groupId=?'
+        let sqlString = 'SELECT id, name, shortName FROM products WHERE groupId=?'
         let sqlParams = [req.params.groupId]
         if (req.query.text != null && req.query.text != '') {
             sqlString += ` AND name LIKE '%${req.query.text}%'`
@@ -38,6 +38,22 @@ class Product {
             connection.query('INSERT INTO products SET ?', post, function (error, results, fields) {
                 if (error) response.setError(error);
                 else response.setData(results)
+                res.json(response)
+            });
+        } catch (error) {
+            console.log(error);
+            response.setError(error)
+            res.json(response)
+        }
+    }
+
+    static async update(req, res) {
+        let response = new ResponseObj()
+        try {
+            var post = req.body;
+            connection.query('UPDATE products SET shortName=?, brand=? WHERE id=?;', [post.shortName, post.brand, req.params.id], function (error, results, fields) {
+                if (error) response.setError(error);
+                else response.setData(post)
                 res.json(response)
             });
         } catch (error) {

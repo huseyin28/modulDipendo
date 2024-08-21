@@ -93,11 +93,36 @@ function getProdcutDetail() {
         if (response.success) {
             response.data.images = JSON.parse(response.data.images)
             $('#name').html(response.data.name)
+            $('#shortName').html(response.data.shortName)
             $('#id').html(response.data.id)
+            $('#btnEdit').off('click').on('click', { prod: response.data }, openEditModal)
             loadImages(response.data.images)
         } else {
             setAlert(response.message)
         }
+    })
+}
+
+function openEditModal(e) {
+    $('#editModal #shortName').val(e.data.prod.shortName);
+    $('#editModal #brand').val(e.data.prod.brand);
+    $('#editModal').modal('show');
+    $('#editModal #btnSave').off('click').on('click', { prod: e.data.prod }, function (e) {
+        $.ajax({
+            type: "POST",
+            url: '/api/products/update/' + e.data.prod.id,
+            dataType: "JSON",
+            data: {
+                shortName: $('#editModal #shortName').val(),
+                brand: $('#editModal #brand').val()
+            },
+        }).done(response => {
+            if (response.success) {
+                location.reload();
+            } else {
+                setAlert(response.message)
+            }
+        })
     })
 }
 
