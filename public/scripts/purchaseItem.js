@@ -29,7 +29,7 @@ function writeDetay(response) {
     purchaseItem = response;
     $('#productName').html(response.product.name);
     $('#purchaseItemId').html(response.purchaseItemId);
-    $('#purchaseItemId').attr('onclick',`location.assign('/product/detail/${response.product.id}')`)
+    $('#purchaseItemId').attr('onclick', `location.assign('/product/detail/${response.product.id}')`)
     $('div[name="propertyValues"]').html('')
     for (const i in response.product.propertyValues) {
         if (Object.hasOwnProperty.call(response.product.propertyValues, i)) {
@@ -53,6 +53,8 @@ function writeDetay(response) {
     GetStatu3(response.product.id, response.purchaseItemId)
     GetStatu4(response.product.id, response.purchaseItemId)
 
+    console.log(response.product.id)
+    controlProduct(response.product)
     $('#openFireFazlaModal').off('click').on('click', function () {
         $('#txtFF').keypress(function (event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -62,13 +64,12 @@ function writeDetay(response) {
             document.getElementById("txtFF").focus();
         })
         $('#modalFireFazla').modal('show');
-
     })
 }
 
 function writeLogs(activities) {
     $('#logs').html('');
-    
+
     activities.forEach(element => {
         $('#logs').append(`<div class="mb-3">${element.content} <span class="float-right"><small>${element.user.firstName} ${element.user.lastName} - ${getDT(element.recordTime)} ${getTM(element.recordTime)}</small></span></div>`)
     });
@@ -116,9 +117,9 @@ function GetStatu3(productId, PurItemId) {
     }).then(response => {
         let dt = new Date();
         response.reverse().forEach(element => {
-            if (element.purchaseItem.purchaseItemId == PurItemId){
+            if (element.purchaseItem.purchaseItemId == PurItemId) {
                 dt = new Date(element.deliveryTime)
-                $('#gonderildi').append(`<div class="col-7">${element.customer.title}</div><div class="col-3">${element.saleCount}${unit}</div><div class="col-2">${dt.getDate()}.${dt.getMonth()+1}.${dt.getFullYear()}</div>`)
+                $('#gonderildi').append(`<div class="col-7">${element.customer.title}</div><div class="col-3">${element.saleCount}${unit}</div><div class="col-2">${dt.getDate()}.${dt.getMonth() + 1}.${dt.getFullYear()}</div>`)
             }
         })
     }).fail(ajaxFail)
@@ -157,10 +158,16 @@ function savePurchaseCount() {
 
 function getDT(dt) {
     let mydt = new Date(dt)
-    return `${mydt.getDate()}.${mydt.getMonth()+1}.${mydt.getFullYear()}`
+    return `${mydt.getDate()}.${mydt.getMonth() + 1}.${mydt.getFullYear()}`
 }
 
-function getTM(dt){
+function getTM(dt) {
     let mydt = new Date(dt)
     return `${mydt.getHours()}:${mydt.getMinutes()}`
+}
+
+function controlProduct(product) {
+    // burda kendi sunucumuza istek gönderip orda bu product veritabanında yoksa eklenecek sonrasında ilgili product geldiğinde
+    // gelen üründe önce shortname ve brand kontrol edilecek yoksa istenecek
+    // ardından fotoğraf var mı ona bakılacak yoksa o istenecek
 }

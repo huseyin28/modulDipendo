@@ -22,6 +22,7 @@ function ready() {
 
 function writeForm(s) {
     Sale = s;
+    $('#spanSID, #spanSID2').html(Sale.saleId)
     $('[data-id="customer"]').html(Sale.customer.title);
     $('[data-id="externalSaleCode"]').html(Sale.externalSaleCode);
     $('[data-id="deliveryTime"]').html(getDt(Sale.deliveryTime));
