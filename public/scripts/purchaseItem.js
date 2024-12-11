@@ -53,7 +53,6 @@ function writeDetay(response) {
     GetStatu3(response.product.id, response.purchaseItemId)
     GetStatu4(response.product.id, response.purchaseItemId)
 
-    console.log(response.product.id)
     controlProduct(response.product)
     $('#openFireFazlaModal').off('click').on('click', function () {
         $('#txtFF').keypress(function (event) {
@@ -167,7 +166,24 @@ function getTM(dt) {
 }
 
 function controlProduct(product) {
+    $.ajax('/api/products/getById/' + product.id).done(response => {
+        if (response.success) {
+            if (response.data) {
+
+            } else {
+                console.log('bu ürün veritabenında yok kayıt işlemi yapılacak');
+
+            }
+        } else {
+            setAlert(response.message)
+        }
+    })
+
+
     // burda kendi sunucumuza istek gönderip orda bu product veritabanında yoksa eklenecek sonrasında ilgili product geldiğinde
     // gelen üründe önce shortname ve brand kontrol edilecek yoksa istenecek
+
+
     // ardından fotoğraf var mı ona bakılacak yoksa o istenecek
+    //! Dikkat bu sayfaya PC üzerinden de girileceği için modal açılmayacak Pid yanında pazantez içerisinde ürün görsel sayısı yazacak eğer görsel yoksa kırmızı 0 yazılacak.
 }
