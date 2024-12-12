@@ -1,4 +1,3 @@
-$('#sidebarToggle').trigger('click')
 var html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 5 });
 
 $(window).on("focus", function () {

@@ -26,6 +26,8 @@ function getUnit(u) {
 getGirisBekleyenCount();
 
 function getGirisBekleyenCount() {
+    if (screen.width < 1360)
+        $('#sidebarToggle').trigger('click')
     $.ajax({
         url: `https://app.dipendo.com/api/purchase-items?status=3&limit=300`,
         headers: { "Authorization": localStorage.getItem('token') }
