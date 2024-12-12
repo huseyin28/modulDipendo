@@ -1,21 +1,18 @@
 let units = { "896": "m", "897": "m", "898": "m", "899": "m", "900": "m", "901": "m", "902": "m", "903": "m", "904": "m", "905": "m", "906": "m", "907": "m", "908": "m", "909": "m", "910": "m", "911": "m", "912": "m", "913": "m", "914": "m", "915": "adet", "916": "adet", "917": "adet", "918": "adet", "919": "adet", "920": "adet", "921": "adet", "922": "m", "923": "adet", "924": "adet", "925": "adet", "926": "adet", "927": "adet", "928": "adet", "929": "adet", "930": "adet", "931": "adet", "932": "adet", "933": "kg", "934": "adet", "935": "adet", "936": "adet", "937": "kg", "943": "adet", "944": "adet" };
 let Sale = null
+const urlParams = new URLSearchParams(location.search);
 
 $(document).ready(ready)
 
 function ready() {
-    const urlParams = new URLSearchParams(location.search);
     $.ajax({
         url: "https://app.dipendo.com/api/sales/" + urlParams.get('id'),
         headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => {
         Sale = response
-        $('#print').off('click').on('click', function () {
-            addPrintList(urlParams.get('id'))
-            window.open('/formPrint/' + urlParams.get('id'), "_blank")
-        })
+        $('#print').off('click').on('click', addPrintList)
         Sale.listItems = []
-        $('#goDipendo').on('click', () => {
+        $('#goDipendo').off('click').on('click', () => {
             window.open(`https://app.dipendo.com/sales/${urlParams.get('id')}/detail/`, '_blank');
         })
         PAGE.joinItems()
@@ -24,16 +21,17 @@ function ready() {
     })
 }
 
-function addPrintList(id) {
+function addPrintList() {
     if (localStorage.getItem('printList') !== null) {
         let list = JSON.parse(localStorage.getItem('printList'))
-        if (list.indexOf(id) == -1) {
-            list.push(id)
+        if (list.indexOf(urlParams.get('id')) == -1) {
+            list.push(urlParams.get('id'))
             localStorage.setItem('printList', JSON.stringify(list))
         }
     } else {
         localStorage.setItem('printList', JSON.stringify([id]))
     }
+    window.open(`/formPrint/${urlParams.get('id')}`, "_blank")
 }
 
 function setStatu() {

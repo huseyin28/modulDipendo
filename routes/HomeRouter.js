@@ -23,6 +23,14 @@ router.get('/qrcodescan', (req, res) => {
     })
 })
 
+router.get('/sale/detail/:saleId', (req, res) => {
+    res.render('sale/detail', {
+        title: 'Sipariş Detay',
+        scripts: `<script>const saleId = ${req.params.saleId};</script>
+        <script src="/public/scripts/sale/detail.js?nocache=${Math.random()}"></script>`
+    })
+})
+
 router.get('/detay', (req, res) => {
     res.render('detay', {
         title: 'Detay',
