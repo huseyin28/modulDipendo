@@ -31,13 +31,6 @@ router.get('/sale/detail/:saleId', (req, res) => {
     })
 })
 
-router.get('/detay', (req, res) => {
-    res.render('detay', {
-        title: 'Detay',
-        scripts: `<script src="/public/scripts/detay.js?nocache=${Math.random()}"></script>`
-    })
-})
-
 router.get('/formPrint/:id', (req, res) => {
     res.render('formPrint', {
         layout: false,
