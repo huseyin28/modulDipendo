@@ -10,9 +10,6 @@ function init() {
     }).then(response => {
         Sale = response;
 
-        console.log('İlk gelen');
-        console.log(Sale.saleItems);
-
         $('#print').off('click').on('click', printForm);
         $('#goDipendo').off('click').on('click', () => window.open(`https://app.dipendo.com/sales/${saleId}/detail/`, '_blank'));
         writeForm();
@@ -42,9 +39,6 @@ function setStatu() {
 }
 
 function updateSale() {
-    console.log('Güncellemeye giden');
-    console.log(Sale.saleItems);
-
     $.ajax({
         url: "https://app.dipendo.com/api/sales/" + Sale.saleId,
         type: "PUT",

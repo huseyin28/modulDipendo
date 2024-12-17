@@ -169,7 +169,9 @@ function controlProduct(product) {
     $.ajax('/api/products/getById/' + product.id).done(response => {
         if (response.success) {
             if (response.data) {
-
+                let images = JSON.parse(response.data.images)
+                $('#lblImgCount').html(images.length)
+                if (images.length == 0) $('#lblImgCount').addClass('text-danger font-weight-bold')
             } else {
                 console.log('bu ürün veritabenında yok kayıt işlemi yapılacak');
 
