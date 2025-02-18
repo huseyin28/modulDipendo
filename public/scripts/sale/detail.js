@@ -26,6 +26,37 @@ function allStatus(statu) {
     })
     Sale.deliveryTime = deliveryTime;
     updateSale();
+    setLastKontrol();
+}
+
+function setLastKontrol() {
+    $('#modalLastKontrol').modal()
+}
+
+function saveLastControl() {
+    const formData = new FormData();
+    const fileInput = document.getElementById('fileInput');
+    let selectedPersons = $('#modalLastKontrol input[type="checkbox"]:checked')
+
+    for (let i = 0; i < fileInput.files.length; i++) {
+        formData.append('files[]', fileInput.files[i]);
+    }
+
+    let arrayPersons = []
+    for (let i = 0; i < selectedPersons.length; i++)
+        arrayPersons.push($(selectedPersons[i]).val())
+
+    formData.append('persons', JSON.stringify(arrayPersons));
+    formData.append('saleId', saleId);
+
+
+    fetch('/uploads/sale', {
+        method: 'POST',
+        body: formData
+    }).then(response => response.json()).then(result => {
+        console.log('Success:', result);
+        alert('Dosya ve veriler başarıyla gönderildi!');
+    })
 }
 
 function setStatu() {

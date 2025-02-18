@@ -8,6 +8,7 @@ const bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload')
 const HomeRouter = require('./routes/HomeRouter')
 const ApiRouter = require('./routes/ApiRouter')
+const UploadsRouter = require('./routes/UploadsRouter')
 
 app.use("/public", express.static('public'))
 app.use(fileUpload())
@@ -21,5 +22,6 @@ app.set('layout', '_template')
 
 app.use('/', HomeRouter)
 app.use('/api', ApiRouter)
+app.use('/uploads', UploadsRouter)
 
 app.listen(port)

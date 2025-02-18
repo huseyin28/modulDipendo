@@ -39,3 +39,82 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modalLastKontrol" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sipariş Son Kontrol</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label>Hazırlayan(lar):</label>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-check my-4">
+                                    <input class="form-check-input mt-1" type="checkbox" id="check1" value="Murat Yılmaz">
+                                    <label class="form-check-label" for="check1">Murat Yılmaz</label>
+                                </div>
+                                <div class="form-check my-4">
+                                    <input class="form-check-input mt-1" type="checkbox" id="check2" value="Selami Gedik">
+                                    <label class="form-check-label" for="check2">Selami Gedik</label>
+                                </div>
+                                <div class="form-check my-4">
+                                    <input class="form-check-input mt-1" type="checkbox" id="check3" value="Sezer Aksu">
+                                    <label class="form-check-label" for="check3">Sezer Aksu</label>
+                                </div>
+                                <div class="form-check my-4">
+                                    <input class="form-check-input mt-1" type="checkbox" id="check4" value="Hüseyin Varol">
+                                    <label class="form-check-label" for="check4">Hüseyin Varol</label>
+                                </div>
+                                <div class="form-check my-4">
+                                    <input class="form-check-input mt-1" type="checkbox" id="check5" value="Hüseyin Gedik">
+                                    <label class="form-check-label" for="check5">Hüseyin Gedik</label>
+                                </div>
+                                <div class="form-check my-4">
+                                    <input class="form-check-input mt-1" type="checkbox" id="check6" value="Hüseyin Yılmaz">
+                                    <label class="form-check-label" for="check6">Hüseyin Yılmaz</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-check my-4">
+                                    <input class="form-check-input mt-1" type="checkbox" id="check7" value="Cem Köksal">
+                                    <label class="form-check-label" for="check7">Cem Köksal</label>
+                                </div>
+                                <div class="form-check my-4">
+                                    <input class="form-check-input mt-1" type="checkbox" id="check8" value="İlyas Akbulut">
+                                    <label class="form-check-label" for="check8">İlyas Akbulut</label>
+                                </div>
+                                <div class="form-check my-4">
+                                    <input class="form-check-input mt-1" type="checkbox" id="check9" value="Hamza Balcı">
+                                    <label class="form-check-label" for="check9">Hamza Balcı</label>
+                                </div>
+                                <div class="form-check my-4">
+                                    <input class="form-check-input mt-1" type="checkbox" id="check10" value="Umut Kurtuluş">
+                                    <label class="form-check-label" for="check10">Umut Kurtuluş</label>
+                                </div>
+                                <div class="form-check my-4">
+                                    <input class="form-check-input mt-1" type="checkbox" id="check11" value="Oğuzhan Hacıoğlu">
+                                    <label class="form-check-label" for="check11">Oğuzhan Hacıoğlu</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                        <label for="fileInput">Paket Görüntüsü</label>
+                        <input type="file" class="form-control-file" id="fileInput" multiple>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-primary" onclick="saveLastControl()">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
