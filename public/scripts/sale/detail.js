@@ -38,8 +38,9 @@ function saveLastControl() {
     const fileInput = document.getElementById('fileInput');
     let selectedPersons = $('#modalLastKontrol input[type="checkbox"]:checked')
 
-    for (let i = 0; i < fileInput.files.length; i++) {
-        formData.append('files[]', fileInput.files[i]);
+    if (fileInput.files.length > 0) {
+        for (let i = 0; i < fileInput.files.length; i++) 
+            formData.append('images', fileInput.files[i]);
     }
 
     let arrayPersons = []
@@ -49,13 +50,22 @@ function saveLastControl() {
     formData.append('persons', JSON.stringify(arrayPersons));
     formData.append('saleId', saleId);
 
-
-    fetch('/uploads/sale', {
-        method: 'POST',
-        body: formData
-    }).then(response => response.json()).then(result => {
-        console.log('Success:', result);
-        alert('Dosya ve veriler başarıyla gönderildi!');
+    $.ajax({
+        type: "POST",
+        url: '/uploads/sale',
+        data: formData,
+        async: true,
+        cache: false,
+        contentType: false,
+        processData: false,
+        timeout: 60000
+    }).done(response => {
+        if (response.success) {
+            appendImage(response.data)
+            $('#fileImage').val('')
+        } else {
+            setAlert(response.message)
+        }
     })
 }
 
