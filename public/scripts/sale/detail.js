@@ -14,6 +14,17 @@ function init() {
         $('#goDipendo').off('click').on('click', () => window.open(`https://app.dipendo.com/sales/${saleId}/detail/`, '_blank'));
         writeForm();
     });
+    getControlDetail()
+}
+
+function getControlDetail(){
+    $.ajax('/api/sales/getById/'+saleId).done(response => {
+        if (response.success) {
+            alert(response.data)
+        } else {
+            setAlert(response.message)
+        }
+    })
 }
 
 function allStatus(statu) {
@@ -26,10 +37,6 @@ function allStatus(statu) {
     })
     Sale.deliveryTime = deliveryTime;
     updateSale();
-    setLastKontrol();
-}
-
-function setLastKontrol() {
     $('#modalLastKontrol').modal()
 }
 
