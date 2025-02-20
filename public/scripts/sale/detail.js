@@ -23,7 +23,7 @@ function getControlDetail(){
             for (const element of response.data) {
                 for(const person of JSON.parse(element.selected_names))
                     $('#listPersons').append(`<li class="list-group-item">${person}</li>`)
-                $('#imgs').append(`<img src="/public/images/sales/${element.file_name}" class="rounded float-left">`)
+                $('#imgs').append(`<img src="${location.hostname == 'localhost' ? 'https://dipendo.hyy.com.tr':''}/public/images/sales/lite/${element.file_name}" class="rounded float-left" style="width:10rem;">`)
             }
         } else {
             setAlert(response.message)

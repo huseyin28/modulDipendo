@@ -1,4 +1,5 @@
 const express = require('express');
+const sharp = require("sharp");
 const router = express.Router();
 const path = require('path')
 const pool = require('../controllers/DBManager');
@@ -34,10 +35,16 @@ router.post('/sale', async function (req, res) {
 
 function uploadSaleImg(file, filename, uploadPath, saleId, selected_names) {
     file.mv(uploadPath, (err) => {
-        if (!err)
+        if (!err){
             insertDB(saleId, filename, uploadPath, selected_names)
-        else
-        console.error(err)
+            sharp(uploadPath)
+            .resize(800)
+            .jpeg({ quality: 70 })
+            .toFile(path.join(__dirname, '..', 'public', 'images', 'sales', 'lite', filename))
+            .then(() => console.log("Görsel sıkıştırıldı!"))
+            .catch(err => console.error("Hata:", err));
+        }else
+            console.error(err)
     })
 }
 
