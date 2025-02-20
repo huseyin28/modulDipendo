@@ -20,7 +20,11 @@ function init() {
 function getControlDetail(){
     $.ajax('/api/sales/getById/'+saleId).done(response => {
         if (response.success) {
-            alert(response.data)
+            for (const element of response.data) {
+                for(const person of JSON.parse(element.selected_names))
+                    $('#listPersons').append(`<li class="list-group-item">${person}</li>`)
+                $('#imgs').append(`<img src="/public/images/sales/${element.file_name}" class="rounded float-left">`)
+            }
         } else {
             setAlert(response.message)
         }

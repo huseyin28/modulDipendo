@@ -9,10 +9,10 @@ module.exports.getById = (req, res) => {
                 response.setError(error)
             else
                 response.setData(results)
+            res.json(response)
         });
     } catch (error) {
         response.setError(error.message)
-    }finally{
         res.json(response)
     }
 }
