@@ -4,6 +4,7 @@ class ResponseObj {
     }
 
     setError(error) {
+        console.error(error)
         this.success = false
         this.message = "İşlem başarısız daha sonra tekrar deneyin"
         this.error = error
