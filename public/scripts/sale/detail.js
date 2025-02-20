@@ -61,8 +61,7 @@ function saveLastControl() {
         timeout: 60000
     }).done(response => {
         if (response.success) {
-            appendImage(response.data)
-            $('#fileImage').val('')
+            $('#modalLastKontrol').modal('hide')
         } else {
             setAlert(response.message)
         }

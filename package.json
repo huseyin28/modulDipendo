@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon ./app.js",
     "ins": "npm install",
-    "sqlite": "npm install -g sqlite3"
+    "sqlite": "npm install -g sqlite3",
+    "start" : "nodemon ./app.js"
   },
   "author": "",
   "license": "ISC",
