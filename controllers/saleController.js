@@ -1,6 +1,6 @@
 let connection = require('./DBManager')
 let ResponseObj = require('./ResponseObj')
-//const sharp = require("sharp");
+const Jimp = require("jimp");
 const path = require('path')
 const db = require('../controllers/DBManager');
 const fs = require('fs')
@@ -47,12 +47,14 @@ module.exports.imgUpload = async (req, res) => {
     }
 }
 
-function uploadSaleImg(file, filename) {
+async function uploadSaleImg(file, filename) {
     let uploadTempPath = path.join(__dirname, '..', 'public', 'images', 'sales', 'temp', filename)
     let uploadPath = path.join(__dirname, '..', 'public', 'images', 'sales', filename)
     
-    file.mv(uploadTempPath, (err) => {
+    file.mv(uploadTempPath, async (err) => {
         if (!err) {
+            const image = await Jimp.read(uploadTempPath);
+            await image.resize(800, Jimp.AUTO).quality(70).writeAsync(uploadPath);
             //sharp(uploadTempPath).resize(1000).jpeg({ quality: 70 }).toFile(uploadPath).then(() => fs.unlinkSync(uploadTempPath)).catch(err => console.error("Hata:", err));
         } else
             console.error(err)
