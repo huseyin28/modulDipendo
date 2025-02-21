@@ -55,7 +55,6 @@ async function uploadSaleImg(file, filename) {
         if (!err) {
             const image = await Jimp.read(uploadTempPath);
             await image.resize(800, Jimp.AUTO).quality(70).writeAsync(uploadPath);
-            //sharp(uploadTempPath).resize(1000).jpeg({ quality: 70 }).toFile(uploadPath).then(() => fs.unlinkSync(uploadTempPath)).catch(err => console.error("Hata:", err));
         } else
             console.error(err)
     })
