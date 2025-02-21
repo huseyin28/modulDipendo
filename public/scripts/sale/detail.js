@@ -58,7 +58,7 @@ function saveLastControl() {
     for (let i = 0; i < selectedPersons.length; i++)
         arrayPersons.push($(selectedPersons[i]).val())
 
-    formData.append('persons', JSON.stringify(arrayPersons));
+    formData.append('preparers', JSON.stringify(arrayPersons));
     formData.append('saleId', saleId);
 
     $.ajax({

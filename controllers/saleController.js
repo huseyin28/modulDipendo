@@ -24,14 +24,20 @@ module.exports.getById = (req, res) => {
 module.exports.imgUpload = async (req, res) => {
     let response = new ResponseObj()
     try {
-        const { persons, saleId } = req.body;
-        let filename = '';
+        const { preparers, saleId } = req.body;
+        let filenameList = [];
         if (!req.files || !req.files.images) { 
-            insertDB(saleId, filename, persons);
-        } else  { 
-            filename = saleId + '.' + req.files.images.name.split('.').at(-1);
-            uploadSaleImg(req.files.images, filename, saleId, persons)
-        } 
+            
+        } else if (!req.files.images.length) { 
+            filenameList.push(saleId + '.' + req.files.images.name.split('.').at(-1))
+            uploadSaleImg(req.files.images, filename)
+        } else {
+            for (let i = 0; i < req.files.images.length; i++) {
+                filenameList.push(`${saleId}-${i}.` + req.files.images[i].name.split('.').at(-1))
+                uploadSaleImg(req.files.images[i], filename)
+            }
+        }
+        insertDB(saleId,JSON.stringify(filenameList),preparers)
         response.setData('OK')
         res.json(response)
     } catch (error) {
@@ -41,13 +47,12 @@ module.exports.imgUpload = async (req, res) => {
     }
 }
 
-function uploadSaleImg(file, filename, saleId, selected_names) {
+function uploadSaleImg(file, filename) {
     let uploadTempPath = path.join(__dirname, '..', 'public', 'images', 'sales', 'temp', filename)
     let uploadPath = path.join(__dirname, '..', 'public', 'images', 'sales', filename)
     
     file.mv(uploadTempPath, (err) => {
         if (!err) {
-            insertDB(saleId, filename, selected_names)
             sharp(uploadTempPath).resize(1000).jpeg({ quality: 70 }).toFile(uploadPath).then(() => fs.unlinkSync(uploadTempPath)).catch(err => console.error("Hata:", err));
         } else
             console.error(err)
