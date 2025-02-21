@@ -1,6 +1,6 @@
 let connection = require('./DBManager')
 let ResponseObj = require('./ResponseObj')
-const sharp = require("sharp");
+//const sharp = require("sharp");
 const path = require('path')
 const db = require('../controllers/DBManager');
 const fs = require('fs')
@@ -53,7 +53,7 @@ function uploadSaleImg(file, filename) {
     
     file.mv(uploadTempPath, (err) => {
         if (!err) {
-            sharp(uploadTempPath).resize(1000).jpeg({ quality: 70 }).toFile(uploadPath).then(() => fs.unlinkSync(uploadTempPath)).catch(err => console.error("Hata:", err));
+            //sharp(uploadTempPath).resize(1000).jpeg({ quality: 70 }).toFile(uploadPath).then(() => fs.unlinkSync(uploadTempPath)).catch(err => console.error("Hata:", err));
         } else
             console.error(err)
     })
