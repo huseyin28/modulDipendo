@@ -5,9 +5,10 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon ./app.js",
-    "sharp": "npm install sharp",
+    "sharp": "npm usinstall sharp",
     "sqlite": "npm install -g sqlite3",
-    "start": "nodemon ./app.js"
+    "start": "nodemon ./app.js",
+    "npm" : "npm install -g npm@latest"
   },
   "author": "",
   "license": "ISC",
