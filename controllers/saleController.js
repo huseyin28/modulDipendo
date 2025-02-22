@@ -1,6 +1,6 @@
 let connection = require('./DBManager')
 let ResponseObj = require('./ResponseObj')
-const Jimp = require("jimp");
+const { Jimp } = require("jimp");
 const path = require('path')
 const db = require('../controllers/DBManager');
 const fs = require('fs')
@@ -23,17 +23,20 @@ module.exports.getById = (req, res) => {
 
 module.exports.imgUpload = async (req, res) => {
     let response = new ResponseObj()
+    let filename;
     try {
         const { preparers, saleId } = req.body;
         let filenameList = [];
         if (!req.files || !req.files.images) { 
             
         } else if (!req.files.images.length) { 
-            filenameList.push(saleId + '.' + req.files.images.name.split('.').at(-1))
+            filename = saleId + '.' + req.files.images.name.split('.').at(-1)
+            filenameList.push(filename)
             uploadSaleImg(req.files.images, filename)
         } else {
             for (let i = 0; i < req.files.images.length; i++) {
-                filenameList.push(`${saleId}-${i}.` + req.files.images[i].name.split('.').at(-1))
+                filename = `${saleId}-${i}.` + req.files.images[i].name.split('.').at(-1)
+                filenameList.push(filename)
                 uploadSaleImg(req.files.images[i], filename)
             }
         }
