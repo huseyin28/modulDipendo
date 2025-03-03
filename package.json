@@ -5,17 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon ./app.js",
-    "axios": "npm install axios",
-    "body-parser": "npm install body-parser",
-    "ejs": "npm install ejs",
-    "express-ejs-layouts": "npm install express-ejs-layouts",
-    "express-fileupload": "npm install express-fileupload",
-    "fs-extra": "npm install fs-extra",
-    "jim": "npm install jim",
-    "jimp": "npm install jimp",
-    "multer": "npm install multer",
-    "mysql": "npm install mysql",
-    "request": "npm install request"
+    "ins": "npm install axios"
   },
   "author": "",
   "license": "ISC",
