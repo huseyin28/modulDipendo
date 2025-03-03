@@ -8,11 +8,23 @@ const sharp = require("sharp");
 module.exports.getById = (req, res) => {
     let response = new ResponseObj()
     try {
-        connection.query('SELECT * FROM sale_images WHERE saleId = ?', [req.params.id], (error, results, fields) => {
+        connection.query('SELECT * FROM sales WHERE saleId = ?', [req.params.id], (error, results, fields) => {
             if (error)
                 response.setError(error)
-            else
-                response.setData(results)
+            else {
+                if (results.length > 0)
+                    response.setData(results)
+                else {
+                    connection.query('INSERT INTO sales (saleId, preparers, satatu, images,shipmentControl) VALUES (?)', [req.params.id], '[]', 1, '[]', '{}')
+                    response.setData({
+                        saleId: req.params.id,
+                        preparers: [],
+                        satatu: 1,
+                        images: [],
+                        shipmentControl: {}
+                    })
+                }
+            }
             res.json(response)
         });
     } catch (error) {
@@ -40,7 +52,7 @@ module.exports.imgUpload = async (req, res) => {
                 uploadSaleImg(req.files.images[i], filename)
             }
         }
-        insertDB(saleId, JSON.stringify(filenameList), preparers)
+        saveDB(saleId, JSON.stringify(filenameList), preparers)
         response.setData('OK')
         res.json(response)
     } catch (error) {
@@ -66,12 +78,6 @@ async function uploadSaleImg(file, filename) {
     })
 }
 
-function insertDB(saleId, filename, preparers) {
-    db.query("SELECT * FROM sale_images WHERE saleId = ?", [saleId], (err, results) => {
-        if (err) throw err;
-        if (results.length > 0)
-            console.log("Ürünler:", results.length);
-        else
-            db.query(`INSERT INTO sale_images (saleId, filename, preparers) VALUES (?, ?, ?)`, [Number(saleId), filename, preparers]);
-    });
+function saveDB(saleId, images, preparers) {
+    db.query("UPDATE sales SET preparers = ?, images=? WHERE saleId = ?", [preparers, images, saleId]);
 }

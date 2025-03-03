@@ -13,18 +13,14 @@ function init() {
         $('#print').off('click').on('click', printForm);
         $('#goDipendo').off('click').on('click', () => window.open(`https://app.dipendo.com/sales/${saleId}/detail/`, '_blank'));
         writeForm();
+        getControlDetail()
     });
-    getControlDetail()
 }
 
-function getControlDetail(){
-    $.ajax('/api/sales/getById/'+saleId).done(response => {
+function getControlDetail() {
+    $.ajax('/api/sales/getById/' + saleId).done(response => {
         if (response.success) {
-            for (const element of response.data) {
-                for(const person of JSON.parse(element.selected_names))
-                    $('#listPersons').append(`<li class="list-group-item">${person}</li>`)
-                $('#imgs').append(`<img src="${location.hostname == 'localhost' ? 'https://dipendo.hyy.com.tr':''}/public/images/sales/lite/${element.file_name}" class="rounded float-left" style="width:10rem;">`)
-            }
+            console.log(response);
         } else {
             setAlert(response.message)
         }
@@ -50,7 +46,7 @@ function saveLastControl() {
     let selectedPersons = $('#modalLastKontrol input[type="checkbox"]:checked')
 
     if (fileInput.files.length > 0) {
-        for (let i = 0; i < fileInput.files.length; i++) 
+        for (let i = 0; i < fileInput.files.length; i++)
             formData.append('images', fileInput.files[i]);
     }
 
