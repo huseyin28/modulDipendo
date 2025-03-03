@@ -1,9 +1,9 @@
 let connection = require('./DBManager')
 let ResponseObj = require('./ResponseObj')
-const { Jimp } = require("jimp");
 const path = require('path')
 const db = require('../controllers/DBManager');
 const fs = require('fs')
+const sharp = require("sharp");
 
 module.exports.getById = (req, res) => {
     let response = new ResponseObj()
@@ -27,9 +27,9 @@ module.exports.imgUpload = async (req, res) => {
     try {
         const { preparers, saleId } = req.body;
         let filenameList = [];
-        if (!req.files || !req.files.images) { 
-            
-        } else if (!req.files.images.length) { 
+        if (!req.files || !req.files.images) {
+
+        } else if (!req.files.images.length) {
             filename = saleId + '.' + req.files.images.name.split('.').at(-1)
             filenameList.push(filename)
             uploadSaleImg(req.files.images, filename)
@@ -40,7 +40,7 @@ module.exports.imgUpload = async (req, res) => {
                 uploadSaleImg(req.files.images[i], filename)
             }
         }
-        insertDB(saleId,JSON.stringify(filenameList),preparers)
+        insertDB(saleId, JSON.stringify(filenameList), preparers)
         response.setData('OK')
         res.json(response)
     } catch (error) {
@@ -53,11 +53,14 @@ module.exports.imgUpload = async (req, res) => {
 async function uploadSaleImg(file, filename) {
     let uploadTempPath = path.join(__dirname, '..', 'public', 'images', 'sales', 'temp', filename)
     let uploadPath = path.join(__dirname, '..', 'public', 'images', 'sales', filename)
-    
+
     file.mv(uploadTempPath, async (err) => {
         if (!err) {
-            const image = await Jimp.read(uploadTempPath);
-            await image.resize(800, Jimp.AUTO).quality(70).writeAsync(uploadPath);
+            await sharp(uploadTempPath)
+                .resize(1000)
+                .jpeg({ quality: 70 })
+                .toFile(uploadPath);
+            fs.unlinkSync(uploadTempPath);
         } else
             console.error(err)
     })
