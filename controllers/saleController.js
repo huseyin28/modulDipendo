@@ -14,7 +14,7 @@ module.exports.getById = (req, res) => {
                 if (results.length > 0)
                     response.setData(results)
                 else {
-                    connection.query('INSERT INTO sales (saleId, preparers, satatu, images,shipmentControl) VALUES (?)', [req.params.id], '[]', 1, '[]', '{}')
+                    connection.query('INSERT INTO sales (saleId, preparers, satatu, images,shipmentControl) VALUES (?,?,?,?,?)', [req.params.id], '[]', 1, '[]', '{}')
                     response.setData({
                         saleId: req.params.id,
                         preparers: [],
