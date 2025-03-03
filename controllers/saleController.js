@@ -1,7 +1,6 @@
 let connection = require('./DBManager')
 let ResponseObj = require('./ResponseObj')
 const path = require('path')
-const db = require('../controllers/DBManager');
 const fs = require('fs')
 const sharp = require("sharp");
 
@@ -79,5 +78,5 @@ async function uploadSaleImg(file, filename) {
 }
 
 function saveDB(saleId, images, preparers) {
-    db.query("UPDATE sales SET preparers = ?, images=? WHERE saleId = ?", [preparers, images, saleId]);
+    connection.query("UPDATE sales SET preparers = ?, images=? WHERE saleId = ?", [preparers, images, saleId]);
 }
