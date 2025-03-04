@@ -17,10 +17,10 @@ module.exports.getById = (req, res) => {
                     connection.query('INSERT INTO sales (saleId, preparers, satatu, images,shipmentControl) VALUES (?,?,?,?,?)', [req.params.id, '[]', 1, '[]', '{}'])
                     response.setData({
                         saleId: req.params.id,
-                        preparers: [],
+                        preparers: '[]',
                         satatu: 1,
-                        images: [],
-                        shipmentControl: {}
+                        images: '[]',
+                        shipmentControl: '{}'
                     })
                 }
             }
