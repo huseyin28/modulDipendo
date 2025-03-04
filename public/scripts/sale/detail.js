@@ -20,7 +20,14 @@ function init() {
 function getControlDetail() {
     $.ajax('/api/sales/getById/' + saleId).done(response => {
         if (response.success) {
-            console.log(response);
+            response.data.preparers = JSON.parse(response.data.preparers)
+            response.data.images = JSON.parse(response.data.images)
+            for (const key in response.data.preparers)
+                $(`input[value="${response.data.preparers[key]}"]`).prop('checked', true)
+
+            for (const key2 in response.data.images)
+                $('.img-container').append(`<img src="/public/images/sales/${response.data.images[key2]}" alt="..." class="img-thumbnail w-25">`)
+
         } else {
             setAlert(response.message)
         }
