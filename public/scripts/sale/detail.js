@@ -26,7 +26,7 @@ function getControlDetail() {
                 $(`input[value="${response.data.preparers[key]}"]`).prop('checked', true)
 
             for (const key2 in response.data.images)
-                $('.img-container').append(`<img src="/public/images/sales/${response.data.images[key2]}" alt="..." class="img-thumbnail w-25">`)
+                $('.img-container').append(`<a href="/public/images/sales/${response.data.images[key2]}" target="_blank"><img src="/public/images/sales/${response.data.images[key2]}" alt="..." class="img-thumbnail w-25"></a>`)
 
         } else {
             setAlert(response.message)
