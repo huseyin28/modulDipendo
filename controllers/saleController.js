@@ -41,17 +41,19 @@ module.exports.imgUpload = async (req, res) => {
         if (!req.files || !req.files.images) {
 
         } else if (!req.files.images.length) {
-            filename = saleId + '.' + req.files.images.name.split('.').at(-1)
+            filename = saleId + (+new Date()) + '.' + req.files.images.name.split('.').at(-1)
+
             filenameList.push(filename)
             uploadSaleImg(req.files.images, filename)
         } else {
             for (let i = 0; i < req.files.images.length; i++) {
-                filename = `${saleId}-${i}.` + req.files.images[i].name.split('.').at(-1)
+                filename = `${saleId}-${i}.` + (+new Date()) + req.files.images[i].name.split('.').at(-1)
+
                 filenameList.push(filename)
                 uploadSaleImg(req.files.images[i], filename)
             }
         }
-        saveDB(saleId, JSON.stringify(filenameList), preparers)
+        saveDB(saleId, filenameList, preparers)
         response.setData('OK')
         res.json(response)
     } catch (error) {
@@ -78,5 +80,19 @@ async function uploadSaleImg(file, filename) {
 }
 
 function saveDB(saleId, images, preparers) {
-    connection.query("UPDATE sales SET preparers = ?, images=? WHERE saleId = ?", [preparers, images, saleId]);
+    connection.query('SELECT * FROM sales WHERE saleId = ?', [saleId], (error, results, fields) => {
+        if (error)
+            response.setError(error)
+        else {
+            if (results.length > 0) {
+                let oldSale = results[0]
+                oldSale.images = JSON.parse(oldSale.images)
+                let newImages = oldSale.images.concat(images)
+                connection.query(
+                    "UPDATE sales SET preparers = ?, images=? WHERE saleId = ?",
+                    [preparers, JSON.stringify(newImages), saleId]
+                );
+            }
+        }
+    })
 }
