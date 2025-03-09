@@ -174,18 +174,48 @@ function controlProduct(product) {
                 if (images.length == 0) $('#lblImgCount').addClass('text-danger font-weight-bold')
             } else {
                 console.log('bu ürün veritabenında yok kayıt işlemi yapılacak');
-
+                addProductToDatabase(product);
             }
         } else {
             setAlert(response.message)
         }
     })
+}
 
 
-    // burda kendi sunucumuza istek gönderip orda bu product veritabanında yoksa eklenecek sonrasında ilgili product geldiğinde
-    // gelen üründe önce shortname ve brand kontrol edilecek yoksa istenecek
+function addProductToDatabase(product) {
+    console.log(product);
 
-
-    // ardından fotoğraf var mı ona bakılacak yoksa o istenecek
-    //! Dikkat bu sayfaya PC üzerinden de girileceği için modal açılmayacak Pid yanında pazantez içerisinde ürün görsel sayısı yazacak eğer görsel yoksa kırmızı 0 yazılacak.
+    let productName = prompt('Lütfen ürün kısa adını girin:', product.name);
+    let productBrand = prompt('Lütfen ürün markasını girin:', product.name);
+    let newProduct = {
+        "id": product.id,
+        "groupId": product.groupId,
+        "isActive": 1,
+        "name": product.name,
+        "propertyValues": JSON.stringify(product.propertyValues),
+        "unitMass": 0,
+        "unitOfMass": "kg",
+        "shortName": productName,
+        "images": JSON.stringify([]),
+        "brand": productBrand
+    }
+    $.ajax({
+        type: "POST",
+        url: '/api/products/add',
+        data: JSON.stringify(newProduct),
+        contentType: "application/json",
+        success: response => {
+            if (response.success) {
+                console.log('Ürün başarıyla eklendi');
+                controlProduct(product);
+            } else {
+                setAlert(response.message);
+            }
+        },
+        error: err => {
+            console.error('Ürün eklenirken hata oluştu:', err);
+            setAlert('Ürün eklenirken hata oluştu');
+        }
+    });
 }
