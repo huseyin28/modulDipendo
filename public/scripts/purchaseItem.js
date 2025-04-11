@@ -182,7 +182,6 @@ function controlProduct(product) {
     })
 }
 
-
 function addProductToDatabase(product) {
     console.log(product);
 
