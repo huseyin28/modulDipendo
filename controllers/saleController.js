@@ -14,11 +14,11 @@ module.exports.getById = (req, res) => {
                 if (results.length > 0)
                     response.setData(results[0])
                 else {
-                    connection.query('INSERT INTO sales (saleId, preparers, satatu, images,shipmentControl) VALUES (?,?,?,?,?)', [req.params.id, '[]', 1, '[]', '{}'])
+                    connection.query('INSERT INTO sales (saleId, preparers, statu, images,shipmentControl) VALUES (?,?,?,?,?)', [req.params.id, '[]', 1, '[]', '{}'])
                     response.setData({
                         saleId: req.params.id,
                         preparers: '[]',
-                        satatu: 1,
+                        statu: 1,
                         images: '[]',
                         shipmentControl: '{}'
                     })
@@ -63,6 +63,32 @@ module.exports.imgUpload = async (req, res) => {
     }
 }
 
+module.exports.setDeliveryTime = (req, res) => {
+    let response = new ResponseObj()
+
+    try {
+        const { saleId, deliveryTime, statu } = req.body
+        const d = new Date(deliveryTime);
+        d.setDate(d.getDate() + 1);
+        d.setHours(0, 0, 0, 0);
+
+        connection.query('SELECT * FROM sales WHERE saleId = ?', [saleId], (error, results, fields) => {
+            if (error) {
+                response.setError(error)
+            } else {
+                if (results.length > 0) {
+                    connection.query("UPDATE sales SET deleveryDate = ?, statu=? WHERE saleId = ?", [d, statu, saleId])
+                    response.setData('OK')
+                }
+            }
+            res.json(response)
+        });
+    } catch (error) {
+        response.setError(error.message)
+        res.json(response)
+    }
+}
+
 async function uploadSaleImg(file, filename) {
     let uploadTempPath = path.join(__dirname, '..', 'public', 'images', 'sales', 'temp', filename)
     let uploadPath = path.join(__dirname, '..', 'public', 'images', 'sales', filename)
@@ -96,3 +122,4 @@ function saveDB(saleId, images, preparers) {
         }
     })
 }
+

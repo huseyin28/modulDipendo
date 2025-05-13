@@ -43,6 +43,8 @@ function allStatus(statu) {
         item.deliveryTime = deliveryTime
     })
     Sale.deliveryTime = deliveryTime;
+    Sale.status = statu;
+
     updateSale();
     $('#modalLastKontrol').modal()
 }
@@ -101,7 +103,25 @@ function updateSale() {
         headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => {
         setAlert('İşlem başarılı', "success")
+        setMyDBDeleryTime(Sale.saleId, Sale.deliveryTime, Sale.status)
         init()
+    }).fail(err => {
+        setAlert('Hata oluştu')
+    })
+}
+
+function setMyDBDeleryTime(saleId, deliveryTime, statu) {
+    $.ajax({
+        url: '/api/sales/setDeliveryTime',
+        type: "POST",
+        dataType: "JSON",
+        data: { saleId: saleId, deliveryTime: deliveryTime, statu: statu },
+    }).then(response => {
+        if (response.success) {
+            setAlert('İşlem başarılı', "success")
+        } else {
+            setAlert('Hata oluştu')
+        }
     }).fail(err => {
         setAlert('Hata oluştu')
     })
