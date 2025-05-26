@@ -43,6 +43,8 @@ function allStatus(statu) {
         item.deliveryTime = deliveryTime
     })
     Sale.deliveryTime = deliveryTime;
+    Sale.status = statu;
+
     updateSale();
     $('#modalLastKontrol').modal()
 }
@@ -101,10 +103,38 @@ function updateSale() {
         headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => {
         setAlert('İşlem başarılı', "success")
+        setMyDBDeleryTime(Sale.saleId, Sale.deliveryTime, Sale.status)
         init()
     }).fail(err => {
         setAlert('Hata oluştu')
     })
+}
+
+function setMyDBDeleryTime(saleId, deliveryTime, statu) {
+    fetch('/api/sales/setDeliveryTime', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ saleId, deliveryTime, statu })
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                setAlert('İşlem başarılı', "success");
+            } else {
+                setAlert('Hata oluştu');
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            setAlert('Hata oluştu');
+        });
 }
 
 function printForm() {
