@@ -13,6 +13,7 @@ router.get('/products/getByGroupId/:groupId', Product.getByGroupId)
 router.get('/products/getById/:id', Product.getById)
 router.get('/sales/getById/:id', Sale.getById)
 router.get('/aut/getKey', Base.getPublicKey)
+router.get('/sales/getSevkList/:dt', Sale.getSevkList)
 
 router.post('/sales/setDeliveryTime', Sale.setDeliveryTime)
 router.post('/products/update/:id', Product.update)

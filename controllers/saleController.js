@@ -3,6 +3,7 @@ let ResponseObj = require('./ResponseObj')
 const path = require('path')
 const fs = require('fs')
 const sharp = require("sharp");
+const { log } = require('console');
 
 module.exports.getById = (req, res) => {
     let response = new ResponseObj()
@@ -59,6 +60,29 @@ module.exports.imgUpload = async (req, res) => {
     } catch (error) {
         response.setError(error)
         console.log(error)
+        res.json(response)
+    }
+}
+
+module.exports.getSevkList = (req, res) => {
+    let response = new ResponseObj()
+    try {
+        const dt = req.params.dt
+        log(dt)
+        connection.query('SELECT * FROM sales WHERE deleveryDate = ? AND statu=3', [dt], (error, results, fields) => {
+            if (error)
+                response.setError(error)
+            else {
+                if (results.length > 0) {
+                    response.setData(results)
+                } else {
+                    response.setData([])
+                }
+            }
+            res.json(response)
+        });
+    } catch (error) {
+        response.setError(error.message)
         res.json(response)
     }
 }

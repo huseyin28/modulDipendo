@@ -70,7 +70,13 @@ router.get('/sbf', (req, res) => {
     res.render('sbf', {
         title: "Sevkiyat Bildirim Formu",
         scripts: `<script src="/public/scripts/sbf.js?nocache=${Math.random()}"></script>`
+    })
+})
 
+router.get('/sbf2', (req, res) => {
+    res.render('sbf2', {
+        title: "Sevkiyat Bildirim Formu2",
+        scripts: `<script src="/public/scripts/sbf2.js?nocache=${Math.random()}"></script>`
     })
 })
 
