@@ -48,15 +48,33 @@ function getSaleById(saleId) {
     })
 }
 
-function writeSaleItem(item) {
-    $('#SBF').append(`<tr id="${item.saleItemId}">
+async function writeSaleItem(item) {
+    let shortProduct = await getShortProduct(item.purchaseItem.product);
+
+    $('#SBF').append(`<tr id="${item.saleItemId}" ${shortProduct == null ? 'class="no-select"' : ''}>
         <td>${getCustomerName(item.customer.title)}</td> 
-        <td>${item.purchaseItem.product.name}</td>
+        <td>${shortProduct != null ? shortProduct.shortName : item.purchaseItem.product.name}</td>
         <td>${item.saleCount}</td>
-        <td>${item.purchaseItem.product.productPropertyValues.at(-1).propertyValue}</td>
+        <td>${shortProduct != null ? shortProduct.shortName : getButtonAddProduct(item.purchaseItem.product)}</td>
         <td></td>
     </tr>`);
-    $('#SBF tr').off('click').on('click', selectItem);
+    $('#SBF tr:not(.no-select)').off('click').on('click', selectItem);
+}
+
+
+
+async function getShortProduct(product) {
+    let p = null;
+    $.ajax({
+        url: `/api/products/getById/${product.productId}`,
+        async: false,
+        success: function (response) {
+            if (response.success) {
+                p = response.data || null;
+            }
+        }
+    })
+    return p;
 }
 
 function selectItem() {
@@ -102,26 +120,40 @@ function mergeItems() {
     Object.values(list).forEach(writeSaleItem);
 }
 
+function getButtonAddProduct(p) {
+    console.log(p);
+    let onc = `onclick"="addProductModal('${p.productId}', '${p.name}')"`;
+    return `<button class="btn btn-primary btn-sm px-3 m-0 py-1" ${onc}> + </button>`;
+}
+
+function addProductModal(productId, productName) {
+
+    // ! Modal açılmıyor bu noktada kaldım 
+    $('#modalShortName').modal('show');
+    $('#modalShortName #modalShortNameBaslik').html(productName);
+    $('#modalShortName #btnOK').attr('onclick', `addProduct(${productId})`);
+}
+
+function addProduct(productId) {
+    let shortName = $('#modalShortName #shortName').val().trim();
+    let brand = $('#modalShortName #brand').val().trim();
+    alert(shortName + '-' + brand);
+
+}
+
 function getCustomerName(name) {
     name = name.replaceAll(' Asansör', ' As.');
     name = name.replaceAll(' Demir Çelik', ' DÇ');
     name = name.replaceAll(' Demir ve Çelik', ' DÇ');
     let customerName = name.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').trim();
     let words = customerName.split(/\s+/);
-
-    // İlk 2 kelimeyi birleştir
     let result = words.slice(0, 2).join(' ');
-
-    // Eğer 3. kelime varsa ve result 10 karakterden küçükse 3. kelimeyi ekle
     if (result.length < 7 && words.length >= 3) {
         result += ' ' + words[2];
     }
-
-    // Eğer result 20 karakterden büyükse ilk 20 karakterini döndür
     if (result.length > 15) {
         return result.slice(0, 15);
     }
-
     return result;
 }
 
@@ -134,4 +166,83 @@ function setYesterday() {
     $('#start').val(getDateString(bugun))
     bugun.setDate(bugun.getDate() + 1)
     $('#start').trigger('change')
+}
+
+class strReplace {
+    static getCustomer(title) {
+        let exp = title.split(" ")
+        let str = `${exp[0]} ${exp[1]}`
+        if (str.length > 10)
+            str = str.slice(0, 11)
+        return str
+    }
+
+    static getMarka(Marka) {
+        Marka = Marka.replaceAll('SHANDONG', 'SHD')
+        Marka = Marka.replaceAll('ERCİYES', 'ERC')
+        Marka = Marka.replaceAll('Erciyes', 'ERC')
+        Marka = Marka.replaceAll('MS ASANSÖR', 'MS')
+        Marka = Marka.replaceAll('KAPTAN', 'KPT')
+        Marka = Marka.replaceAll('DRAKO', 'DRK')
+        Marka = Marka.replaceAll('KISWIRE', 'KSW')
+        Marka = Marka.replaceAll('KİSWİRE', 'KSW')
+        Marka = Marka.replaceAll('GÖVER', 'GVR')
+        Marka = Marka.replaceAll('KÖŞKER', 'KŞKR')
+        Marka = Marka.replaceAll('Köşkerler', 'KŞKR')
+        Marka = Marka.replaceAll('ARAS KALIP', 'ARAS')
+        Marka = Marka.replaceAll('VAN BEEST', 'VANB')
+        Marka = Marka.replaceAll('SEVERSTAL', 'SVR')
+        Marka = Marka.replaceAll('KJ CHAIN', 'KJC')
+        Marka = Marka.replaceAll('Yeni Doğan', 'YD')
+        Marka = Marka.replaceAll('NEMAG', 'NMG')
+        Marka = Marka.replaceAll('İZMİT', 'AŞ')
+        Marka = Marka.replaceAll('İzmit A.Ş.', 'AŞ')
+        Marka = Marka.replaceAll('Global Rope Fittings', 'GRF')
+        Marka = Marka.replaceAll('GLOBAL ROPE', 'GR')
+        Marka = Marka.replaceAll('CHUNG WOO', 'CW')
+        Marka = Marka.replaceAll('KÖŞKERLER', 'KŞKR')
+        Marka = Marka.replaceAll('J.D.THEILE', 'JDT')
+        Marka = Marka.replaceAll('AMZONE', 'AMZ')
+        Marka = Marka.replaceAll('JIANGSU', 'JHS')
+        Marka = Marka.replaceAll('Hamdi Küçük', 'HK')
+        Marka = Marka.replaceAll('Şahinler', 'ŞHN')
+        Marka = Marka.replaceAll('Van Beest', 'VANB')
+        Marka = Marka.replaceAll('PEWAG', 'PWG')
+        Marka = Marka.replaceAll('ŞAHİNLER', 'ŞHN')
+        Marka = Marka.replaceAll('GÜL MAKİNE', 'GÜL')
+        return Marka
+    }
+
+    static getProduct(name) {
+        name = name.replaceAll('MS ASANSÖR', 'MS')
+        name = name.replaceAll('ARAS KALIP', 'ARAS')
+        name = name.replaceAll('VAN BEEST', 'VANB')
+        name = name.replaceAll('Omega ', 'O ')
+        name = name.replaceAll(' Ton ', 'T ')
+        name = name.replaceAll(' Yellow Pin ', ' YP ')
+        name = name.replaceAll(' Polyester Sapan ', ' PS ')
+        name = name.replaceAll(' UNGALV', '')
+        name = name.replaceAll(' A1', '')
+        name = name.replaceAll(' A2', '')
+        name = name.replaceAll(' A3', '')
+        name = name.replaceAll(' A4', '')
+        name = name.replaceAll(' A5', '')
+        name = name.replaceAll(' DRY', '')
+        name = name.replaceAll(' 1960', '')
+        name = name.replaceAll(' 1770', '')
+        name = name.replaceAll(' 2160', '')
+        name = name.replaceAll(' RHRL', '')
+        name = name.replaceAll(' RHLL', '')
+        name = name.replaceAll(' LHRL', ' SOL')
+        name = name.replaceAll(' LHLL', ' SOL')
+        name = name.replaceAll(' WS', '')
+        name = name.replaceAll(' KÖ', '+1')
+        name = name.replaceAll(' SEALE', 'S')
+        name = name.replaceAll('1370/1770', '')
+        name = name.replaceAll('Zincir Kancası Gözlü B Tipi', 'Kanca B Gözlü')
+
+        let dm = name.split(' ')
+        dm.splice(dm.length - 1, 1)
+        return dm.join(' ');
+    }
 }

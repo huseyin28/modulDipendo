@@ -6,6 +6,7 @@
     right: 0;
     padding: 15px;
 }
+
 .btn-circle {
     width: 50px;
     height: 50px;
@@ -15,6 +16,7 @@
     align-items: center;
     justify-content: center;
 }
+
 #images2 a img {
     max-height: 200px;
 }
@@ -62,6 +64,10 @@ button.pswp__button--test-button {
     background-color: rgba(0, 0, 0, 0.05);
 }
 
+.no-select {
+    cursor: not-allowed;
+    color: red;
+}
 
 .sbf-onay {
     width: 50px;
