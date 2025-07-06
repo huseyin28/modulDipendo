@@ -1,4 +1,5 @@
-let bugun = new Date(Date.now());
+// let bugun = new Date(Date.now());
+let bugun = new Date('2025-06-24');
 let selectedItems = [];
 let saleItems = [];
 $(document).ready(main)
@@ -31,6 +32,7 @@ function getSaleById(saleId) {
         headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => {
         for (const i in response.saleItems) {
+            response.saleItems[i].customer = response.customer;
             saleItems.push(response.saleItems[i])
             writeSaleItem(response.saleItems[i], response.customer.title)
         }
@@ -73,14 +75,13 @@ function mergeItems() {
     let list = {};
     selectedItems.forEach(element => {
         let kod = '';
-        if (element.saleCount == element.purchaseItem.purchaseCount && element.purchaseItem.product.groupUnit == "meter") {
-            kod = `${element.customer.id}-${element.purchaseItem.product.id}`
-        } else if (element.purchaseItem.product.groupUnit == "piece")
-            kod = `${element.customer.id}-${element.purchaseItem.product.id}`;
-        else if (element.purchaseItem.product.groupUnit == "meter")
-            kod = `${element.customer.id}-${element.purchaseItem.purchaseItemId}`;
-
-        console.log(kod, element.purchaseItem);
+        if (element.saleCount == element.purchaseItem.purchaseCount && units[element.purchaseItem.product.productGroupId] == "m") {
+            kod = `${element.customer.customerId}-${element.purchaseItem.product.productId}`
+        } else if (units[element.purchaseItem.product.productGroupId] == "adet" || units[element.purchaseItem.product.productGroupId] == "kg") {
+            kod = `${element.customer.customerId}-${element.purchaseItem.product.productId}`;
+        } else if (units[element.purchaseItem.product.productGroupId] == "m") {
+            kod = `${element.customer.customerId}-${element.purchaseItem.purchaseItemId}`;
+        }
 
         if (kod in list) {
             list[kod].saleCount += element.saleCount;
