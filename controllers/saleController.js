@@ -69,7 +69,7 @@ module.exports.getSevkList = (req, res) => {
     try {
         const dt = req.params.dt
         log(dt)
-        connection.query('SELECT * FROM sales WHERE deleveryDate = ? AND statu=3', [dt], (error, results, fields) => {
+        connection.query('SELECT * FROM sales WHERE deleveryDate = ? AND statu=3 ORDER BY saleId DESC', [dt], (error, results, fields) => {
             if (error)
                 response.setError(error)
             else {

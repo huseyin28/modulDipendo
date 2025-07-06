@@ -1,5 +1,12 @@
-// let bugun = new Date(Date.now());
-let bugun = new Date('2025-06-24');
+let bugun;
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.has('date')) {
+    bugun = new Date(urlParams.get('date'));
+} else {
+    bugun = new Date(Date.now());
+    urlParams.set('date', getDateString(bugun));
+    window.history.replaceState({}, '', `${location.pathname}?${urlParams}`);
+}
 let selectedItems = [];
 let saleItems = [];
 $(document).ready(main)
@@ -8,6 +15,8 @@ function main() {
     $('#start').val(getDateString(bugun))
     $('#start').off('change').on('change', () => {
         bugun = new Date($('#start').val());
+        urlParams.set('date', getDateString(bugun));
+        window.history.replaceState({}, '', `${location.pathname}?${urlParams}`);
         main();
     })
     $('#btnOnay').off('click').on('click', createForm)
@@ -34,14 +43,14 @@ function getSaleById(saleId) {
         for (const i in response.saleItems) {
             response.saleItems[i].customer = response.customer;
             saleItems.push(response.saleItems[i])
-            writeSaleItem(response.saleItems[i], response.customer.title)
+            writeSaleItem(response.saleItems[i])
         }
     })
 }
 
-writeSaleItem = (item, customer) => {
+function writeSaleItem(item) {
     $('#SBF').append(`<tr id="${item.saleItemId}">
-        <td>${getCustomerName(customer)}</td> 
+        <td>${getCustomerName(item.customer.title)}</td> 
         <td>${item.purchaseItem.product.name}</td>
         <td>${item.saleCount}</td>
         <td>${item.purchaseItem.product.productPropertyValues.at(-1).propertyValue}</td>
@@ -89,7 +98,8 @@ function mergeItems() {
             list[kod] = element
         }
     })
-    console.log(list)
+    $('#SBF').html('');
+    Object.values(list).forEach(writeSaleItem);
 }
 
 function getCustomerName(name) {
