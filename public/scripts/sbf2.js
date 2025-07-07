@@ -69,9 +69,7 @@ function getNot(saleItem) {
         if (units[saleItem.purchaseItem.product.productGroupId] == "adet" || units[saleItem.purchaseItem.product.productGroupId] == "kg") {
             return `Verildi`;
         } else if (units[saleItem.purchaseItem.product.productGroupId] == "m") {
-            console.log(saleItem);
-            //! burada kaldım. 
-            return `.... Kesildi`;
+            return ``;
         }
     } else {
         return ``;
@@ -109,12 +107,12 @@ function createForm() {
         alert('Lütfen en az bir ürün seçiniz');
         return;
     }
-    selectedItems = saleItems.filter(element => selectedItems.includes(String(element.saleItemId)));
+    selectedItems = selectedItems.map(id => saleItems.find(element => String(element.saleItemId) === id)).filter(Boolean);
     mergeItems()
 }
 
-function mergeItems() {
-    selectedItems.forEach(element => {
+async function mergeItems() {
+    selectedItems.forEach(await function (element) {
         let kod = '';
         if (element.saleCount == element.purchaseItem.purchaseCount && units[element.purchaseItem.product.productGroupId] == "m") {
             kod = `${element.customer.customerId}-${element.purchaseItem.product.productId}`
@@ -131,7 +129,13 @@ function mergeItems() {
         }
     })
     $('#SBF').html('');
-    Object.values(list).forEach(writeSaleItem);
+
+    console.log(selectedItems);
+    console.log(list);
+    console.log(Object.keys(list));
+
+
+    Object.values(list).forEach(await writeSaleItem);
 }
 
 function getButtonAddProduct(p) {
