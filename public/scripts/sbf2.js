@@ -68,7 +68,10 @@ function getNot(saleItem) {
     if (Object.keys(list).length != 0) {
         if (units[saleItem.purchaseItem.product.productGroupId] == "adet" || units[saleItem.purchaseItem.product.productGroupId] == "kg") {
             return `Verildi`;
+        } else if (units[saleItem.purchaseItem.product.productGroupId] == "m" && saleItem.saleCount == saleItem.purchaseItem.purchaseCount) {
+            return `Verildi`;
         } else if (units[saleItem.purchaseItem.product.productGroupId] == "m") {
+            console.log(saleItem);
             return ``;
         }
     } else {
