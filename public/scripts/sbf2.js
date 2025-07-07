@@ -1,4 +1,5 @@
-let bugun;
+let bugun, addList = {};
+
 const urlParams = new URLSearchParams(window.location.search);
 if (urlParams.has('date')) {
     bugun = new Date(urlParams.get('date'));
@@ -50,18 +51,18 @@ function getSaleById(saleId) {
 
 async function writeSaleItem(item) {
     let shortProduct = await getShortProduct(item.purchaseItem.product);
+    if (shortProduct == null)
+        addList[item.purchaseItem.product.productId] = item.purchaseItem.product;
 
     $('#SBF').append(`<tr id="${item.saleItemId}" ${shortProduct == null ? 'class="no-select"' : ''}>
         <td>${getCustomerName(item.customer.title)}</td> 
         <td>${shortProduct != null ? shortProduct.shortName : item.purchaseItem.product.name}</td>
         <td>${item.saleCount}</td>
-        <td>${shortProduct != null ? shortProduct.shortName : getButtonAddProduct(item.purchaseItem.product)}</td>
+        <td>${shortProduct != null ? shortProduct.brand : getButtonAddProduct(item.purchaseItem.product)}</td>
         <td></td>
     </tr>`);
     $('#SBF tr:not(.no-select)').off('click').on('click', selectItem);
 }
-
-
 
 async function getShortProduct(product) {
     let p = null;
@@ -122,22 +123,41 @@ function mergeItems() {
 
 function getButtonAddProduct(p) {
     console.log(p);
-    let onc = `onclick"="addProductModal('${p.productId}', '${p.name}')"`;
+    let onc = `onclick="addProductModal('${p.productId}', '${p.name}')"`;
     return `<button class="btn btn-primary btn-sm px-3 m-0 py-1" ${onc}> + </button>`;
 }
 
 function addProductModal(productId, productName) {
-
-    // ! Modal açılmıyor bu noktada kaldım 
     $('#modalShortName').modal('show');
     $('#modalShortName #modalShortNameBaslik').html(productName);
     $('#modalShortName #btnOK').attr('onclick', `addProduct(${productId})`);
 }
 
-function addProduct(productId) {
+function addProduct(pId) {
     let shortName = $('#modalShortName #shortName').val().trim();
     let brand = $('#modalShortName #brand').val().trim();
-    alert(shortName + '-' + brand);
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/products/add',
+        data: {
+            id: pId,
+            groupId: addList[pId].productGroupId,
+            isActive: 1,
+            name: addList[pId].name,
+            propertyValues: JSON.stringify(addList[pId].productPropertyValues),
+            unitMass: addList[pId].unitMass,
+            unitOfMass: addList[pId].unitOfMass,
+            shortName: shortName,
+            images: JSON.stringify([]),
+            brand: brand
+        },
+        success: response => {
+            if (response.success) {
+                location.reload();
+            }
+        }
+    })
 
 }
 

@@ -66,8 +66,6 @@ function addProduct(id) {
     $('#modalShortName #shortName').val(listAdd[id].name)
     $('#modalShortName #brand').val(listAdd[id].name)
     $('#modalShortName #btnOK').off('click').on('click', { product: listAdd[id] }, function (e) {
-        e.data.product
-
         $.ajax({
             type: 'POST',
             url: '/api/products/add',
