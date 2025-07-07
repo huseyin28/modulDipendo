@@ -1,4 +1,4 @@
-let bugun, addList = {};
+let bugun, addList = {}, list = {};;
 
 const urlParams = new URLSearchParams(window.location.search);
 if (urlParams.has('date')) {
@@ -59,9 +59,23 @@ async function writeSaleItem(item) {
         <td>${shortProduct != null ? shortProduct.shortName : item.purchaseItem.product.name}</td>
         <td>${item.saleCount}</td>
         <td>${shortProduct != null ? shortProduct.brand : getButtonAddProduct(item.purchaseItem.product)}</td>
-        <td></td>
+        <td>${getNot(item)}</td>
     </tr>`);
     $('#SBF tr:not(.no-select)').off('click').on('click', selectItem);
+}
+
+function getNot(saleItem) {
+    if (Object.keys(list).length != 0) {
+        if (units[saleItem.purchaseItem.product.productGroupId] == "adet" || units[saleItem.purchaseItem.product.productGroupId] == "kg") {
+            return `Verildi`;
+        } else if (units[saleItem.purchaseItem.product.productGroupId] == "m") {
+            console.log(saleItem);
+            //! burada kaldım. 
+            return `.... Kesildi`;
+        }
+    } else {
+        return ``;
+    }
 }
 
 async function getShortProduct(product) {
@@ -100,7 +114,6 @@ function createForm() {
 }
 
 function mergeItems() {
-    let list = {};
     selectedItems.forEach(element => {
         let kod = '';
         if (element.saleCount == element.purchaseItem.purchaseCount && units[element.purchaseItem.product.productGroupId] == "m") {
@@ -122,9 +135,7 @@ function mergeItems() {
 }
 
 function getButtonAddProduct(p) {
-    console.log(p);
-    let onc = `onclick="addProductModal('${p.productId}', '${p.name}')"`;
-    return `<button class="btn btn-primary btn-sm px-3 m-0 py-1" ${onc}> + </button>`;
+    return `<button class="btn btn-primary btn-sm px-3 m-0 py-1" onclick="addProductModal('${p.productId}', '${p.name}')"> + </button>`;
 }
 
 function addProductModal(productId, productName) {
