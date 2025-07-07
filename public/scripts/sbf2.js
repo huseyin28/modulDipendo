@@ -129,12 +129,6 @@ async function mergeItems() {
         }
     })
     $('#SBF').html('');
-
-    console.log(selectedItems);
-    console.log(list);
-    console.log(Object.keys(list));
-
-
     Object.values(list).forEach(await writeSaleItem);
 }
 
