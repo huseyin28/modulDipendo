@@ -107,7 +107,7 @@ function createForm() {
         alert('Lütfen en az bir ürün seçiniz');
         return;
     }
-    selectedItems = selectedItems.map(id => saleItems.find(element => String(element.saleItemId) === id)).filter(Boolean);
+    selectedItems = saleItems.filter(element => selectedItems.includes(String(element.saleItemId)));
     mergeItems()
 }
 
