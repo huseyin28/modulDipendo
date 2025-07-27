@@ -119,7 +119,11 @@ function GetStatu3(productId, PurItemId) {
             if (element.purchaseItem.purchaseItemId == PurItemId) {
                 dt = new Date(element.deliveryTime)
                 dt.setDate(dt.getDate() + 1);
-                $('#gonderildi').append(`<div class="col-7">${element.customer.title}</div><div class="col-3">${element.saleCount}${unit}</div><div class="col-2">${dt.toLocaleDateString('tr-TR')}</div>`)
+                console.log(dt.toLocaleDateString('tr-TR'), dt);
+                $('#gonderildi').append(`
+                    <div class="col-7">${element.customer.title}</div>
+                    <div class="col-3">${element.saleCount}${unit}</div>
+                    <div class="col-2">${dt.toLocaleDateString('tr-TR')}</div>`)
             }
         })
     }).fail(ajaxFail)

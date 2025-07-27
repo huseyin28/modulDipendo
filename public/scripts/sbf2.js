@@ -1,4 +1,10 @@
-let bugun, addList = {}, list = {};;
+let bugun,
+    addList = {},
+    list = {},
+    selectedItems = [],
+    saleItems = [];
+
+let selectionOrder = []; // Yeni global değişken ekle
 
 const urlParams = new URLSearchParams(window.location.search);
 if (urlParams.has('date')) {
@@ -8,8 +14,7 @@ if (urlParams.has('date')) {
     urlParams.set('date', getDateString(bugun));
     window.history.replaceState({}, '', `${location.pathname}?${urlParams}`);
 }
-let selectedItems = [];
-let saleItems = [];
+
 $(document).ready(main)
 
 function main() {
@@ -24,20 +29,22 @@ function main() {
     init(bugun)
 }
 
-function init(dt) {
+async function init(dt) {
     $('#SBF').html("");
     saleItems = [];
+    selectedItems = [];
+    selectionOrder = []; // Bunu ekle
     $.ajax({
+        async: false,
         url: `/api/sales/getSevkList/${getDateString(dt)}`,
-    }).then(response => {
-        for (const i in response.data) {
-            getSaleById(response.data[i].saleId);
-        }
+    }).then(async response => {
+        for (const i in response.data) await getSaleById(response.data[i].saleId);
     })
 }
 
-function getSaleById(saleId) {
+async function getSaleById(saleId) {
     $.ajax({
+        async: false,
         url: `https://app.dipendo.com/api/sales/${saleId}`,
         headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => {
@@ -71,13 +78,25 @@ function getNot(saleItem) {
         } else if (units[saleItem.purchaseItem.product.productGroupId] == "m" && saleItem.saleCount == saleItem.purchaseItem.purchaseCount) {
             return `Verildi`;
         } else if (units[saleItem.purchaseItem.product.productGroupId] == "m") {
-            console.log(saleItem);
-            return ``;
+            return getRopeNote(saleItem)
         }
     } else {
         return ``;
     }
 }
+
+function getRopeNote(saleItem) {
+    // Aynı purchaseItemId'ye sahip seçilenlerin order numaralarını al
+    const matchingItems = selectedItems.map(id => saleItems.find(item => item.saleItemId == id))
+        .filter(item => item && item.purchaseItem.purchaseItemId === saleItem.purchaseItem.purchaseItemId && item.saleItemId !== saleItem.saleItemId);
+
+    // Eğer 'order' özelliği yoksa, index'i kullan
+    const orderNumbers = matchingItems.map(item => typeof item.order !== 'undefined' ? item.order : saleItems.findIndex(si => si.saleItemId == item.saleItemId));
+    console.log('Order numaraları:', orderNumbers);
+    //! burada kaldım
+    return ``;
+}
+
 
 async function getShortProduct(product) {
     let p = null;
@@ -98,9 +117,11 @@ function selectItem() {
 
     if (selectedItems.includes(id)) {
         selectedItems = selectedItems.filter(item => item !== id);
+        selectionOrder = selectionOrder.filter(item => item !== id);
         $(this).removeClass('bg-success text-white');
     } else {
         selectedItems.push(id);
+        selectionOrder.push(id); // Seçim sırasını kaydet
         $(this).addClass('bg-success text-white');
     }
 }
@@ -110,13 +131,24 @@ function createForm() {
         alert('Lütfen en az bir ürün seçiniz');
         return;
     }
-    selectedItems = saleItems.filter(element => selectedItems.includes(String(element.saleItemId)));
-    mergeItems()
+
+    // Seçim sırasına göre filtrelenen öğeleri al
+    let orderedSelectedItems = selectionOrder.map(id =>
+        saleItems.find(element => element.saleItemId == id)
+    ).filter(item => item !== undefined);
+
+    selectedItems = orderedSelectedItems;
+    mergeItems();
 }
 
 async function mergeItems() {
-    selectedItems.forEach(await function (element) {
+    list = {}; // list'i temizle
+
+    // Seçilen sıraya göre işle
+    for (let i = 0; i < selectedItems.length; i++) {
+        const element = selectedItems[i];
         let kod = '';
+
         if (element.saleCount == element.purchaseItem.purchaseCount && units[element.purchaseItem.product.productGroupId] == "m") {
             kod = `${element.customer.customerId}-${element.purchaseItem.product.productId}`
         } else if (units[element.purchaseItem.product.productGroupId] == "adet" || units[element.purchaseItem.product.productGroupId] == "kg") {
@@ -128,11 +160,15 @@ async function mergeItems() {
         if (kod in list) {
             list[kod].saleCount += element.saleCount;
         } else {
-            list[kod] = element
+            list[kod] = element;
+            list[kod].order = i; // Seçilme sırasını ekle
         }
-    })
+    }
+
     $('#SBF').html('');
-    Object.values(list).forEach(await writeSaleItem);
+    Object.values(list)
+        .sort((a, b) => a.order - b.order)
+        .forEach(async item => await writeSaleItem(item));
 }
 
 function getButtonAddProduct(p) {
@@ -190,7 +226,7 @@ function getCustomerName(name) {
 }
 
 function getDateString(dt) {
-    return `${dt.getFullYear()}-${("0" + (dt.getMonth() + 1)).slice(-2)}-${("0" + dt.getDate()).slice(-2)}`
+    return dt.toISOString().slice(0, 10);
 }
 
 function setYesterday() {
@@ -208,7 +244,7 @@ class strReplace {
             str = str.slice(0, 11)
         return str
     }
-
+    /*
     static getMarka(Marka) {
         Marka = Marka.replaceAll('SHANDONG', 'SHD')
         Marka = Marka.replaceAll('ERCİYES', 'ERC')
@@ -244,7 +280,7 @@ class strReplace {
         Marka = Marka.replaceAll('GÜL MAKİNE', 'GÜL')
         return Marka
     }
-
+ 
     static getProduct(name) {
         name = name.replaceAll('MS ASANSÖR', 'MS')
         name = name.replaceAll('ARAS KALIP', 'ARAS')
@@ -272,9 +308,10 @@ class strReplace {
         name = name.replaceAll(' SEALE', 'S')
         name = name.replaceAll('1370/1770', '')
         name = name.replaceAll('Zincir Kancası Gözlü B Tipi', 'Kanca B Gözlü')
-
+ 
         let dm = name.split(' ')
         dm.splice(dm.length - 1, 1)
         return dm.join(' ');
     }
+    */
 }
