@@ -1,11 +1,11 @@
 let qrCodes = [];
 
-$(document).ready(function(){
-    if(localStorage.getItem('qrCodes') !== null){
+$(document).ready(function () {
+    if (localStorage.getItem('qrCodes') !== null) {
         qrCodes = JSON.parse(localStorage.getItem('qrCodes'))
         write()
         console.log("kayıt ok");
-    }else{
+    } else {
         console.log("kayıt yok");
     }
 })
@@ -27,7 +27,7 @@ function addCode() {
             qrCodes.push(i)
         write()
     }
-    localStorage.setItem('qrCodes',JSON.stringify(qrCodes))
+    localStorage.setItem('qrCodes', JSON.stringify(qrCodes))
     $('#txtCode').val('')
     $('#txtCode').focus()
 }
@@ -39,17 +39,16 @@ function write() {
     });
 }
 
-function delQR(pId){
-    console.log(qrCodes);
-    const index = qrCodes.indexOf(pId);
-    console.log(index);
-    qrCodes.splice(index, 1);
-    console.log(qrCodes);
-    write()
-    localStorage.setItem('qrCodes',JSON.stringify(qrCodes))
+function delQR(pId) {
+    const index = qrCodes.findIndex(code => code == pId);
+    if (index > -1) {
+        qrCodes.splice(index, 1);
+        write();
+        localStorage.setItem('qrCodes', JSON.stringify(qrCodes));
+    }
 }
 
-function getTitle(pId){
+function getTitle(pId) {
     let title = null;
     $.ajax({
         url: `https://app.dipendo.com/api/purchase-items/${pId}`,
