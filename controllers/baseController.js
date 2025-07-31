@@ -68,7 +68,7 @@ class baseController {
             if (rows && rows.length > 0) {
                 response.setData(rows[0]);
             } else {
-                response.setError('No data found');
+                response.setError('No data found for purchaseItemId: ' + purchaseItemId);
             }
         } catch (error) {
             console.error('Error in getpurchaseItem:', error);
