@@ -23,19 +23,20 @@ class baseController {
     static async getpurchaseItem(req, res) {
         let response = new ResponseObj()
         try {
-            const { purchaseItemId } = req.params;
-
-            const [rows] = await connection.query('SELECT * FROM purchaseItems WHERE purchaseItemId = ?', [purchaseItemId]);
-
-            if (rows.length > 0) {
-                response.setData(rows[0]);
-            } else {
-                response.setError('No data found');
-            }
+            connection.query('SELECT * FROM purchaseItems WHERE purchaseItemId = ?', [req.params.purchaseItemId], (err, result) => {
+                if (err) {
+                    response.setError(err);
+                } else if (!result || result.length === 0) {
+                    response.setError('Kayıt bulunamadı');
+                } else {
+                    response.setData(result[0]);
+                }
+                res.json(response);
+            });
         } catch (error) {
-            response.setError(error.message);
-        } finally {
-            res.send(response);
+            console.log(error);
+            response.setError(error)
+            res.json(response)
         }
     }
 
@@ -44,12 +45,13 @@ class baseController {
         try {
             const { purchaseItemId, location } = req.body;
 
-            // UPSERT kullan - daha temiz
-            await connection.query(`
-                INSERT INTO purchaseItems (purchaseItemId, location) 
-                VALUES (?, ?) 
-                ON DUPLICATE KEY UPDATE location = ?
-            `, [purchaseItemId, location, location]);
+            connection.query(`INSERT INTO purchaseItems (purchaseItemId, location) VALUES (?, ?) ON DUPLICATE KEY UPDATE location = ?`, [purchaseItemId, location, location], (err, result) => {
+                if (err) {
+                    response.setError(err);
+                    return res.json(response);
+                }
+                response.setData({ purchaseItemId, location });
+            });
 
             response.setData({ purchaseItemId, location });
         } catch (error) {
@@ -57,6 +59,8 @@ class baseController {
         } finally {
             res.send(response);
         }
+
+
     }
 }
 
