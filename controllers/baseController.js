@@ -20,29 +20,18 @@ class baseController {
             });
     }
 
-    static async updateKonum(req, res) {
+    static async getpurchaseItem(req, res) {
         let response = new ResponseObj()
         try {
-            const { purchaseItemId, location } = req.body;
+            const { purchaseItemId } = req.params;
 
-            // Query sonucunu önce kontrol et
-            const queryResult = await connection.query('SELECT * FROM purchaseItems WHERE purchaseItemId = ?', [purchaseItemId]);
-            console.log('Query result:', queryResult); // Debug için
+            const [rows] = await connection.query('SELECT * FROM purchaseItems WHERE purchaseItemId = ?', [purchaseItemId]);
 
-            // Eğer result array değilse veya boşsa
-            if (!queryResult || !Array.isArray(queryResult)) {
-                // Hiç kayıt yoksa INSERT yap
-                await connection.query('INSERT INTO purchaseItems (purchaseItemId, location) VALUES (?, ?)', [purchaseItemId, location]);
+            if (rows.length > 0) {
+                response.setData(rows[0]);
             } else {
-                const [rows] = queryResult;
-                if (rows && rows.length > 0) {
-                    await connection.query('UPDATE purchaseItems SET location = ? WHERE purchaseItemId = ?', [location, purchaseItemId]);
-                } else {
-                    await connection.query('INSERT INTO purchaseItems (purchaseItemId, location) VALUES (?, ?)', [purchaseItemId, location]);
-                }
+                response.setError('No data found');
             }
-
-            response.setData({ purchaseItemId, location });
         } catch (error) {
             response.setError(error.message);
         } finally {
@@ -50,28 +39,20 @@ class baseController {
         }
     }
 
-    static async getpurchaseItem(req, res) {
+    static async updateKonum(req, res) {
         let response = new ResponseObj()
         try {
-            const { purchaseItemId } = req.params;
+            const { purchaseItemId, location } = req.body;
 
-            const queryResult = await connection.query('SELECT * FROM purchaseItems WHERE purchaseItemId = ?', [purchaseItemId]);
+            // UPSERT kullan - daha temiz
+            await connection.query(`
+                INSERT INTO purchaseItems (purchaseItemId, location) 
+                VALUES (?, ?) 
+                ON DUPLICATE KEY UPDATE location = ?
+            `, [purchaseItemId, location, location]);
 
-            // Destructuring yerine direct access kullan
-            let rows;
-            if (Array.isArray(queryResult)) {
-                rows = queryResult[0];
-            } else {
-                rows = queryResult;
-            }
-
-            if (rows && rows.length > 0) {
-                response.setData(rows[0]);
-            } else {
-                response.setError('No data found for purchaseItemId: ' + purchaseItemId);
-            }
+            response.setData({ purchaseItemId, location });
         } catch (error) {
-            console.error('Error in getpurchaseItem:', error);
             response.setError(error.message);
         } finally {
             res.send(response);
