@@ -28,8 +28,6 @@ function getpurchaseItem(id) {
         success: function (response) {
             if (response.success) {
                 $('#konumDropdown').val(response.data.location || '0');
-            } else {
-                alert('Purchase item not found');
             }
         },
     })
