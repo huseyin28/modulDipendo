@@ -47,34 +47,32 @@ class baseController {
             connection.query('SELECT * FROM purchaseItems WHERE purchaseItemId = ?', [purchaseItemId], (err, result) => {
                 if (err) {
                     response.setError(err);
-                    res.json(response);
-                } else if (!result || result.length === 0) {
+                    return res.json(response); // sadece burada gönder
+                }
+                if (!result || result.length === 0) {
                     connection.query(`INSERT INTO purchaseItems (purchaseItemId, location) VALUES (?, ?)`, [purchaseItemId, location], (err, result) => {
                         if (err) {
                             response.setError(err);
                         } else {
                             response.setData({ purchaseItemId, location });
                         }
-                        res.json(response);
+                        return res.json(response); // sadece burada gönder
                     });
                 } else {
                     connection.query(`UPDATE purchaseItems SET location = ? WHERE purchaseItemId = ?`, [location, purchaseItemId], (err, result) => {
                         if (err) {
                             response.setError(err);
-                            return res.json(response);
+                        } else {
+                            response.setData({ purchaseItemId, location });
                         }
-                        response.setData({ purchaseItemId, location });
+                        return res.json(response); // sadece burada gönder
                     });
                 }
-                res.json(response);
             });
         } catch (error) {
             response.setError(error.message);
-        } finally {
-            res.send(response);
+            return res.json(response);
         }
-
-
     }
 }
 
