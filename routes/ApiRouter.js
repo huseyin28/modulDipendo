@@ -19,7 +19,10 @@ router.post('/sales/setDeliveryTime', Sale.setDeliveryTime)
 router.post('/products/update/:id', Product.update)
 router.post('/products/imgUpload/:id', Product.imgUpload)
 router.post('/products/add/', Product.add)
+router.post('/konum/update', Base.updateKonum)
 router.delete('/products/removeImage/:pid', Product.removeImage)
+
+
 
 
 

@@ -120,13 +120,35 @@ function GetStatu3(productId, PurItemId) {
                 dt = new Date(element.deliveryTime)
                 dt.setDate(dt.getDate() + 1);
                 console.log(dt.toLocaleDateString('tr-TR'), dt);
-                $('#gonderildi').append(`
-                    <div class="col-7">${element.customer.title}</div>
-                    <div class="col-3">${element.saleCount}${unit}</div>
-                    <div class="col-2">${dt.toLocaleDateString('tr-TR')}</div>`)
+                $('#gonderildi').append(`<div class="row my-2" >
+                    <div class="col-6 text-truncate">${element.customer.title}</div>
+                    <div class="col-2">${element.saleCount}${unit}</div>
+                    <div class="col-4 text-right">${dt.toLocaleDateString('tr-TR')}</div>
+                </div>`)
             }
         })
     }).fail(ajaxFail)
+}
+
+function changeKonum() {
+    let selectedValue = $('#konumDropdown').val();
+    alert("Seçilen Konum: " + selectedValue);
+    $.ajax({
+        url: '/api/konum/update',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            purchaseItemId: purchaseItemId,
+            location: selectedValue
+        }),
+        success: function (response) {
+            alert('Konum başarıyla güncellendi.');
+        },
+        error: function (err) {
+            alert('Konum güncellenirken hata oluştu.');
+            console.error(err);
+        }
+    });
 }
 
 // rezerveler statu 4 

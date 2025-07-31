@@ -1,4 +1,8 @@
 const axios = require('axios');
+let connection = require('./DBManager')
+let ResponseObj = require('./ResponseObj')
+
+
 class baseController {
     static async getPublicKey(req, res) {
         axios.post('https://app.dipendo.com/oauth/token', {
@@ -14,6 +18,24 @@ class baseController {
             .catch(function (error) {
                 res.send({ error: error });
             });
+    }
+
+    static async updateKonum(req, res) {
+        let response = new ResponseObj()
+        try {
+            const { purchaseItemId, location } = req.body;
+            const [rows] = await connection.query('SELECT * FROM purchaseItems WHERE purchaseItemId = ?', [purchaseItemId]);
+            if (rows.length > 0) {
+                await connection.query('UPDATE purchaseItems SET location = ? WHERE purchaseItemId = ?', [location, purchaseItemId]);
+            } else {
+                await connection.query('INSERT INTO purchaseItems (purchaseItemId, location) VALUES (?, ?)', [purchaseItemId, location]);
+            }
+            response.setData({ purchaseItemId, location });
+        } catch (error) {
+            response.setError(error.message);
+        } finally {
+            res.send(response);
+        }
     }
 }
 
