@@ -37,6 +37,23 @@ class baseController {
             res.send(response);
         }
     }
+
+    static async getpurchaseItem(req, res) {
+        let response = new ResponseObj()
+        try {
+            const { purchaseItemId } = req.params;
+            const [rows] = await connection.query('SELECT * FROM purchaseItems WHERE purchaseItemId = ?', [purchaseItemId]);
+            if (rows.length > 0) {
+                response.setData(rows[0]);
+            } else {
+                response.setError('No data found');
+            }
+        } catch (error) {
+            response.setError(error.message);
+        } finally {
+            res.send(response);
+        }
+    }
 }
 
 module.exports = baseController

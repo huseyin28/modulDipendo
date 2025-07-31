@@ -1,3 +1,5 @@
+const { getpurchaseItem } = require("../../controllers/baseController");
+
 $(document).ready(ready);
 let purchaseItem = null;
 let stok;
@@ -14,10 +16,25 @@ function ready() {
 }
 
 function getDetay(id) {
+    getpurchaseItem(id)
     $.ajax({
         url: `https://app.dipendo.com/api/purchase-items/${id}`,
         headers: { "Authorization": localStorage.getItem('token') }
     }).then(writeDetay).fail(ajaxFail)
+}
+
+function getpurchaseItem(id) {
+    $.ajax({
+        url: `/api/purchaseItem/getpurchaseItem/${id}`,
+        method: 'GET',
+        success: function (response) {
+            if (response.success) {
+                $('#konumDropdown').val(response.data.location || '0');
+            } else {
+                alert('Purchase item not found');
+            }
+        },
+    })
 }
 
 function ajaxFail(e) {
@@ -133,7 +150,7 @@ function GetStatu3(productId, PurItemId) {
 function changeKonum() {
     let selectedValue = $('#konumDropdown').val();
     $.ajax({
-        url: '/api/konum/update',
+        url: '/api/purchaseItem/updateLocation',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
