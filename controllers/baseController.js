@@ -44,16 +44,30 @@ class baseController {
         let response = new ResponseObj()
         try {
             const { purchaseItemId, location } = req.body;
-
-            connection.query(`INSERT INTO purchaseItems (purchaseItemId, location) VALUES (?, ?) ON DUPLICATE KEY UPDATE location = ?`, [purchaseItemId, location, location], (err, result) => {
+            connection.query('SELECT * FROM purchaseItems WHERE purchaseItemId = ?', [purchaseItemId], (err, result) => {
                 if (err) {
                     response.setError(err);
-                    return res.json(response);
+                    res.json(response);
+                } else if (!result || result.length === 0) {
+                    connection.query(`INSERT INTO purchaseItems (purchaseItemId, location) VALUES (?, ?)`, [purchaseItemId, location], (err, result) => {
+                        if (err) {
+                            response.setError(err);
+                        } else {
+                            response.setData({ purchaseItemId, location });
+                        }
+                        res.json(response);
+                    });
+                } else {
+                    connection.query(`UPDATE purchaseItems SET location = ? WHERE purchaseItemId = ?`, [location, purchaseItemId], (err, result) => {
+                        if (err) {
+                            response.setError(err);
+                            return res.json(response);
+                        }
+                        response.setData({ purchaseItemId, location });
+                    });
                 }
-                response.setData({ purchaseItemId, location });
+                res.json(response);
             });
-
-            response.setData({ purchaseItemId, location });
         } catch (error) {
             response.setError(error.message);
         } finally {
