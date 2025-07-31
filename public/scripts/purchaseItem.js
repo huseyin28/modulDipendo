@@ -1,5 +1,3 @@
-const { getpurchaseItem } = require("../../controllers/baseController");
-
 $(document).ready(ready);
 let purchaseItem = null;
 let stok;
