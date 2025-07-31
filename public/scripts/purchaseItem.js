@@ -132,7 +132,6 @@ function GetStatu3(productId, PurItemId) {
 
 function changeKonum() {
     let selectedValue = $('#konumDropdown').val();
-    alert("Seçilen Konum: " + selectedValue);
     $.ajax({
         url: '/api/konum/update',
         type: 'POST',
@@ -141,9 +140,6 @@ function changeKonum() {
             purchaseItemId: purchaseItemId,
             location: selectedValue
         }),
-        success: function (response) {
-            alert('Konum başarıyla güncellendi.');
-        },
         error: function (err) {
             alert('Konum güncellenirken hata oluştu.');
             console.error(err);
