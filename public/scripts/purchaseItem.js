@@ -134,9 +134,8 @@ function GetStatu3(productId, PurItemId) {
                 dt.setDate(dt.getDate() + 1);
                 console.log(dt.toLocaleDateString('tr-TR'), dt);
                 $('#gonderildi').append(`<div class="row my-2" >
-                    <div class="col-6 text-truncate">${element.customer.title}</div>
-                    <div class="col-2">${element.saleCount}${unit}</div>
-                    <div class="col-4 text-right">${dt.toLocaleDateString('tr-TR')}</div>
+                    <div class="col-6 col-md-8 text-truncate">${element.customer.title}</div>
+                    <div class="col-6 col-md-4"><span>${element.saleCount}${unit}</span> <span class="float-right">${dt.toLocaleDateString('tr-TR')}</span></div>
                 </div>`)
             }
         })
