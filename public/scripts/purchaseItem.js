@@ -132,14 +132,21 @@ function GetStatu3(productId, PurItemId) {
             if (element.purchaseItem.purchaseItemId == PurItemId) {
                 dt = new Date(element.deliveryTime)
                 dt.setDate(dt.getDate() + 1);
-                console.log(dt.toLocaleDateString('tr-TR'), dt);
-                $('#gonderildi').append(`<div class="row my-2" >
+                console.log(isYesterday(dt));
+                $('#gonderildi').append(`<div class="row my-2 ${isYesterday(dt) && 'text-primary'}" >
                     <div class="col-6 col-md-8 text-truncate">${element.customer.title}</div>
                     <div class="col-6 col-md-4"><span>${element.saleCount}${unit}</span> <span class="float-right">${dt.toLocaleDateString('tr-TR')}</span></div>
                 </div>`)
             }
         })
     }).fail(ajaxFail)
+}
+
+function isYesterday(date) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    return date.toDateString() === yesterday.toDateString();
 }
 
 function changeKonum() {
