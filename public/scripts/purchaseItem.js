@@ -131,7 +131,8 @@ function GetStatu3(productId, PurItemId) {
         response.reverse().forEach(element => {
             if (element.purchaseItem.purchaseItemId == PurItemId) {
                 dt = new Date(element.deliveryTime)
-                dt.setDate(dt.getDate() + 1);
+
+                dt.setDate(dt.getDate() + (dt.getDay() == 5 ? 3 : 1));
                 console.log(isYesterday(dt));
                 $('#gonderildi').append(`<div class="row my-2 ${isYesterday(dt) && 'text-primary'}" >
                     <div class="col-6 col-md-8 text-truncate">${element.customer.title}</div>
