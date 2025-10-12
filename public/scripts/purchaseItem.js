@@ -62,7 +62,6 @@ function writeDetay(response) {
     stok = response.stockCount;
     writeLogs(response.activities);
     GetStatu1(response.product.id, response.purchaseItemId)
-    GetStatu2(response.product.id, response.purchaseItemId)
     GetStatu3(response.product.id, response.purchaseItemId)
     GetStatu4(response.product.id, response.purchaseItemId)
 
@@ -89,34 +88,38 @@ function writeLogs(activities) {
 
 // Satıldılar statu 1
 function GetStatu1(productId, PurItemId) {
+    let satilanlar = 0;
     $('#satildi').html('')
-    let ekle = 0;
     $.ajax({
         url: `https://app.dipendo.com/api/sale-items?productId=${productId}&status=1&offset=0&limit=1000`,
         headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => {
         response.forEach(element => {
             if (element.purchaseItem.purchaseItemId == PurItemId) {
-                ekle += element.saleCount;
+                satilanlar += element.saleCount;
                 $('#satildi').append(`<div class="col-9">${element.customer.title}</div><div class="col-3">${element.saleCount}${unit}</div>`)
             }
         });
-        stok += ekle
-        $('#anlik').html(stok);
+        $('#anlik').html(stok + satilanlar);
+        GetStatu2(productId, PurItemId, satilanlar)
     }).fail(ajaxFail)
 }
 
 // Sevke hazırlar statu 2
-function GetStatu2(productId, PurItemId) {
+function GetStatu2(productId, PurItemId, satilanlar) {
+    let hazirlar = 0;
     $('#hazir').html('')
     $.ajax({
         url: `https://app.dipendo.com/api/sale-items?productId=${productId}&status=2&offset=0&limit=1000`,
         headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => {
         response.forEach(element => {
-            if (element.purchaseItem.purchaseItemId == PurItemId)
+            if (element.purchaseItem.purchaseItemId == PurItemId) {
+                hazirlar += element.saleCount;
                 $('#hazir').append(`<div class="col-9">${element.customer.title}</div><div class="col-3">${element.saleCount}${unit}</div>`)
+            }
         });
+        $('#anlik2').html(stok + hazirlar + satilanlar);
     }).fail(ajaxFail)
 }
 

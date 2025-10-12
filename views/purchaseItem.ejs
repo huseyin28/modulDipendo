@@ -3,8 +3,7 @@
 		<div class="card">
 			<div class="card-body">
 				<h4 class="card-title"><span id="productName"></span>
-					<img src="/public/images/dipendo.png" id="goDipendo"
-						style="float: left; cursor: pointer; width: 20px; height: 20px; margin-top: 4px;">
+					<img src="/public/images/dipendo.png" id="goDipendo" style="float: left; cursor: pointer; width: 20px; height: 20px; margin-top: 4px;">
 				</h4>
 				<h6 class="card-subtitle mb-2 text-muted"><b>Nesne Kimliği :</b> <span id="purchaseItemId"></span>
 					(<span id="lblImgCount"></span>)</h6>
@@ -47,14 +46,14 @@
 	<div class="mt-4 col-12 col-sm-6">
 		<div class="card">
 			<div class="card-body">
-				<span class="badge badge-danger badge-counter" id="anlik"
-					style="position: absolute; transform-origin: top right; right: 0.25rem; margin-top: -0.25rem;"></span>
+				<span class="badge badge-secondary badge-counter" id="anlik" style="position: absolute; transform-origin: top right; right: 0.25rem; margin-top: -0.25rem;"></span>
 				<h6 class="card-title font-weight-bold">SATILANLAR</h6>
 				<div class="row" id="satildi"></div>
 			</div>
 		</div>
 		<div class="card mt-3">
 			<div class="card-body">
+				<span class="badge badge-primary badge-counter" id="anlik2" style="position: absolute; transform-origin: top right; right: 0.25rem; margin-top: -0.25rem;"></span>
 				<h6 class="card-title font-weight-bold">SEVKE HAZIRLAR</h6>
 				<div class="row" id="hazir"></div>
 			</div>
@@ -80,8 +79,7 @@
 				<div class="input-group mb-3">
 					<input id="txtFF" type="text" class="form-control">
 					<div class="input-group-append">
-						<button class="btn btn-outline-secondary" onclick="savePurchaseCount()"
-							type="button">Kaydet</button>
+						<button class="btn btn-outline-secondary" onclick="savePurchaseCount()" type="button">Kaydet</button>
 					</div>
 				</div>
 				<small class="form-text text-muted">Eklemek için (+) çıkar için (-) ifadesiyle değeri yazınız</small>
