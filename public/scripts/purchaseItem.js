@@ -148,6 +148,8 @@ function GetStatu3(productId, PurItemId) {
 function isYesterday(date) {
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
+    if (yesterday.getDay() == 0)
+        yesterday.setDate(yesterday.getDate() - 2);
 
     return date.toDateString() === yesterday.toDateString();
 }
