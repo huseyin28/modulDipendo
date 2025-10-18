@@ -49,14 +49,18 @@ async function getSaleById(saleId) {
         headers: { "Authorization": localStorage.getItem('token') }
     }).then(response => {
         for (const i in response.saleItems) {
-            response.saleItems[i].customer = response.customer;
-            saleItems.push(response.saleItems[i])
-            writeSaleItem(response.saleItems[i])
+            if (response.saleItems[i].status == 3) {
+                response.saleItems[i].customer = response.customer;
+                saleItems.push(response.saleItems[i])
+                writeSaleItem(response.saleItems[i])
+            }
         }
     })
 }
 
 async function writeSaleItem(item) {
+    console.log(item);
+
     let shortProduct = await getShortProduct(item.purchaseItem.product);
     if (shortProduct == null)
         addList[item.purchaseItem.product.productId] = item.purchaseItem.product;
