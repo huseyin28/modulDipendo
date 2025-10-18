@@ -59,8 +59,6 @@ async function getSaleById(saleId) {
 }
 
 async function writeSaleItem(item) {
-    console.log(item);
-
     let shortProduct = await getShortProduct(item.purchaseItem.product);
     if (shortProduct == null)
         addList[item.purchaseItem.product.productId] = item.purchaseItem.product;
