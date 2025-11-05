@@ -66,6 +66,14 @@ router.get('/productImages', (req, res) => {
     })
 })
 
+router.get('/sayim', (req, res) => {
+    res.render('sayim', {
+        title: '2025 Sayım',
+        scripts: `<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script><script src="/public/scripts/sayim.js?nocache=${Math.random()}"></script>`,
+    })
+})
+
+
 router.get('/sbf', (req, res) => {
     res.render('sbf', {
         title: "Sevkiyat Bildirim Formu",

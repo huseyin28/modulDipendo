@@ -63,6 +63,42 @@ class Product {
         }
     }
 
+    static async insertSayim(req, res) {
+        let response = new ResponseObj()
+        try {
+            const { productId, location, quantity, user } = req.body;
+
+            connection.query('SELECT COUNT(*) AS cnt FROM sayim2025 WHERE purchaseitemid = ?', [productId], (err, results) => {
+                if (err) {
+                    response.setError(err);
+                    return res.json(response);
+                }
+
+                if (results[0].cnt > 0) {
+                    response.setError('Bu ürün için sayım zaten yapılmış.');
+                    return res.json(response);
+                }
+
+                // Kayıt yoksa ekle
+                const timestamp = new Date();
+                connection.query(
+                    'INSERT INTO stocktakings (productId, location, quantity, user, timestamp) VALUES (?, ?, ?, ?, ?)',
+                    [productId, location, quantity, user, timestamp],
+                    (error, result) => {
+                        if (error) response.setError(error);
+                        else response.setData(result);
+                        res.json(response);
+                    }
+                );
+            });
+
+        } catch (error) {
+            console.log(error);
+            response.setError(error);
+            res.json(response);
+        }
+    }
+
     static async getById(req, res) {
         let response = new ResponseObj()
         try {

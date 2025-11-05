@@ -21,6 +21,7 @@ router.post('/products/update/:id', Product.update)
 router.post('/products/imgUpload/:id', Product.imgUpload)
 router.post('/products/add/', Product.add)
 router.post('/purchaseItem/updateLocation', Base.updateKonum)
+router.post('/purchaseItem/sayim', Product.insertSayim)
 
 router.delete('/products/removeImage/:pid', Product.removeImage)
 
