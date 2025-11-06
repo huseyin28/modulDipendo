@@ -66,9 +66,9 @@ class Product {
     static async insertSayim(req, res) {
         let response = new ResponseObj()
         try {
-            const { productId, location, quantity, user } = req.body;
+            const { product, location, purchaseItemId, stockCount } = req.body;
 
-            connection.query('SELECT COUNT(*) AS cnt FROM sayim2025 WHERE purchaseitemid = ?', [productId], (err, results) => {
+            connection.query('SELECT COUNT(*) AS cnt FROM sayim2025 WHERE purchaseitemid = ?', [purchaseItemId], (err, results) => {
                 if (err) {
                     response.setError(err);
                     return res.json(response);
@@ -82,8 +82,8 @@ class Product {
                 // Kayıt yoksa ekle
                 const timestamp = new Date();
                 connection.query(
-                    'INSERT INTO stocktakings (productId, location, quantity, user, timestamp) VALUES (?, ?, ?, ?, ?)',
-                    [productId, location, quantity, user, timestamp],
+                    'INSERT INTO sayim2025 (productname, productid, shortname, brand, stockcount, location, purchaseitemid) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                    [product.name, product.id, '', '', stockCount, location, purchaseItemId],
                     (error, result) => {
                         if (error) response.setError(error);
                         else response.setData(result);
