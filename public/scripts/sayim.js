@@ -18,13 +18,21 @@ function insertPurchaseItem(piid) {
 
 function sendAPI(data) {
     data.location = $('#konumDropdown').val();
+    if (data.location == "0") {
+        alert('Lütfen bir depo seçiniz!')
+        return;
+    }
     $.ajax({
         url: '/api/purchaseItem/sayim',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(data),
         success: response => {
-
+            if (response.success) {
+                alert('Sayım işlemi başarılı!')
+            } else {
+                alert(response.error)
+            }
         }
     });
 }

@@ -79,7 +79,6 @@ class Product {
                     return res.json(response);
                 }
 
-                // Kayıt yoksa ekle
                 const timestamp = new Date();
                 connection.query(
                     'INSERT INTO sayim2025 (productname, productid, shortname, brand, stockcount, location, purchaseitemid) VALUES (?, ?, ?, ?, ?, ?, ?)',
