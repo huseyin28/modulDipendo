@@ -1,4 +1,4 @@
-var html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 5 });
+var html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 1 });
 
 html5QrcodeScanner.render(function (decodedText, decodedResult) {
     let txt = decodedText.replaceAll('dipendo://', '')
