@@ -16,6 +16,7 @@ router.get('/aut/getKey', Base.getPublicKey)
 router.get('/sales/getSevkList/:dt', Sale.getSevkList)
 router.get('/purchaseItem/getpurchaseItem/:purchaseItemId', Base.getpurchaseItem)
 
+router.post('/purchaseItem/sayim/complete', Product.SayimComplete)
 router.post('/sales/setDeliveryTime', Sale.setDeliveryTime)
 router.post('/products/update/:id', Product.update)
 router.post('/products/imgUpload/:id', Product.imgUpload)

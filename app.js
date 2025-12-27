@@ -11,9 +11,15 @@ const ApiRouter = require('./routes/ApiRouter')
 const UploadsRouter = require('./routes/UploadsRouter')
 
 app.use("/public", express.static('public'))
-app.use(fileUpload())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+// arttırılmış payload limitleri
+const jsonLimit = '50mb'; // ihtiyaca göre  '10mb','100mb' vb. değiştir
+app.use(fileUpload({
+    limits: { fileSize: 50 * 1024 * 1024 }, // 50 MB
+    useTempFiles: true,
+    tempFileDir: path.join(__dirname, 'tmp') // windows için de çalışır
+}));
+app.use(bodyParser.urlencoded({ extended: false, limit: jsonLimit }))
+app.use(bodyParser.json({ limit: jsonLimit }))
 
 app.use(expressLayouts)
 app.set('view engine', 'ejs')

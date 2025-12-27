@@ -98,6 +98,29 @@ class Product {
         }
     }
 
+    static async SayimComplete(req, res) {
+        let response = new ResponseObj();
+        try {
+            const items = req.body;
+            items.forEach(async (item) => {
+                let p = item.purchaseItem.product;
+                if (p.groupUnit == 'meter' && p.groupId != 914 && p.groupId != 922) {
+                    connection.query('INSERT INTO sayim2025 (productname, productid,stockcount,location,purchaseitemid) VALUES (?, ?, ?, ?, ?)',
+                        [p.name, p.id, item.saleCount, 'DGR' + item.status, item.purchaseItem.purchaseItemId], (error, result) => {
+                            if (error) response.setError(error);
+                            else response.setData(result);
+                        });
+                }
+            });
+            response.setData('Sayım tamamlandı ve veritabanına işlendi.');
+            res.json(response);
+        } catch (error) {
+            console.log(error);
+            response.setError(error);
+            res.json(response);
+        }
+    }
+
     static async getById(req, res) {
         let response = new ResponseObj()
         try {
