@@ -63,63 +63,6 @@ class Product {
         }
     }
 
-    static async insertSayim(req, res) {
-        let response = new ResponseObj()
-        try {
-            const { product, location, purchaseItemId, stockCount } = req.body;
-
-            connection.query('SELECT COUNT(*) AS cnt FROM sayim2025 WHERE purchaseitemid = ?', [purchaseItemId], (err, results) => {
-                if (err) {
-                    response.setError(err);
-                    return res.json(response);
-                }
-
-                if (results[0].cnt > 0) {
-                    response.setError('Bu ürün için sayım zaten yapılmış.');
-                    return res.json(response);
-                }
-
-                const timestamp = new Date();
-                connection.query(
-                    'INSERT INTO sayim2025 (productname, productid, shortname, brand, stockcount, location, purchaseitemid) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                    [product.name, product.id, '', '', stockCount, location, purchaseItemId],
-                    (error, result) => {
-                        if (error) response.setError(error);
-                        else response.setData(result);
-                        res.json(response);
-                    }
-                );
-            });
-
-        } catch (error) {
-            console.log(error);
-            response.setError(error);
-            res.json(response);
-        }
-    }
-
-    static async SayimComplete(req, res) {
-        let response = new ResponseObj();
-        try {
-            const items = req.body;
-            items.forEach(async (item) => {
-                let p = item.purchaseItem.product;
-                if (p.groupUnit == 'meter' && p.groupId != 914 && p.groupId != 922) {
-                    connection.query('INSERT INTO sayim2025 (productname, productid,stockcount,location,purchaseitemid) VALUES (?, ?, ?, ?, ?)',
-                        [p.name, p.id, item.saleCount, 'DGR' + item.status, item.purchaseItem.purchaseItemId], (error, result) => {
-                            if (error) response.setError(error);
-                            else response.setData(result);
-                        });
-                }
-            });
-            response.setData('Sayım tamamlandı ve veritabanına işlendi.');
-            res.json(response);
-        } catch (error) {
-            console.log(error);
-            response.setError(error);
-            res.json(response);
-        }
-    }
 
     static async getById(req, res) {
         let response = new ResponseObj()
@@ -216,6 +159,68 @@ class Product {
             console.log(error);
             response.setError(error)
             res.json(response)
+        }
+    }
+
+    static async insertSayim(req, res) {
+        let response = new ResponseObj()
+        try {
+            const { product, location, purchaseItemId, stockCount } = req.body;
+
+            connection.query('SELECT COUNT(*) AS cnt FROM sayim2025 WHERE purchaseitemid = ?', [purchaseItemId], (err, results) => {
+                if (err) {
+                    response.setError(err);
+                    return res.json(response);
+                }
+
+                if (results[0].cnt > 0) {
+                    response.setError('Bu ürün için sayım zaten yapılmış.');
+                    return res.json(response);
+                }
+
+                const timestamp = new Date();
+                connection.query(
+                    'INSERT INTO sayim2025 (productname, productid, shortname, brand, stockcount, location, purchaseitemid) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                    [product.name, product.id, '', '', stockCount, location, purchaseItemId],
+                    (error, result) => {
+                        if (error) response.setError(error);
+                        else response.setData(result);
+                        res.json(response);
+                    }
+                );
+            });
+
+        } catch (error) {
+            console.log(error);
+            response.setError(error);
+            res.json(response);
+        }
+    }
+
+    static async SayimComplete(req, res) {
+        // ! 1. Versiyonla ilgili olarak alınan notlar aşağıdadır.
+        // ! Sevke hazır ve Satış kısmındaki ürünler DGR1-DGR2 olarak işaretlenmişti ve kontrolsüz şekilde sayıma eklenmişti. Bu durum mükerrer kayıt ve bazı metrajların fazla çıkmasına sebep oldu. Öneri şudur satış ve hazır kısmındaki verileri ekledikten sonra kontrol edilecek ve mükerrer olanlar yada metrajı fazla çıkanlar elenecek.
+        // ! Bir diğer husus manuel kimlik yazılıp sayım yapılan alanda gerekli grupid ve unit kontrolleri yapılacak ve eklemeden önce ürünün ismi ve metrajı personele gösterilip onay alınacak.
+
+        let response = new ResponseObj();
+        try {
+            const items = req.body;
+            items.forEach(async (item) => {
+                let p = item.purchaseItem.product;
+                if (p.groupUnit == 'meter' && p.groupId != 914 && p.groupId != 922) {
+                    connection.query('INSERT INTO sayim2025 (productname, productid,stockcount,location,purchaseitemid) VALUES (?, ?, ?, ?, ?)',
+                        [p.name, p.id, item.saleCount, 'DGR' + item.status, item.purchaseItem.purchaseItemId], (error, result) => {
+                            if (error) response.setError(error);
+                            else response.setData(result);
+                        });
+                }
+            });
+            response.setData('Sayım tamamlandı ve veritabanına işlendi.');
+            res.json(response);
+        } catch (error) {
+            console.log(error);
+            response.setError(error);
+            res.json(response);
         }
     }
 }
