@@ -1,65 +1,69 @@
 let qrCodes = [];
 
-$(document).ready(function () {
-    if (localStorage.getItem('qrCodes') !== null) {
-        qrCodes = JSON.parse(localStorage.getItem('qrCodes'))
-        write()
-        console.log("kayıt ok");
-    } else {
-        console.log("kayıt yok");
-    }
-})
+$(document).ready(getList)
+
+function getList() {
+    $.ajax({
+        url: `/api/qrcode/getlist`,
+        success: response => {
+            if (response.success) {
+                $('#codes').html('')
+                if (response.data.length > 0) {
+                    write(response.data)
+                } else {
+                    $('#codes').html('<tr><td colspan="5" class="text-center">Yazdırılacak kod yok...</td></tr>')
+                }
+            }
+        }
+    })
+}
 
 function addCode() {
     let txtCode = $('#txtCode').val().trim();
     if (txtCode.length < 5) {
         console.log('geçersiz code gidiniz ' + txtCode)
     } else if (txtCode.length == 5) {
-        if (!qrCodes.includes(txtCode)) {
-            qrCodes.push(txtCode)
-            write()
-        } else {
-            console.log('Kod zaten mevcut: ' + txtCode)
-        }
+        qrCodes.push(txtCode)
     } else if (txtCode.indexOf(",") > -1) {
         let sp = txtCode.split(',')
         sp.forEach(element => {
-            if (!qrCodes.includes(element)) {
-                qrCodes.push(element);
-            } else {
-                console.log('Kod zaten mevcut: ' + element)
-            }
+            qrCodes.push(element);
         });
-        write()
     } else if (txtCode.indexOf("-") > -1) {
         let ar = txtCode.split('-')
         for (let i = ar[0]; i <= ar[1]; i++) {
-            if (!qrCodes.includes(i)) {
-                qrCodes.push(i)
-            } else {
-                console.log('Kod zaten mevcut: ' + i)
-            }
+            qrCodes.push(i)
         }
-        write()
     }
-    localStorage.setItem('qrCodes', JSON.stringify(qrCodes))
+    fetch('/api/qrcode/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ codes: qrCodes })
+    }).then(response => response.json())
+        .then(data => {
+            console.log(data);
+            getList()
+        })
     $('#txtCode').val('')
     $('#txtCode').focus()
 }
 
-function write() {
+function write(list) {
+    qrCodes = [];
     $('#codes').html('')
-    qrCodes.forEach((element, index) => {
-        let item = getProduct(element);
-        console.log(item)
+    list.forEach((element, index) => {
+        qrCodes.push(element.kimlik);
+        let item = getProduct(element.kimlik);
         $('#codes').append(`
             <tr>
             <td>${index + 1}</td>
-            <td>${element}</td>
+            <td>${element.kimlik}</td>
             <td>${item.product.name}</td>
             <td>${item.stockCount}m</td>
             <td class="text-center p-1">
-                <button class="btn btn-sm btn-danger my-0" onclick="delQR('${element}')">
+                <button class="btn btn-sm btn-danger my-0" onclick="delQR('${element.id}')">
                 <i class="fa-solid fa-fw fa-x"></i>
                 </button>
             </td>
@@ -67,13 +71,16 @@ function write() {
     });
 }
 
-function delQR(pId) {
-    const index = qrCodes.findIndex(code => code == pId);
-    if (index > -1) {
-        qrCodes.splice(index, 1);
-        write();
-        localStorage.setItem('qrCodes', JSON.stringify(qrCodes));
-    }
+function delQR(id) {
+    fetch('/api/qrcode/delete/' + id, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    }).then(response => response.json())
+        .then(data => {
+            console.log(data);
+            getList()
+        })
 }
 
 function getProduct(pId) {
@@ -90,6 +97,13 @@ function getProduct(pId) {
 }
 
 function print() {
-    localStorage.removeItem('qrCodes')
-    location.href = location.origin + "/printQRCode?codes=" + qrCodes.join(',');
+    fetch('/api/qrcode/print', {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    }).then(response => response.json())
+        .then(data => {
+            location.href = location.origin + "/printQRCode?codes=" + qrCodes.join(',');
+        })
+
 }

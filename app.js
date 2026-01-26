@@ -10,6 +10,14 @@ const HomeRouter = require('./routes/HomeRouter')
 const ApiRouter = require('./routes/ApiRouter')
 const UploadsRouter = require('./routes/UploadsRouter')
 
+// Caching headers'ı devre dışı bırak
+app.use((req, res, next) => {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+    next();
+});
+
 app.use("/public", express.static('public'))
 // arttırılmış payload limitleri
 const jsonLimit = '50mb'; // ihtiyaca göre  '10mb','100mb' vb. değiştir

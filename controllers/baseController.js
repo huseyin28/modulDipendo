@@ -20,6 +20,90 @@ class baseController {
             });
     }
 
+    static async getQRCodeList(req, res) {
+        let response = new ResponseObj()
+        try {
+            connection.query('SELECT * FROM qrcodeprint WHERE isprint = 0 GROUP BY kimlik', (err, result) => {
+                if (err) {
+                    response.setError(err);
+                } else {
+                    response.setData(result);
+                }
+                res.json(response);
+            });
+        }
+        catch (error) {
+            console.log(error);
+            response.setError(error)
+            res.json(response)
+        }
+    }
+
+    static async printQRCode(req, res) {
+        let response = new ResponseObj()
+        try {
+            connection.query('UPDATE qrcodeprint SET isprint = 1 WHERE isprint = 0', (err, result) => {
+                if (err) {
+                    response.setError(err);
+                }
+                else {
+                    response.setData({ updatedCount: result.affectedRows });
+                }
+                res.json(response);
+            });
+        } catch (error) {
+            console.log(error);
+            response.setError(error)
+            res.json(response)
+        }
+    }
+
+    static async addQRCode(req, res) {
+        let response = new ResponseObj()
+        try {
+            const { codes } = req.body;
+
+            if (!Array.isArray(codes) || codes.length === 0) {
+                response.setError('Codes must be a non-empty array');
+                return res.json(response);
+            }
+
+            const values = codes.map(code => [code, 0]);
+            console.log(values);
+            connection.query('INSERT INTO qrcodeprint (kimlik, isprint) VALUES ?', [values], (err, result) => {
+                if (err) {
+                    response.setError(err);
+                } else {
+                    response.setData({ insertedCount: result.affectedRows, codes });
+                }
+                res.json(response);
+            });
+        } catch (error) {
+            console.log(error);
+            response.setError(error)
+            res.json(response)
+        }
+    }
+
+    static async deleteQRCode(req, res) {
+        let response = new ResponseObj()
+        try {
+            const { id } = req.params;
+            connection.query('DELETE FROM qrcodeprint WHERE id = ?', [id], (err, result) => {
+                if (err) {
+                    response.setError(err);
+                } else {
+                    response.setData({ deletedCount: result.affectedRows });
+                }
+                res.json(response);
+            });
+        } catch (error) {
+            console.log(error);
+            response.setError(error)
+            res.json(response)
+        }
+    }
+
     static async getpurchaseItem(req, res) {
         let response = new ResponseObj()
         try {
