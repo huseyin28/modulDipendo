@@ -5,6 +5,7 @@ const path = require('path');
 let Group = require('../controllers/groupController')
 let Product = require('../controllers/productController')
 let Sale = require('../controllers/saleController')
+let Person = require('../controllers/personController')
 const baseController = require('../controllers/baseController');
 
 // API isteklerinde caching'i devre dışı bırak (304 hatasını önlemek için)
@@ -33,6 +34,11 @@ router.post('/sales/setDeliveryTime', Sale.setDeliveryTime)
 router.post('/products/update/:id', Product.update)
 router.post('/products/imgUpload/:id', Product.imgUpload)
 router.post('/products/add/', Product.add)
+router.get('/person/get', Person.getAll)
+router.get('/person/get/:id', Person.getById)
+router.post('/person/add', Person.add)
+router.post('/person/update/:id', Person.update)
+router.delete('/person/delete/:id', Person.delete)
 router.post('/purchaseItem/updateLocation', baseController.updateKonum)
 router.post('/purchaseItem/sayim', Product.insertSayim)
 

@@ -1,0 +1,68 @@
+<h2 class="ml-3"><%- title %></h2>
+<div class="card m-3">
+    <div class="card-body">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <th></th>
+                <th>Ad Soyad</th>
+                <th>Doğum Günü</th>
+                <th>Ayakkabı</th>
+                <th>Pantolon</th>
+                <th>Tşört</th>
+                <th>Çeket</th>
+                <th></th>
+            </thead>
+            <tbody id="personsTableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal for adding new person -->
+<div class="modal fade" id="addPersonModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kişi Ekle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addPersonForm">
+                    <div class="mb-3">
+                        <label class="form-label">Ad</label>
+                        <input type="text" class="form-control" id="firstName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Soyad</label>
+                        <input type="text" class="form-control" id="lastName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Doğum Günü</label>
+                        <input type="date" class="form-control" id="birthday" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ayakkabı</label>
+                        <input type="text" class="form-control" id="shoe" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Pantolon</label>
+                        <input type="text" class="form-control" id="trousers" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Tşört</label>
+                        <input type="text" class="form-control" id="tshirt" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Çeket</label>
+                        <input type="text" class="form-control" id="jacket" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                <button type="button" class="btn btn-primary" id="btnOnay">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+t
+<button class="btn btn-success btn-lg px-1 sbf-onay" id="btnOpenAddModel"><i class="fa-solid fa-plus"></i></button>

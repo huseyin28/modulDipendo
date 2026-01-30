@@ -16,6 +16,13 @@ router.get('/login', (req, res) => {
     })
 })
 
+router.get('/persons', (req, res) => {
+    res.render('persons', {
+        title: 'Personeller',
+        scripts: `<script src="/public/scripts/persons.js?nocache=${Math.random()}"></script>`
+    })
+})
+
 router.get('/qrcodescan', (req, res) => {
     res.render('qrcodescan', {
         title: 'QR Code Tarat',
