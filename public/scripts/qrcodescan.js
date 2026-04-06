@@ -15,5 +15,5 @@ html5QrcodeScanner.render(function (decodedText, decodedResult) {
     else if (txt[0] == 'sale')
         window.open(`/sale/detail/${txt[1]}`, '_blank', 'noopener, noreferrer');
     else
-        alert(decodedText);
+        alert(decodedText.indexOf('TEMELIRSALIYE') !== 0 ? 'İRSALİYE' : 'Bilinmeyen QR Kodu');
 });
