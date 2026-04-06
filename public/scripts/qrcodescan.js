@@ -14,4 +14,6 @@ html5QrcodeScanner.render(function (decodedText, decodedResult) {
         window.open('/purchaseItem/detay/' + txt[1], '_blank', 'noopener, noreferrer');
     else if (txt[0] == 'sale')
         window.open(`/sale/detail/${txt[1]}`, '_blank', 'noopener, noreferrer');
+    else
+        alert(decodedText);
 });
