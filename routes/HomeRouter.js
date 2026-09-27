@@ -23,6 +23,13 @@ router.get('/persons', (req, res) => {
     })
 })
 
+router.get('/joblist', (req, res) => {
+    res.render('joblist/joblist', {
+        title: 'İş Listesi',
+        scripts: `<script src="/public/scripts/joblist.js?nocache=${Math.random()}"></script>`
+    })
+})
+
 router.get('/qrcodescan', (req, res) => {
     res.render('qrcodescan', {
         title: 'QR Code Tarat',
