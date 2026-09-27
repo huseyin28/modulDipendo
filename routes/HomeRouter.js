@@ -26,7 +26,7 @@ router.get('/persons', (req, res) => {
 router.get('/joblist', (req, res) => {
     res.render('joblist/joblist', {
         title: 'İş Listesi',
-        scripts: `<script src="/public/scripts/joblist.js?nocache=${Math.random()}"></script>`
+        scripts: `<script src="/public/scripts/joblist.js?nocache=${Math.random()}"></script><script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>`
     })
 })
 
