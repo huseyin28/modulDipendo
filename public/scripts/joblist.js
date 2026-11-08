@@ -37,7 +37,7 @@ function getJobList() {
                 };
             });
             for (const key in ids) {
-                $(`#pendingJobs`).append(`<li><a class="job-item" data-id="${key}" target="_blank" href="/sale/detail/${ids[key].id}">${ids[key].name}</a></li>`);
+                $(`#pendingJobs`).append(`<li data-id="${key}" id="${key}" class="job-item"><a class="btn btn-sm btn-link" target="_blank" href="/sale/detail/${key}">${ids[key].name}</a></li>`);
             }
         },
         error: function (err) {
@@ -48,23 +48,16 @@ function getJobList() {
 
 
 function saveJobPositions() {
-
     const data = [];
-
     document.querySelectorAll('.dropzone').forEach(function (dropzone) {
-
         const category = dropzone.dataset.category;
-
         dropzone.querySelectorAll('.job-item').forEach(function (item, index) {
-
             data.push({
-                id: item.dataset.id,
+                id: item.id,
                 category: category,
                 order: index + 1
             });
-
         });
-
     });
 
     console.log(data);
